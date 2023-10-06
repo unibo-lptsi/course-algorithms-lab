@@ -1,0 +1,10 @@
+# create with
+python3 -m venv code-python/lp-algorithms-venv
+# exported with (--from-history to only include requested packages)
+pip freeze > requirements.txt
+# to be re-created with
+pip install -r requirements.txt
+# to activate with
+source code-python/lp-algorithms-venv/bin/activate
+# once done
+deactivate

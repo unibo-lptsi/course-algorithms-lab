@@ -1,0 +1,8 @@
+# created with
+conda create --name lp-algorithms-env python=3.9
+# exported with (--from-history to only include requested packages)
+conda env export > environment.yml
+# to be re-created with
+conda env create -f environment.yml
+# to activate with
+conda activate myenv
