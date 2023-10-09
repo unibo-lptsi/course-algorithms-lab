@@ -2,6 +2,7 @@ from math import sqrt
 from typing import Callable, Tuple, Sequence, Any # note: Sequence is covariant, while List is invariant
 
 # Note: this is a higher-order function, since it takes a function as input (f is a Callable)
+# Note: type hints can be checked via tool `mypy`
 def test(tests: Sequence[Tuple[Tuple,Any]], f: Callable) -> None:
   """Runs a set of tests over a function-under-test f.
 
