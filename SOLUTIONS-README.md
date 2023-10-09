@@ -1,4 +1,4 @@
-# Corso *Algoritmi e Strutture Dati*: Laboratorio
+# Corso *Algoritmi e Strutture Dati*: Laboratorio (SOLUZIONI)
 
 ## Lab 01: Semplici algoritmi in Python
 
