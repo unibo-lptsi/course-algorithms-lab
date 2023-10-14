@@ -1,10 +1,23 @@
 # Corso *Algoritmi e Strutture Dati*: Laboratorio
 
+I sorgenti indicati nelle istruzioni sono contenuti in `code-python/`.
+
+## Lab 02: Ricorsione in Python
+
+1. [Tempo stimato: 60'] Studio sorgenti dati
+    - `02-recursion-hanoi.py`: implementazione della soluzione ricorsiva al problema della Torre di Hanoi
+    - `02-recursion-types.py`: implementazione di algoritmi ricorsivi per la tipologie di ricorsione viste a lezione
+2. [Tempo stimato: 60'] Esercizi sulla ricorsione (NOTA: oltre all'implementazione della soluzione, prevedere una serie di test per verificarne la correttezza)
+    - Implementare `sum_numbers(a,b)` (somma di tutti i numeri interi compresi tra `a` e `b`) in modo *ricorsivo*
+    - Implementare `pow(a,n)` (elevamento a potenza) in modo *ricorsivo*
+    - Implementare `list_contains(lst,elem)` (funzione che restituisce `True` se `elem` è contenuto nella lista `lst` o `False` altrimenti) in modo *ricorsivo*
+    - Implementare `palindrome(string)` (funzione che restituisce `True` se `string` è una stringa palindroma) in modo *ricorsivo*
+        - Un [palindromo](https://it.wikipedia.org/wiki/Palindromo) è una sequenza di caratteri che, letta al contrario, rimane invariata.  Esempio: `emme`, `siris`
+
+
 ## Lab 01: Semplici algoritmi in Python
 
 ISTRUZIONI: leggere attentamente i passi seguenti. Completare ogni passo prima di passare al successivo.
-
-(I sorgenti indicati sono contenuti in `code-python/`.)
 
 1. [Tempo stimato: 45'] Studio sorgente `01-intro-algorithms.py` 
     - Questo sorgente include implementazioni di algoritmi molto semplici.
