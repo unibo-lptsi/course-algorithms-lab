@@ -13,7 +13,8 @@ def test(tests: Sequence[Tuple[Tuple,Any]], f: Callable, tolerance: float = 0.) 
   for test in tests:
       actual = f(*test[0])
       expected = test[1]
-      if math.isclose(actual, expected, rel_tol=tolerance): # actual == expected:
+      success = math.isclose(actual, expected, rel_tol=tolerance) if isinstance(actual, float) else actual==expected
+      if success:
           print(f"PASSED: {test}")
       else:
           print(f"!!! FAILED: {test}\nGOT: {actual}")
@@ -48,6 +49,12 @@ def palindrome(s):
     if len(s)==0: return True
     return False if s[0]!=s[-1] else palindrome(s[1:-1])
 
+# Implementare `filter(lst,pred)` (funzione che restituisce una nuova lista con soli gli element idi `lst` 
+# che soddisfano la funzione predicato `pred`) in modo ricorsivo
+def list_filter(lst,pred):
+    if len(lst)==0: return []
+    return ([lst[0]] if pred(lst[0]) else []) + list_filter(lst[1:], pred)
+
 print("\n*** SUM_NUMBERS TESTS ***\n")
 sum_numbers_tests = [((1, n), n*(n+1)//2) for n in range(1,10)]
 test(sum_numbers_tests, sum_numbers)
@@ -64,3 +71,10 @@ test(contains_tests, list_contains)
 print("\n*** PALINDROME TESTS ***\n")
 palindrome_tests = [(("emme",), True), (("emmE",), False), (("emm e",), False), (("siris",), True), (("siri",), False)]
 test(palindrome_tests, palindrome)
+
+print("\n*** LIST FILTER TESTS ***\n")
+filter_tests = [((list(range(0,10)),lambda x: x%2==0), [0,2,4,6,8]),
+                ((list(range(0,10)),lambda x: x%3==0), [0,3,6,9]),
+                ((list(range(0,10)),lambda x: x>5), [6,7,8,9]),
+                ((list(range(0,10)),lambda x: x<0), [])]
+test(filter_tests, list_filter)
