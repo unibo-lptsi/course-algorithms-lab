@@ -1,6 +1,6 @@
 import copy # for copy.deepcopy
 
-n = 5
+n = 8
 problem = [[i for i in range(n*2,0,-2)],[],[]] # uses even numbers only as they're easier to denote graphically
 
 def print_hanoi(p):
@@ -50,6 +50,6 @@ print_hanoi(res)
 print("\nOUTPUT\n")
 
 res = copy.deepcopy(problem)
-print(res)
 hanoi(res,n,0,2,1)
+print(res)
 print_hanoi(res)
