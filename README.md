@@ -2,6 +2,29 @@
 
 I sorgenti indicati nelle istruzioni sono contenuti in `code-python/`.
 
+## Lab 03: Misura dei tempi d'esecuzione di funzioni e Plotting
+
+Si svolgano i seguenti esercizi:
+
+1. Si consideri `03-measure-fib.py`. Si misuri e si confronti il tempo d'esecuzione di `fib` (Fibonacci in versione ricorsiva) e `fib_iter` (Fibonacci in versione iterativa). Si utilizzino i *millisecondi* come unità di misura.
+    * Si definisca una funzione `measure_running_time(f)` che restituisca il tempo d'esecuzione della funzione `f` fornita in input e la si applichi a `fib` e `fib_iter` per input 10, 20, 30.
+        * Si implementi la funzione in due varianti: una usando `time.perf_counter()` e l'altra usando `timeit.repeat`
+    * Quale tra `fib` e `fib_iter` dà luogo a tempi d'esecuzione minori?
+2. Si consideri `03-profile-function.py`. Si utilizzi `cProfile` per profilare `function_to_be_profiled()`
+    * Qual è la parte più lenta di `function_to_be_profiled()`?
+3. Si utilizzi `matplotlib` per costruire un'immagine simile a quella sottostante
+    * Si faccia riferimento alle slide, al [cheatsheet](https://matplotlib.org/cheatsheets/cheatsheets.pdf), alla [guida](https://matplotlib.org/stable/users/explain/quick_start.html), e alla [API Reference](https://matplotlib.org/stable/api/index.html) 
+    * Alcune indicazioni:
+        * Si stabilisca un array di funzioni: `functions = [float, math.log, lambda n: n*math.log(n), ...]`
+        * Si usi `x_points = np.linspace(...)` per individuare i valori dell'asse `x` da produrre
+        * Si produca i punti da graficare per ogni funzione con qualcosa del tipo:
+        `y_points = np.array([some_function(x) for x in x_points])`
+        * Si plotti `plot(x_points, y_points)`
+        * Si può voler limitare l'asse y mediante la funzione `ylim(min,max)`
+
+![](imgs/functions.png)
+
+
 ## Lab 02: Ricorsione in Python
 
 1. [Tempo stimato: 60'] Studio sorgenti dati
