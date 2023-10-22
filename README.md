@@ -15,6 +15,7 @@ Si svolgano i seguenti esercizi:
     * Qual è la parte più lenta di `function_to_be_profiled()`?
 3. Si utilizzi `matplotlib` per costruire un'immagine simile a quella sottostante
     * Si faccia riferimento alle slide, al [cheatsheet](https://matplotlib.org/cheatsheets/cheatsheets.pdf), alla [guida](https://matplotlib.org/stable/users/explain/quick_start.html), e alla [API Reference](https://matplotlib.org/stable/api/index.html) 
+    * Si faccia anche riferimento agli esempi inclusi in [code-python/mpl/](code-python/mpl/)
     * Alcune indicazioni:
         * Si stabilisca un array di funzioni: `functions = [float, math.log, lambda n: n*math.log(n), ...]`
         * Si usi `x_points = np.linspace(...)` per individuare i valori dell'asse `x` da produrre
