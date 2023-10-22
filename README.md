@@ -24,9 +24,13 @@ Si svolgano i seguenti esercizi:
         `y_points = np.array([some_function(x) for x in x_points])`
         * Si plotti `plot(x_points, y_points)`
         * Si può voler limitare l'asse y mediante la funzione `ylim(min,max)`
+    * Nota: la funzione [gamma](https://en.wikipedia.org/wiki/Gamma_function) è una generalizzazione del fattoriale su valori reali
+        * In Python: `math.gamma()`
 4. *[Tempo stimato: 10']* Si legga la descrizione del progetto [`big-O`](https://pypi.org/project/big-O/)
 
 ![](imgs/functions.png)
+
+
 
 
 ## Lab 02: Ricorsione in Python
