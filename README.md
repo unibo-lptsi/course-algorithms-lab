@@ -6,6 +6,7 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/`.
 
 Si svolgano i seguenti esercizi:
 
+0. 
 1. Si consideri `03-measure-fib.py`. Si misuri e si confronti il tempo d'esecuzione di `fib` (Fibonacci in versione ricorsiva) e `fib_iter` (Fibonacci in versione iterativa). Si utilizzino i *millisecondi* come unità di misura.
     * Si definisca una funzione `measure_running_time(f)` che restituisca il tempo d'esecuzione della funzione `f` fornita in input e la si applichi a `fib` e `fib_iter` per input 10, 20, 30.
         * Si implementi la funzione in due varianti: una usando `time.perf_counter()` e l'altra usando `timeit.repeat`
@@ -21,6 +22,7 @@ Si svolgano i seguenti esercizi:
         `y_points = np.array([some_function(x) for x in x_points])`
         * Si plotti `plot(x_points, y_points)`
         * Si può voler limitare l'asse y mediante la funzione `ylim(min,max)`
+4. Si legga la descrizione del progetto [`big-O`](https://pypi.org/project/big-O/)
 
 ![](imgs/functions.png)
 

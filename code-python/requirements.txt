@@ -9,6 +9,9 @@ numpy==1.26.0
 packaging==23.2
 Pillow==10.0.1
 pyparsing==3.1.1
+PyQt5==5.15.10
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.13.0
 python-dateutil==2.8.2
 six==1.16.0
 tomli==2.0.1
