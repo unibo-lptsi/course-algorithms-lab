@@ -1,3 +1,4 @@
+big-O==0.11.0
 contourpy==1.1.1
 cycler==0.12.0
 fonttools==4.43.1
