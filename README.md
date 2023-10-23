@@ -18,7 +18,11 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/`.
         * Si può voler limitare l'asse y mediante la funzione `ylim(min,max)`
     * Nota: la funzione [gamma](https://en.wikipedia.org/wiki/Gamma_function) è una generalizzazione del fattoriale su valori reali
         * In Python: `math.gamma()`
+
+![](imgs/functions.png)
+
 -->
+
 
 ## Lab 03: Misura dei tempi d'esecuzione di funzioni
 
@@ -36,7 +40,6 @@ Si svolgano i seguenti esercizi:
     * Si rifletta sul problema generale: dedurre la forma/formula di una funzione a partire da punti (e.g., coppie (x,y)). Un approccio è quello della cosiddetta [regression analysis](https://en.wikipedia.org/wiki/Regression_analysis), dove si considera una certa forma di funzione (ad es `ax+b` per una retta), e si cerca di trovare i valori dei parametri `a` e `b` che meglio corrispondano ai dati (*regressione lineare*).
     * Si provi, consultando la documentazione, ad applicare il modulo allo scopo di inferire il comportamento asintotico di funzioni implementate nei laboratori precedenti.
 
-![](imgs/functions.png)
 
 
 
