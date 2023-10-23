@@ -2,6 +2,48 @@
 
 I sorgenti indicati nelle istruzioni sono contenuti in `code-python/`.
 
+<!--
+
+## Lab 04: plotting
+
+1. *[Tempo stimato: 60']* Si utilizzi `matplotlib` per costruire un'immagine simile a quella sottostante
+    * Si faccia riferimento alle slide, al [cheatsheet](https://matplotlib.org/cheatsheets/cheatsheets.pdf), alla [guida](https://matplotlib.org/stable/users/explain/quick_start.html), e alla [API Reference](https://matplotlib.org/stable/api/index.html) 
+    * Si faccia anche riferimento agli esempi inclusi in [code-python/mpl/](code-python/mpl/)
+    * Alcune indicazioni:
+        * Si stabilisca un array di funzioni: `functions = [float, math.log, lambda n: n*math.log(n), ...]`
+        * Si usi `x_points = np.linspace(...)` per individuare i valori dell'asse `x` da produrre
+        * Si produca i punti da graficare per ogni funzione con qualcosa del tipo:
+        `y_points = np.array([some_function(x) for x in x_points])`
+        * Si plotti `plot(x_points, y_points)`
+        * Si può voler limitare l'asse y mediante la funzione `ylim(min,max)`
+    * Nota: la funzione [gamma](https://en.wikipedia.org/wiki/Gamma_function) è una generalizzazione del fattoriale su valori reali
+        * In Python: `math.gamma()`
+
+![](imgs/functions.png)
+
+-->
+
+
+## Lab 03: Misura dei tempi d'esecuzione di funzioni
+
+Si svolgano i seguenti esercizi:
+
+0. *[Tempo stimato: 15']* Consultare la pagina [TimeComplexity (python.org)](https://wiki.python.org/moin/TimeComplexity) che documenta la complessità in tempo di varie operazioni su strutture dati nell'implementazione Python `CPython`. Ci si concentri in particulare sulle operazioni su `list`e.
+    - Si noti come sia importante per chi programma in un linguaggio conoscere la complessità delle funzioni che utilizza.
+1. *[Tempo stimato: 30']* Si consideri `03-measure-fib.py`. Si misuri e si confronti il tempo d'esecuzione di `fib` (Fibonacci in versione ricorsiva) e `fib_iter` (Fibonacci in versione iterativa). Si utilizzino i *millisecondi* come unità di misura.
+    * Si definisca una funzione `measure_running_time(f)` che restituisca il tempo d'esecuzione della funzione `f` fornita in input e la si applichi a `fib` e `fib_iter` per input 10, 20, 30.
+        * Si implementi la funzione in due varianti: una usando `time.perf_counter()` e l'altra usando `timeit.repeat`
+    * Quale tra `fib` e `fib_iter` dà luogo a tempi d'esecuzione minori?
+2. *[Tempo stimato: 15']* Si consideri `03-profile-function.py`. Si utilizzi `cProfile` per profilare `function_to_be_profiled()`
+    * Qual è la parte più lenta di `function_to_be_profiled()`?
+4. *[Tempo stimato: 30']* Si legga la descrizione del progetto [`big-O`](https://pypi.org/project/big-O/)
+    * Si rifletta sul problema generale: dedurre la forma/formula di una funzione a partire da punti (e.g., coppie (x,y)). Un approccio è quello della cosiddetta [regression analysis](https://en.wikipedia.org/wiki/Regression_analysis), dove si considera una certa forma di funzione (ad es `ax+b` per una retta), e si cerca di trovare i valori dei parametri `a` e `b` che meglio corrispondano ai dati (*regressione lineare*).
+    * Si provi, consultando la documentazione, ad applicare il modulo allo scopo di inferire il comportamento asintotico di funzioni implementate nei laboratori precedenti.
+
+
+
+
+
 ## Lab 02: Ricorsione in Python
 
 1. [Tempo stimato: 60'] Studio sorgenti dati
