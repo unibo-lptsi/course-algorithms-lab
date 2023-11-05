@@ -12,9 +12,10 @@ def random_array(fromN, toN, n, seed = None):
     return [random.randint(fromN, toN) for i in range(n)]
 
 # tests
-for i in range(10):
-    input = random_array(0,100, 10 * i)
-    x = random.randint(0,100)
-    pos = linear_search(input, x)
-    print(f"---\nTEST {i}\n---\nINPUT: {input}\nElem to find: {x}\nOutput: {pos}\n")
+if __name__ == '__main__':
+    for i in range(10):
+        input = random_array(0,100, 10 * i)
+        x = random.randint(0,100)
+        pos = linear_search(input, x)
+        print(f"---\nTEST {i}\n---\nINPUT: {input}\nElem to find: {x}\nOutput: {pos}\n")
     

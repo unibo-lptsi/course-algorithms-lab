@@ -19,18 +19,22 @@ def binary_search_iter(array, x, start, to, eq = lambda x, y: x == y, less = lam
         else: to = m-1
     return -1
 
+def binary_search(array, x):
+    return binary_search_iter(array, x, 0, len(array)-1)
+
 def random_array(fromN, toN, n, seed = None):
     random.seed(seed)
     return [random.randint(fromN, toN) for i in range(n)]
 
 # tests
-for i in range(10):
-    input = random_array(0,100, 10 * i)
-    input.sort()
-    x = random.randint(0,100)
-    pos = binary_search_recur(input, x, 0, len(input)-1)
-    print(f"---\nTEST (rec) {i}\n---\nINPUT: {input}\nElem to find: {x}\nOutput: {pos}\n")
+if __name__ == '__main__':
+    for i in range(10):
+        input = random_array(0,100, 10 * i)
+        input.sort()
+        x = random.randint(0,100)
+        pos = binary_search_recur(input, x, 0, len(input)-1)
+        print(f"---\nTEST (rec) {i}\n---\nINPUT: {input}\nElem to find: {x}\nOutput: {pos}\n")
 
-    pos = binary_search_iter(input, x, 0, len(input)-1)
-    print(f"---\nTEST (iter) {i}\n---\nINPUT: {input}\nElem to find: {x}\nOutput: {pos}\n")
-    
+        pos = binary_search_iter(input, x, 0, len(input)-1)
+        print(f"---\nTEST (iter) {i}\n---\nINPUT: {input}\nElem to find: {x}\nOutput: {pos}\n")
+        

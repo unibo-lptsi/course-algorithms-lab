@@ -1,1 +1,3 @@
 lp-algorithms-venv/
+__pycache__/
+*.csv
