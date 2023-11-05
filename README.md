@@ -23,6 +23,19 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/`.
 
 -->
 
+## Lab 04: Algoritmi di ricerca (+ unit testing e csv)
+
+0. [Tempo stimato: 15'] Si osservi il codice d'esempio sull'uso di [`unittest`](https://docs.python.org/3/library/unittest.html) in [`code-python/testing`](code-python/testing).
+1. [Tempo stimato: 30'] Implementare in Python l'algoritmo di *ricerca lineare*
+    - Misurare i tempi dell'algoritmo su istanze di dimensione diversa
+    - [Opzionale] Testare l'algoritmo usando `unittest` (si scrivano i test in un modulo separato)
+    - NOTA: si cerchi di rendere il codice di misura dei tempi e di salvataggio su CSV riusabile
+2. [Tempo stimato: 45'] Implementare in Python l'algoritmo di *ricerca binaria*
+    - Misurare i tempi dell'algoritmo su istanze di dimensione diversa
+    - [Opzionale] Testare l'algoritmo usando `unittest` (si scrivano i test in un modulo separato)
+3. [Opzionale] Si tenga traccia dei tempi d'esecuzione degli algoritmi implementati nei punti precedenti per valori progressivi di `n` (dimensione dell'istanza) in un file CSV usando il modulo [`csv`](https://docs.python.org/3/library/csv.html)
+3. [Tempo stimato: 30'] Si implementi gli algoritmi precedenti (ricerca lineare e ricerca binaria) in modo ricorsivo
+
 
 ## Lab 03: Misura dei tempi d'esecuzione di funzioni
 
