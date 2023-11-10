@@ -1,12 +1,23 @@
 # Corso *Algoritmi e Strutture Dati*: Laboratorio
 
-I sorgenti indicati nelle istruzioni sono contenuti in `code-python/`.
+I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codice Python) e `code-c` (per codice C).
 
-<!--
 
-## Lab 04: plotting
+## Lab 05: Array dinamici (+ plotting con `matplotlib`)
 
-1. *[Tempo stimato: 60']* Si utilizzi `matplotlib` per costruire un'immagine simile a quella sottostante
+1. [Tempo stimato: 45'] Array dinamici
+    - Studiare il sorgente `dynamic_arrays.c`
+    - Completare il sorgente implementando le seguenti funzioni:
+        - `darray_resize_linear`: atta ad applicare un'espansione lineare della memoria dell'array dinamico
+        - `darray_append`: atta ad aggiungere alla fine dell'array un elemento (ridimensionando l'array)
+        - `darray_insert`: atta ad aggiungere alla posizione indicata un nuovo elemento (traslando opportunamenti quelli attualmente presenti)
+        - `darray_assert_equals`: atta a verificare con asserzioni che l'array dinamico indicato ha lo stesso contenuto dell'array "tradizionale" fornito
+    - Si noti la funzione di `test()` che viene invocata ed eseguita attivando le due modalità di espansione dell'array
+2. [Tempo stimato: 30'] Utilizzare `matplotlib` per graficare come evolve la capacità (memoria allocata) di un array dinamico utilizzando le due tecniche di espansione (lineare e geometrica).
+    - Parametrizzare il codice rispetto ai delta, fattori, soglie di crescita/contrazione
+    - Ovvero, si cerchi di riprodurre una figura tipo la seguente
+![](imgs/dynamic-array-capacity-growth.png)
+3. *[Tempo stimato: 30']* Si utilizzi `matplotlib` per costruire un'immagine simile a quella sottostante
     * Si faccia riferimento alle slide, al [cheatsheet](https://matplotlib.org/cheatsheets/cheatsheets.pdf), alla [guida](https://matplotlib.org/stable/users/explain/quick_start.html), e alla [API Reference](https://matplotlib.org/stable/api/index.html) 
     * Si faccia anche riferimento agli esempi inclusi in [code-python/mpl/](code-python/mpl/)
     * Alcune indicazioni:
@@ -16,23 +27,24 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/`.
         `y_points = np.array([some_function(x) for x in x_points])`
         * Si plotti `plot(x_points, y_points)`
         * Si può voler limitare l'asse y mediante la funzione `ylim(min,max)`
+        * Si usi `Axes#xscale("log")` per impostare una scala logaritmica sull'asse x 
     * Nota: la funzione [gamma](https://en.wikipedia.org/wiki/Gamma_function) è una generalizzazione del fattoriale su valori reali
         * In Python: `math.gamma()`
-
 ![](imgs/functions.png)
-
--->
 
 ## Lab 04: Algoritmi di ricerca (+ unit testing e csv)
 
 0. [Tempo stimato: 15'] Si osservi il codice d'esempio sull'uso di [`unittest`](https://docs.python.org/3/library/unittest.html) in [`code-python/testing`](code-python/testing).
 1. [Tempo stimato: 30'] Implementare in Python l'algoritmo di *ricerca lineare*
+    - Testare l'algoritmo 
+        - [Opzionale] Usando `unittest` (si scrivano i test in un modulo separato)
     - Misurare i tempi dell'algoritmo su istanze di dimensione diversa
-    - [Opzionale] Testare l'algoritmo usando `unittest` (si scrivano i test in un modulo separato)
-    - NOTA: si cerchi di rendere il codice di misura dei tempi e di salvataggio su CSV riusabile
+        - NOTA: per la misura dei tempi, si generino (in modo casuale) due categorie di istanze: (1) quelle del *caso medio*, dove l'elemento da trovare è casualmente individuato; e (2) quelle del *caso peggiore*, dove l'elemento da trovare è in posizione peggiore (o non presente).
+    - NOTA: si cerchi di rendere il codice di misura dei tempi (e di salvataggio su CSV -- vedi succ.) riusabile
 2. [Tempo stimato: 45'] Implementare in Python l'algoritmo di *ricerca binaria*
+    - Testare l'algoritmo 
+        - [Opzionale] Usando `unittest` (si scrivano i test in un modulo separato)
     - Misurare i tempi dell'algoritmo su istanze di dimensione diversa
-    - [Opzionale] Testare l'algoritmo usando `unittest` (si scrivano i test in un modulo separato)
 3. [Opzionale] Si tenga traccia dei tempi d'esecuzione degli algoritmi implementati nei punti precedenti per valori progressivi di `n` (dimensione dell'istanza) in un file CSV usando il modulo [`csv`](https://docs.python.org/3/library/csv.html)
 3. [Tempo stimato: 30'] Si implementi gli algoritmi precedenti (ricerca lineare e ricerca binaria) in modo ricorsivo
 
