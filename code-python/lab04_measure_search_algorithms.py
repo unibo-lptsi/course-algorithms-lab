@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
     ls_times_worst = measure(linear_search, worst_inputs, "LINEAR SEARCH (WORST)")
     # sort inputs for running binary_search
-    for input in average_inputs: input[0].sort()
+    for input in worst_inputs: input[0].sort()
     bs_times_worst = measure(binary_search, worst_inputs, "BINARY SEARCH (WORST)")
 
     data = [("lab04_ls_times_avg.csv", ls_times_avg), 
