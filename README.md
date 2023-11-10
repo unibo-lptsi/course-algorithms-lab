@@ -13,6 +13,7 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codic
         - `darray_insert`: atta ad aggiungere alla posizione indicata un nuovo elemento (traslando opportunamenti quelli attualmente presenti)
         - `darray_assert_equals`: atta a verificare con asserzioni che l'array dinamico indicato ha lo stesso contenuto dell'array "tradizionale" fornito
     - Si noti la funzione di `test()` che viene invocata ed eseguita attivando le due modalità di espansione dell'array
+    - Nota: si compili con `gcc -DDEBUG dynamic_arrays.c` per attivare log di debug e ispezionare il comportamento delle funzioni di riallocazione
 2. [Tempo stimato: 30'] Utilizzare `matplotlib` per graficare come evolve la capacità (memoria allocata) di un array dinamico utilizzando le due tecniche di espansione (lineare e geometrica).
     - Parametrizzare il codice rispetto ai delta, fattori, soglie di crescita/contrazione
     - Ovvero, si cerchi di riprodurre una figura tipo la seguente
