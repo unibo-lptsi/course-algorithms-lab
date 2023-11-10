@@ -16,7 +16,7 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codic
 2. [Tempo stimato: 30'] Utilizzare `matplotlib` per graficare come evolve la capacità (memoria allocata) di un array dinamico utilizzando le due tecniche di espansione (lineare e geometrica).
     - Parametrizzare il codice rispetto ai delta, fattori, soglie di crescita/contrazione
     - Ovvero, si cerchi di riprodurre una figura tipo la seguente
-![](imgs/capacity-growth.png)
+![](imgs/dynamic-array-capacity-growth.png)
 3. *[Tempo stimato: 30']* Si utilizzi `matplotlib` per costruire un'immagine simile a quella sottostante
     * Si faccia riferimento alle slide, al [cheatsheet](https://matplotlib.org/cheatsheets/cheatsheets.pdf), alla [guida](https://matplotlib.org/stable/users/explain/quick_start.html), e alla [API Reference](https://matplotlib.org/stable/api/index.html) 
     * Si faccia anche riferimento agli esempi inclusi in [code-python/mpl/](code-python/mpl/)
