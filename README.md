@@ -3,7 +3,7 @@
 I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codice Python) e `code-c` (per codice C).
 
 
-## Lab 05: Strutture dati di base (array dinamici, pile, code) (+ plotting con `matplotlib`)
+## Lab 05: Array dinamici (+ plotting con `matplotlib`)
 
 1. [Tempo stimato: 45'] Array dinamici
     - Studiare il sorgente `dynamic_arrays.c`
