@@ -1,12 +1,23 @@
 # Corso *Algoritmi e Strutture Dati*: Laboratorio
 
-I sorgenti indicati nelle istruzioni sono contenuti in `code-python/`.
+I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codice Python) e `code-c` (per codice C).
 
-<!--
 
-## Lab 04: plotting
+## Lab 05: Strutture dati di base (array dinamici, pile, code) (+ plotting con `matplotlib`)
 
-1. *[Tempo stimato: 60']* Si utilizzi `matplotlib` per costruire un'immagine simile a quella sottostante
+1. [Tempo stimato: 45'] Array dinamici
+    - Studiare il sorgente `dynamic_arrays.c`
+    - Completare il sorgente implementando le seguenti funzioni:
+        - `darray_resize_linear`: atta ad applicare un'espansione lineare della memoria dell'array dinamico
+        - `darray_append`: atta ad aggiungere alla fine dell'array un elemento (ridimensionando l'array)
+        - `darray_insert`: atta ad aggiungere alla posizione indicata un nuovo elemento (traslando opportunamenti quelli attualmente presenti)
+        - `darray_assert_equals`: atta a verificare con asserzioni che l'array dinamico indicato ha lo stesso contenuto dell'array "tradizionale" fornito
+    - Si noti la funzione di `test()` che viene invocata ed eseguita attivando le due modalità di espansione dell'array
+2. [Tempo stimato: 30'] Utilizzare `matplotlib` per graficare come evolve la capacità (memoria allocata) di un array dinamico utilizzando le due tecniche di espansione (lineare e geometrica).
+    - Parametrizzare il codice rispetto ai delta, fattori, soglie di crescita/contrazione
+    - Ovvero, si cerchi di riprodurre una figura tipo la seguente
+![](imgs/capacity-growth.png)
+3. *[Tempo stimato: 30']* Si utilizzi `matplotlib` per costruire un'immagine simile a quella sottostante
     * Si faccia riferimento alle slide, al [cheatsheet](https://matplotlib.org/cheatsheets/cheatsheets.pdf), alla [guida](https://matplotlib.org/stable/users/explain/quick_start.html), e alla [API Reference](https://matplotlib.org/stable/api/index.html) 
     * Si faccia anche riferimento agli esempi inclusi in [code-python/mpl/](code-python/mpl/)
     * Alcune indicazioni:
@@ -18,10 +29,7 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/`.
         * Si può voler limitare l'asse y mediante la funzione `ylim(min,max)`
     * Nota: la funzione [gamma](https://en.wikipedia.org/wiki/Gamma_function) è una generalizzazione del fattoriale su valori reali
         * In Python: `math.gamma()`
-
 ![](imgs/functions.png)
-
--->
 
 ## Lab 04: Algoritmi di ricerca (+ unit testing e csv)
 
