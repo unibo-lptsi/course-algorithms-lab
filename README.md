@@ -27,6 +27,7 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codic
         `y_points = np.array([some_function(x) for x in x_points])`
         * Si plotti `plot(x_points, y_points)`
         * Si può voler limitare l'asse y mediante la funzione `ylim(min,max)`
+        * Si usi `Axes#xscale("log")` per impostare una scala logaritmica sull'asse x 
     * Nota: la funzione [gamma](https://en.wikipedia.org/wiki/Gamma_function) è una generalizzazione del fattoriale su valori reali
         * In Python: `math.gamma()`
 ![](imgs/functions.png)
