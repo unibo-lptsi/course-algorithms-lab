@@ -29,6 +29,7 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codic
         * Si plotti `plot(x_points, y_points)`
         * Si può voler limitare l'asse y mediante la funzione `ylim(min,max)`
         * Si usi `Axes#xscale("log")` per impostare una scala logaritmica sull'asse x 
+        * Si usi `list(map(f,l))` per produrre una lista applicando `f` ad ogni elemento della lista `l` 
     * Nota: la funzione [gamma](https://en.wikipedia.org/wiki/Gamma_function) è una generalizzazione del fattoriale su valori reali
         * In Python: `math.gamma()`
 ![](imgs/functions.png)
