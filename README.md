@@ -2,6 +2,17 @@
 
 I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codice Python) e `code-c` (per codice C).
 
+## Lab 06: Hashtable 
+
+1. [Tempo stimato: 30'] Hashtable a indirizzamento chiuso (chained)
+    - Studiare il sorgente `hashtable-chained.c`
+    - Implementare una funzione `HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries)` che crei e inizializzi una hashtable con le entry fornite
+    - Implementare una funzione `HashTable *hashtable_merge(HashTable* h1, HashTable *h2)` che restituisca una nuova hashtable data dall'unione delle due tabelle hash fornite in input.
+    - Si scriva un test per verificare le funzioalità implementate.
+2. [Tempo stimato: 30'] Si copi il file `hashtable-chained.c` e si vada ad adattare il sorgente per utilizzare il tipo stringa `char*` per le chiavi.
+    - Occorre modificare la `typedef`, aggiustare implementazioni di funzioni, e definire una nuova funzione di `hash` (si faccia riferimento alle slide di teoria per un esempio di implementazione)
+2. [EXTRA - Tempo stimato: 90'] Prendendo spunto da `hashtable-chained.c` e da `dynamic-arrays.c`, implementare una hashtable a indirizzamento aperto.
+    - Si ricorda che una hashtable a indirizzamento aperto risolve le collisioni andando a occupare bucket successivi della tabella.
 
 ## Lab 05: Array dinamici (+ plotting con `matplotlib`)
 
@@ -13,6 +24,7 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codic
         - `darray_insert`: atta ad aggiungere alla posizione indicata un nuovo elemento (traslando opportunamenti quelli attualmente presenti)
         - `darray_assert_equals`: atta a verificare con asserzioni che l'array dinamico indicato ha lo stesso contenuto dell'array "tradizionale" fornito
     - Si noti la funzione di `test()` che viene invocata ed eseguita attivando le due modalità di espansione dell'array
+    - Nota: si compili con `gcc -DDEBUG dynamic_arrays.c` per attivare log di debug e ispezionare il comportamento delle funzioni di riallocazione
 2. [Tempo stimato: 30'] Utilizzare `matplotlib` per graficare come evolve la capacità (memoria allocata) di un array dinamico utilizzando le due tecniche di espansione (lineare e geometrica).
     - Parametrizzare il codice rispetto ai delta, fattori, soglie di crescita/contrazione
     - Ovvero, si cerchi di riprodurre una figura tipo la seguente
@@ -28,6 +40,7 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codic
         * Si plotti `plot(x_points, y_points)`
         * Si può voler limitare l'asse y mediante la funzione `ylim(min,max)`
         * Si usi `Axes#xscale("log")` per impostare una scala logaritmica sull'asse x 
+        * Si usi `list(map(f,l))` per produrre una lista applicando `f` ad ogni elemento della lista `l` 
     * Nota: la funzione [gamma](https://en.wikipedia.org/wiki/Gamma_function) è una generalizzazione del fattoriale su valori reali
         * In Python: `math.gamma()`
 ![](imgs/functions.png)
