@@ -179,7 +179,6 @@ unsigned int hashtable_hash(HashTable *h, TKey key);
 void hashtable_destroy(HashTable* h);
 void hashtable_insert(HashTable* h, TKey key, TValue val);
 void hashtable_delete(HashTable* h, TKey key);
-void hashtable_delete_value(HashTable* h, TKey key, TValue val);
 TValue *hashtable_search(HashTable* h, TKey key);
 int hashtable_search_value(HashTable* h, TValue val);
 int hashtable_search_keyvalue(HashTable* h, TKey key, TValue val);
@@ -250,16 +249,6 @@ void hashtable_delete(HashTable* ht, TKey key) {
     }
 }
 
-void hashtable_delete_value(HashTable* h, TKey key, TValue val) {
-    for(int i = 0; i < h->nbuckets; i++) {
-        if(h->bucket.item[i] &&
-            equal_key(h->bucket.item[i]->key, key) &&
-            equal_value(h->bucket.item[i]->value, val)) {
-            hashtable_delete(h, h->bucket.item[i]->key);
-        }
-    }
-}
-
 int hashtable_search_value(HashTable* h, TValue val) {
     for(int i = 0; i < h->nbuckets; i++) {
         if(h->bucket.item[i] && equal_value((*(h->bucket.item[i])).value, val)) {
@@ -308,8 +297,8 @@ int main(void) {
     printf("Is value 371 present? %s.\n", hashtable_search_value(h, 371) ? "yes" : "no");
     hashtable_delete(h, 4);
     hashtable_print(h, 0, "after removal of key 4 =");
-    hashtable_delete_value(h, 175, 55);
-    hashtable_print(h, 0, "after removal of element 55 =");
+    hashtable_delete(h, 175);
+    hashtable_print(h, 0, "after removal of key 175 =");
     hashtable_delete(h, 44);
     hashtable_insert(h, 5, 0);
     hashtable_print(h, 0, "after removal of 44 and insertion of (5,0) =");
