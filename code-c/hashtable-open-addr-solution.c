@@ -224,16 +224,27 @@ void hashtable_insert(HashTable* h, TKey key, TValue val) {
     unsigned int hash = hashtable_hash(h, key);
     if(!hashtable_search_keyvalue(h, key, val)) {
         int k = hash;
-        for(; h->bucket.item[k] != NULL || k == hash-1 % h->bucket.capacity; k = (k + 1) % h->bucket.capacity) ;  
+        for(; h->bucket.item[k] != NULL || k == (hash-1) % h->bucket.capacity; k = (k + 1) % h->bucket.capacity) ;  
         if(h->bucket.item[k] == NULL) h->bucket.item[k] = info;
     }
 }
 
 void hashtable_delete(HashTable* ht, TKey key) {
     unsigned int h = hashtable_hash(ht, key);
-    for(int i = h; i < ht->nbuckets; i++) {
+    int removed = -1;
+    for(int i = h; i != (h-1) % ht->nbuckets; i++) {
         if(ht->bucket.item[i] && equal_key((*(ht->bucket.item[i])).key, key)) {
+            removed = i;
             free(ht->bucket.item[i]);
+            ht->bucket.item[i] = NULL;
+            break;
+        }
+    }
+    if(removed >= 0) {
+        for(int i = (removed + 1) % ht->nbuckets; 
+            i != h && ht->bucket.item[i] && h == hashtable_hash(ht, (*(ht->bucket.item[i])).key); 
+            i = (i+1) % ht->nbuckets) {
+            ht->bucket.item[i-1] = ht->bucket.item[i];
             ht->bucket.item[i] = NULL;
         }
     }
@@ -259,17 +270,13 @@ int hashtable_search_value(HashTable* h, TValue val) {
 }
 
 int hashtable_search_keyvalue(HashTable* h, TKey key, TValue val) {
-    TInfo info = { key, val };
-    for(int i = 0; i < h->nbuckets; i++) {
-        if(h->bucket.item[i] && equal(*(h->bucket.item[i]), info)) {
-            return 1;
-        }
-    }
-    return 0;
+   TValue *v = hashtable_search(h, key);
+   return v != NULL && *v == val;
 }
 
 TValue *hashtable_search(HashTable* h, TKey key) {
-    for(int i = 0; i < h->nbuckets; i++) {
+    unsigned int hash = hashtable_hash(h, key);
+    for(int i = hash; i !=  (hash-1) % h->nbuckets; i = (i + 1) % h->nbuckets) {
         if(h->bucket.item[i] && equal_key((*(h->bucket.item[i])).key, key)) {
             return &(*(h->bucket.item[i])).value;
         }
@@ -309,5 +316,8 @@ int main(void) {
 
     HashTable *h2 = hashtable_init(10, (TInfo[]) { { 3, 7}, { 5, 8}, {6, 9}, { 33, 10 } }, 4);
     hashtable_print(h2, 0, "h2");
+    hashtable_delete(h2, 3);
+    hashtable_print(h2, 0, "h2 after removal of key 3");
+    printf("Is key 33 present? %s.\n", hashtable_search(h2, 33) ? "yes" : "no");
     return 0;
 }
