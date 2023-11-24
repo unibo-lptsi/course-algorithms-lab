@@ -2,6 +2,11 @@
 
 I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codice Python) e `code-c` (per codice C).
 
+## Lab 07: Algoritmi di ordinamento
+
+Si consideri il file `lab07_sorting_algorithms.py`. Include lo scheletro di un programma atto a testare e misurare i tempi d'esecuzione di 5 algoritmi di ordinamento (selection sort, insertion sort, bubble sort, merge sort, quick sort) da implementare.
+Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di difficoltà, alle slide viste a lezione e, in ultima istanza, allo pseudocodice mostrato).
+
 ## Lab 06: Hashtable 
 
 1. [Tempo stimato: 30'] Hashtable a indirizzamento chiuso (chained)
