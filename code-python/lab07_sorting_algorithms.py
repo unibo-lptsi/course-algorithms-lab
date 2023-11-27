@@ -1,6 +1,10 @@
 import unittest 
 import numpy as np
 import time
+import sys 
+
+sizes = [10,100,1000]
+sys.setrecursionlimit(max(sizes))
 
 def selection_sort(a):
     pass
@@ -45,7 +49,6 @@ class TestSortingAlgorithms(unittest.TestCase):
         """
         Test sorting on random lists of increasing size.
         """
-        sizes = [10,100,1000,10_000,100_000]
         for n in sizes:
             for f in sorting_algorithms:
                 with self.subTest(algo=f.__name__):
@@ -63,14 +66,12 @@ class TestSortingAlgorithms(unittest.TestCase):
         """
         Test sorting on sorted lists of increasing size (best case).
         """
-        sizes = [10,100,1000,10_000,100_000]
         for n in sizes:
             for f in sorting_algorithms:
                 with self.subTest(algo=f.__name__):
                     a = list(range(0,n))
                     expected = a.copy()
                     expected.sort() 
-                    a = a.tolist()
                     start_time = time.perf_counter()
                     f(a)
                     end_time = time.perf_counter()
@@ -82,14 +83,12 @@ class TestSortingAlgorithms(unittest.TestCase):
         """
         Test sorting on reverse-ordered lists of increasing size (worst case).
         """
-        sizes = [10,100,1000,10_000,100_000]
         for n in sizes:
             for f in sorting_algorithms:
                 with self.subTest(algo=f.__name__):
                     a = list(range(n,0,-1))
                     expected = a.copy()
                     expected.sort() 
-                    a = a.tolist()
                     start_time = time.perf_counter()
                     f(a)
                     end_time = time.perf_counter()
