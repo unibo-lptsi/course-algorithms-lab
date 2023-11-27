@@ -2,13 +2,20 @@
 
 I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codice Python) e `code-c` (per codice C).
 
+## Lab 07: Algoritmi di ordinamento
+<a name="lab07-sorting" />
+
+Si consideri il file `lab07_sorting_algorithms.py`. Include lo scheletro di un programma atto a testare e misurare i tempi d'esecuzione di 5 algoritmi di ordinamento (selection sort, insertion sort, bubble sort, merge sort, quick sort) da implementare.
+Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di difficoltà, alle slide viste a lezione e, in ultima istanza, allo pseudocodice mostrato).
+
 ## Lab 06: Hashtable 
+<a name="lab06-hashtable" />
 
 1. [Tempo stimato: 30'] Hashtable a indirizzamento chiuso (chained)
     - Studiare il sorgente `hashtable-chained.c`
     - Implementare una funzione `HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries)` che crei e inizializzi una hashtable con le entry fornite
     - Implementare una funzione `HashTable *hashtable_merge(HashTable* h1, HashTable *h2)` che restituisca una nuova hashtable data dall'unione delle due tabelle hash fornite in input.
-    - Si scriva un test per verificare le funzioalità implementate.
+    - Si scriva un test per verificare le funzionalità implementate.
 2. [Tempo stimato: 30'] Si copi il file `hashtable-chained.c` e si vada ad adattare il sorgente per utilizzare il tipo stringa `char*` per le chiavi.
     - Occorre modificare la `typedef`, aggiustare implementazioni di funzioni, e definire una nuova funzione di `hash` (si faccia riferimento alle slide di teoria per un esempio di implementazione)
 3. [EXTRA - Tempo stimato: 30'] Esercizio di realtà: esplorare l'implementazione della classe [java.util.HashMap](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/HashMap.java) e cercare di ritrovare concetti introdotti a lezione
@@ -16,6 +23,8 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codic
     - Si ricorda che una hashtable a indirizzamento aperto risolve le collisioni andando a occupare bucket successivi della tabella.
 
 ## Lab 05: Array dinamici (+ plotting con `matplotlib`)
+<a name="lab05-dynamic-arrays" />
+
 
 1. [Tempo stimato: 45'] Array dinamici
     - Studiare il sorgente `dynamic_arrays.c`
@@ -47,6 +56,8 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codic
 ![](imgs/functions.png)
 
 ## Lab 04: Algoritmi di ricerca (+ unit testing e csv)
+<a name="lab04-search" />
+
 
 0. [Tempo stimato: 15'] Si osservi il codice d'esempio sull'uso di [`unittest`](https://docs.python.org/3/library/unittest.html) in [`code-python/testing`](code-python/testing).
 1. [Tempo stimato: 30'] Implementare in Python l'algoritmo di *ricerca lineare*
@@ -64,6 +75,7 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codic
 
 
 ## Lab 03: Misura dei tempi d'esecuzione di funzioni
+<a name="lab03-time" />
 
 Si svolgano i seguenti esercizi:
 
@@ -84,6 +96,8 @@ Si svolgano i seguenti esercizi:
 
 
 ## Lab 02: Ricorsione in Python
+<a name="lab02-recursion" />
+
 
 1. [Tempo stimato: 60'] Studio sorgenti dati
     - `02-recursion-hanoi.py`: implementazione della soluzione ricorsiva al problema della Torre di Hanoi
@@ -98,6 +112,7 @@ Si svolgano i seguenti esercizi:
 
 
 ## Lab 01: Semplici algoritmi in Python
+<a name="lab01-simple-algorithms" />
 
 ISTRUZIONI: leggere attentamente i passi seguenti. Completare ogni passo prima di passare al successivo.
 

@@ -271,9 +271,8 @@ int hashtable_search_value(HashTable* h, TValue val) {
 }
 
 int hashtable_search_keyvalue(HashTable* h, TKey key, TValue val) {
-    TInfo info = { key = key, val = val };
-    TInfo *value_in_list = list_search(hashtable_list(h, key), info);
-    return value_in_list != NULL && equal(info, *value_in_list);
+    TValue *v = hashtable_search(h, key);
+    return v != NULL && *v == val;
 }
 
 TValue *hashtable_search(HashTable* h, TKey key) {
