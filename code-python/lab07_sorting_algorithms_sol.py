@@ -4,7 +4,7 @@ import time
 import sys
 
 sizes = [10,100,1000]
-sys.setrecursionlimit(max(sizes))
+sys.setrecursionlimit(2 * max(sizes))
 
 def selection_sort(a):
     sorted_idx = -1
