@@ -3,7 +3,8 @@ import numpy as np
 import time
 import sys
 
-sys.setrecursionlimit(5000)
+sizes = [10,100,1000]
+sys.setrecursionlimit(max(sizes))
 
 def selection_sort(a):
     sorted_idx = -1
@@ -119,7 +120,6 @@ class TestSortingAlgorithms(unittest.TestCase):
         """
         Test sorting on random lists of increasing size.
         """
-        sizes = [10,100,1000]
         for n in sizes:
             for f in sorting_algorithms:
                 with self.subTest(algo=f.__name__):
@@ -137,7 +137,6 @@ class TestSortingAlgorithms(unittest.TestCase):
         """
         Test sorting on sorted lists of increasing size (best case).
         """
-        sizes = [10,100,1000]
         for n in sizes:
             for f in sorting_algorithms:
                 with self.subTest(algo=f.__name__):
@@ -155,7 +154,6 @@ class TestSortingAlgorithms(unittest.TestCase):
         """
         Test sorting on reverse-ordered lists of increasing size (worst case).
         """
-        sizes = [10,100,1000]
         for n in sizes:
             for f in sorting_algorithms:
                 with self.subTest(algo=f.__name__):
