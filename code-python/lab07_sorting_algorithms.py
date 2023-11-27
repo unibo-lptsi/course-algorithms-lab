@@ -95,7 +95,7 @@ class TestSortingAlgorithms(unittest.TestCase):
                     start_time = time.perf_counter()
                     f(a)
                     end_time = time.perf_counter()
-                    print(f"Algorithm {f.__name__:20} on *sorted* array of {n:20} elements took: {end_time-start_time:20} s")
+                    print(f"Algorithm {f.__name__:20} on *reverse-sorted* array of {n:20} elements took: {end_time-start_time:20} s")
                     self.assertEqual(expected, a)
             print("---")
 
