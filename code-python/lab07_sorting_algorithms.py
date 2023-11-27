@@ -58,7 +58,7 @@ class TestSortingAlgorithms(unittest.TestCase):
                     start_time = time.perf_counter()
                     f(a)
                     end_time = time.perf_counter()
-                    print(f"Algorithm {f.__name__:20} on random array of {n:12} elements took: {end_time-start_time:20.2} ms")
+                    print(f"Algorithm {f.__name__:20} on random array of {n:12} elements took: {end_time-start_time:20.2} s")
                     self.assertEqual(expected, a)
             print("---")
 
@@ -75,7 +75,7 @@ class TestSortingAlgorithms(unittest.TestCase):
                     start_time = time.perf_counter()
                     f(a)
                     end_time = time.perf_counter()
-                    print(f"Algorithm {f.__name__:20} on *sorted* array of {n:20} elements took: {end_time-start_time:20} ms")
+                    print(f"Algorithm {f.__name__:20} on *sorted* array of {n:20} elements took: {end_time-start_time:20} s")
                     self.assertEqual(expected, a)
             print("---")
 
@@ -92,7 +92,7 @@ class TestSortingAlgorithms(unittest.TestCase):
                     start_time = time.perf_counter()
                     f(a)
                     end_time = time.perf_counter()
-                    print(f"Algorithm {f.__name__:20} on *sorted* array of {n:20} elements took: {end_time-start_time:20} ms")
+                    print(f"Algorithm {f.__name__:20} on *sorted* array of {n:20} elements took: {end_time-start_time:20} s")
                     self.assertEqual(expected, a)
             print("---")
 
