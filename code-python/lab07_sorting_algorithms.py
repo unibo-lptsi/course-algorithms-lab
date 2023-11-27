@@ -50,11 +50,12 @@ class TestSortingAlgorithms(unittest.TestCase):
         Test sorting on random lists of increasing size.
         """
         for n in sizes:
+            arr = np.random.randint(0, 1_000_000, n)
+            expected = np.sort(arr).tolist() # return a sorted copy
+            arr = arr.tolist()
             for f in sorting_algorithms:
                 with self.subTest(algo=f.__name__):
-                    a = np.random.randint(0, 1_000_000, n)
-                    expected = np.sort(a).tolist() # return a sorted copy
-                    a = a.tolist()
+                    a = arr.copy()
                     start_time = time.perf_counter()
                     f(a)
                     end_time = time.perf_counter()
@@ -67,11 +68,12 @@ class TestSortingAlgorithms(unittest.TestCase):
         Test sorting on sorted lists of increasing size (best case).
         """
         for n in sizes:
+            arr = list(range(0,n))
+            expected = arr.copy()
+            expected.sort() 
             for f in sorting_algorithms:
                 with self.subTest(algo=f.__name__):
-                    a = list(range(0,n))
-                    expected = a.copy()
-                    expected.sort() 
+                    a = arr.copy()
                     start_time = time.perf_counter()
                     f(a)
                     end_time = time.perf_counter()
@@ -84,11 +86,12 @@ class TestSortingAlgorithms(unittest.TestCase):
         Test sorting on reverse-ordered lists of increasing size (worst case).
         """
         for n in sizes:
+            arr = list(range(n,0,-1))
+            expected = arr.copy()
+            expected.sort() 
             for f in sorting_algorithms:
                 with self.subTest(algo=f.__name__):
-                    a = list(range(n,0,-1))
-                    expected = a.copy()
-                    expected.sort() 
+                    a = arr.copy()
                     start_time = time.perf_counter()
                     f(a)
                     end_time = time.perf_counter()
