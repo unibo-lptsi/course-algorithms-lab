@@ -86,7 +86,7 @@ class TestSortingAlgorithms(unittest.TestCase):
         for n in sizes:
             for f in sorting_algorithms:
                 with self.subTest(algo=f.__name__):
-                    a = list(range(n,0))
+                    a = list(range(n,0,-1))
                     expected = a.copy()
                     expected.sort() 
                     a = a.tolist()
