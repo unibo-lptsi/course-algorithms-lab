@@ -10,11 +10,15 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codic
     * Si implementino le funzioni:
         * `bfv` (visita in ampiezza)
         * `dfv` (visita in profondità)
-        * `dijkstra` (cammini di costo minimo)
+        * `dijkstra` (annotazione grafo per cammini di costo minimo da un nodo sorgente)
+        * `shortest_path` (produzione del cammino di costo minimo da un grafo annotato con Dijkstra)
 2. Si consideri il file `binary-trees.c`. Viene data un'implementazione degli alberi binari.
     * Si studi il sorgente fornito: si osservi la definizione della struttura dati, e le implementazioni delle funzioni fornite (ad es. per creare, distruggere, o stampare alberi). 
     * Si implementino le seguenti funzioni: 
-        * TODO
+        * `binarytree_init`: inizializza un btree con l'array di valori dato
+        * `binarytree_visit_postorder`: effettua la visita in profondità post-ordine (nodo corrente dopo i sottoalberi)
+        * `binarytree_height`: calcola l'altezza di un btree
+        * `binarytree_count_leaves`: conta quante foglie sono presenti in un btree
 
 ## Lab 07: Algoritmi di ordinamento
 <a name="lab07-sorting" />
