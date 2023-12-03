@@ -2,6 +2,20 @@
 
 I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codice Python) e `code-c` (per codice C).
 
+## Lab 08: Grafi e Alberi
+<a name="lab07-sorting" />
+
+1. Si consideri il file `lab08_graphs.py`. Viene dato un grafo. 
+    * Si studi il sorgente fornito: si osservi come viene creato il grafo, e come è strutturata la funzione che si occupa di plottarlo.
+    * Si implementino le funzioni:
+        * `bfv` (visita in ampiezza)
+        * `dfv` (visita in profondità)
+        * `dijkstra` (cammini di costo minimo)
+2. Si consideri il file `binary-trees.c`. Viene data un'implementazione degli alberi binari.
+    * Si studi il sorgente fornito: si osservi la definizione della struttura dati, e le implementazioni delle funzioni fornite (ad es. per creare, distruggere, o stampare alberi). 
+    * Si implementino le seguenti funzioni: 
+        * TODO
+
 ## Lab 07: Algoritmi di ordinamento
 <a name="lab07-sorting" />
 
