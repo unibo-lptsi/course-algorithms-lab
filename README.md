@@ -6,8 +6,9 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codic
 
 <a name="lab08-graphs"></a>
 
-1. Si consideri il file [`lab08_graphs.py`](code-python/lab08_graphs.py). Viene dato un grafo. 
+1. Si consideri il file [`lab08_graphs.py`](code-python/lab08_graphs.py). Viene dato un grafo, creato mediante la libreria **NetworkX**. 
     * Si studi il sorgente fornito: si osservi come viene creato il grafo, e come è strutturata la funzione che si occupa di plottarlo.
+        * Si faccia riferimento all [documentazione di NetworkX](https://networkx.org/documentation/stable/reference/index.html)
     * Si implementino le funzioni:
         * `bfv` (visita in ampiezza)
         * `dfv` (visita in profondità)
