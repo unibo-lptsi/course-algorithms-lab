@@ -105,7 +105,11 @@ void binarytree_print_preorder(TBinaryTree tree, int level) {
 }
 
 void binarytree_visit_postorder(TBinaryTree tree, void (*f)(TInfo)) {
-    // TODO: implement this
+    if(tree != NULL) {
+        binarytree_visit_postorder(tree->left, f);
+        binarytree_visit_postorder(tree->right, f);
+        f(tree->info);
+    }
 }
 
 TBinaryTree binarytree_insert(TBinaryTree tree, TInfo info) {
@@ -158,8 +162,11 @@ TBinaryTree binarytree_delete(TBinaryTree tree, TInfo info) {
 }
 
 TBinaryTree binarytree_init(TInfo* entries, int nentries) {
-    return NULL;
-    // TODO: implement this
+    TBinaryTree t = NULL;
+    for(int i = 0; i < nentries; i++) {
+        t = binarytree_insert(t, entries[i]);
+    }
+    return t;
 }
 
 int binarytree_sum(TBinaryTree tree) {
@@ -178,7 +185,10 @@ void print_node(TInfo i) {
 }
 
 int binarytree_height(TBinaryTree tree) {
-    return -1;
+    if(binarytree_is_empty(tree)) return -1;
+    int hleft = binarytree_height(tree->left);
+    int hright = binarytree_height(tree->right);
+    return hleft >= hright ? hleft + 1 : hright + 1;
 }
 
 int binarytree_count_nodes(TBinaryTree tree) {
@@ -189,7 +199,9 @@ int binarytree_count_nodes(TBinaryTree tree) {
 }
 
 int binarytree_count_leaves(TBinaryTree tree) {
-    return -1;
+    if(!tree) return 0;
+    if(!tree->left && !tree->right) return 1;
+    return binarytree_count_leaves(tree->left) + binarytree_count_leaves(tree->right);
 }
 
 int main() {
