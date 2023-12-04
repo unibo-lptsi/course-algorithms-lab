@@ -3,7 +3,8 @@
 I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codice Python) e `code-c` (per codice C).
 
 ## Lab 08: Grafi e Alberi
-<a name="lab07-sorting" />
+
+<a name="lab08-graphs" />
 
 1. Si consideri il file `lab08_graphs.py`. Viene dato un grafo. 
     * Si studi il sorgente fornito: si osservi come viene creato il grafo, e come è strutturata la funzione che si occupa di plottarlo.
