@@ -4,7 +4,7 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codic
 
 ## Lab 08: Grafi e Alberi
 
-<a name="lab08-graphs" />
+<a name="lab08-graphs"></a>
 
 1. Si consideri il file `lab08_graphs.py`. Viene dato un grafo. 
     * Si studi il sorgente fornito: si osservi come viene creato il grafo, e come è strutturata la funzione che si occupa di plottarlo.
@@ -22,13 +22,13 @@ I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codic
         * `binarytree_count_leaves`: conta quante foglie sono presenti in un btree
 
 ## Lab 07: Algoritmi di ordinamento
-<a name="lab07-sorting" />
+<a name="lab07-sorting"></a>
 
 Si consideri il file `lab07_sorting_algorithms.py`. Include lo scheletro di un programma atto a testare e misurare i tempi d'esecuzione di 5 algoritmi di ordinamento (selection sort, insertion sort, bubble sort, merge sort, quick sort) da implementare.
 Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di difficoltà, alle slide viste a lezione e, in ultima istanza, allo pseudocodice mostrato).
 
 ## Lab 06: Hashtable 
-<a name="lab06-hashtable" />
+<a name="lab06-hashtable"></a>
 
 1. [Tempo stimato: 30'] Hashtable a indirizzamento chiuso (chained)
     - Studiare il sorgente `hashtable-chained.c`
@@ -42,7 +42,7 @@ Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di di
     - Si ricorda che una hashtable a indirizzamento aperto risolve le collisioni andando a occupare bucket successivi della tabella.
 
 ## Lab 05: Array dinamici (+ plotting con `matplotlib`)
-<a name="lab05-dynamic-arrays" />
+<a name="lab05-dynamic-arrays"></a>
 
 
 1. [Tempo stimato: 45'] Array dinamici
@@ -75,7 +75,7 @@ Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di di
 ![](imgs/functions.png)
 
 ## Lab 04: Algoritmi di ricerca (+ unit testing e csv)
-<a name="lab04-search" />
+<a name="lab04-search"></a>
 
 
 0. [Tempo stimato: 15'] Si osservi il codice d'esempio sull'uso di [`unittest`](https://docs.python.org/3/library/unittest.html) in [`code-python/testing`](code-python/testing).
@@ -94,7 +94,7 @@ Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di di
 
 
 ## Lab 03: Misura dei tempi d'esecuzione di funzioni
-<a name="lab03-time" />
+<a name="lab03-time"></a>
 
 Si svolgano i seguenti esercizi:
 
@@ -115,7 +115,7 @@ Si svolgano i seguenti esercizi:
 
 
 ## Lab 02: Ricorsione in Python
-<a name="lab02-recursion" />
+<a name="lab02-recursion"></a>
 
 
 1. [Tempo stimato: 60'] Studio sorgenti dati
@@ -131,7 +131,7 @@ Si svolgano i seguenti esercizi:
 
 
 ## Lab 01: Semplici algoritmi in Python
-<a name="lab01-simple-algorithms" />
+<a name="lab01-simple-algorithms"></a>
 
 ISTRUZIONI: leggere attentamente i passi seguenti. Completare ogni passo prima di passare al successivo.
 
