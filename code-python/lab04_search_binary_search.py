@@ -2,7 +2,7 @@ import random
 # import timeit
 
 def binary_search_recur(array, x, start, to, eq = lambda x, y: x == y, less = lambda x, y: x < y):
-    if start - to == 0 or to < start: return -1
+    if to < start: return -1
     if start == to:
         return start if eq(array[start], x)  else -1
     mid = start + (to - start)//2
