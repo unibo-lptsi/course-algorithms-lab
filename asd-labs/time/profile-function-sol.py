@@ -25,6 +25,7 @@ def function_to_be_profiled(max):
 for n in (100, 1000):
     print(f"### Profiling for n={n} ###\n")
     
+    # note: use Python >= 3.8 (cf. https://github.com/mCodingLLC/VideosSampleCode/issues/5)
     with cProfile.Profile() as pf:
         function_to_be_profiled(n)
 
