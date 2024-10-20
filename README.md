@@ -100,7 +100,7 @@ Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di di
 -->
 
 
-## Lab `labs-asd-time` (2024-10-21): Misura dei tempi d'esecuzione di funzioni
+## Lab `time` (2024-10-21): Misura dei tempi d'esecuzione di funzioni
 <a name="lab-time"></a>
 
 Si svolgano i seguenti esercizi:
