@@ -8,7 +8,7 @@ typedef struct SNode {
     struct SNode *left;
     struct SNode *right;
 } TNode;
-typedef TNode* TBinaryTree;
+typedef TNode* TBTree;
 
 bool equal(TInfo a, TInfo b) {
     return a == b;
@@ -23,22 +23,22 @@ TNode *node_create(TInfo value);
 void node_destroy(TNode* node);
 
 // Creation and destruction of btrees
-TBinaryTree binarytree_create();
-TBinaryTree binarytree_destroy();
+TBTree binarytree_create();
+TBTree binarytree_destroy();
 
 // Operations on btrees
-void binarytree_visit(TBinaryTree tree, void (*f)(TInfo));
-void binarytree_visit_preorder(TBinaryTree tree, void (*f)(TInfo));
-void binarytree_visit_postorder(TBinaryTree tree, void (*f)(TInfo));
-TNode *binarytree_search(TBinaryTree tree, TInfo value);
-TNode *binarytree_search(TBinaryTree tree, TInfo value);
-TBinaryTree binarytree_insert(TBinaryTree tree, TInfo info);
-TBinaryTree binarytree_delete(TBinaryTree tree, TInfo info);
-bool binarytree_is_empty(TBinaryTree tree);
-int binarytree_height(TBinaryTree tree);
-int binarytree_sum(TBinaryTree tree);
-int binarytree_count_nodes(TBinaryTree tree);
-int binarytree_count_leaves(TBinaryTree tree);
+void binarytree_visit(TBTree tree, void (*f)(TInfo));
+void binarytree_visit_preorder(TBTree tree, void (*f)(TInfo));
+void binarytree_visit_postorder(TBTree tree, void (*f)(TInfo));
+TNode *binarytree_search(TBTree tree, TInfo value);
+TNode *binarytree_search(TBTree tree, TInfo value);
+TBTree binarytree_insert(TBTree tree, TInfo info);
+TBTree binarytree_delete(TBTree tree, TInfo info);
+bool binarytree_is_empty(TBTree tree);
+int binarytree_height(TBTree tree);
+int binarytree_sum(TBTree tree);
+int binarytree_count_nodes(TBTree tree);
+int binarytree_count_leaves(TBTree tree);
 
 TNode *node_create(TInfo value) {
     TNode *node = (TNode*) malloc(sizeof(TNode));
@@ -53,11 +53,11 @@ void node_destroy(TNode* node) {
 }
 
 /* Returns an empty binary tree */
-TBinaryTree binarytree_create() {
+TBTree binarytree_create() {
     return NULL;
 }
 
-TBinaryTree binarytree_destroy(TBinaryTree tree) {
+TBTree binarytree_destroy(TBTree tree) {
     if(tree != NULL) {
         tree->left = binarytree_destroy(tree->left);
         tree->right = binarytree_destroy(tree->right);
@@ -67,7 +67,7 @@ TBinaryTree binarytree_destroy(TBinaryTree tree) {
 }
 
 // Operations on btrees
-void binarytree_visit(TBinaryTree tree, void (*f)(TInfo)) {
+void binarytree_visit(TBTree tree, void (*f)(TInfo)) {
     if(tree != NULL) {
         binarytree_visit(tree->left, f);
         f(tree->info);
@@ -75,7 +75,7 @@ void binarytree_visit(TBinaryTree tree, void (*f)(TInfo)) {
     }
 }
 
-void binarytree_visit_preorder(TBinaryTree tree, void (*f)(TInfo)) {
+void binarytree_visit_preorder(TBTree tree, void (*f)(TInfo)) {
     if(tree != NULL) {
         f(tree->info);
         binarytree_visit_preorder(tree->left, f);
@@ -92,7 +92,7 @@ char *spacing(int level, char* s) {
     return s;
 }
 
-void binarytree_print_preorder(TBinaryTree tree, int level) {
+void binarytree_print_preorder(TBTree tree, int level) {
     if(tree != NULL) {
         char c[200];
         printf("[%d]", tree->info);
@@ -104,7 +104,7 @@ void binarytree_print_preorder(TBinaryTree tree, int level) {
     }
 }
 
-void binarytree_visit_postorder(TBinaryTree tree, void (*f)(TInfo)) {
+void binarytree_visit_postorder(TBTree tree, void (*f)(TInfo)) {
     if(tree != NULL) {
         binarytree_visit_postorder(tree->left, f);
         binarytree_visit_postorder(tree->right, f);
@@ -112,7 +112,7 @@ void binarytree_visit_postorder(TBinaryTree tree, void (*f)(TInfo)) {
     }
 }
 
-TBinaryTree binarytree_insert(TBinaryTree tree, TInfo info) {
+TBTree binarytree_insert(TBTree tree, TInfo info) {
     if(tree == NULL) {
         return node_create(info);
     } else {
@@ -125,21 +125,21 @@ TBinaryTree binarytree_insert(TBinaryTree tree, TInfo info) {
     }
 }
 
-TNode *binarytree_search(TBinaryTree tree, TInfo value) {
+TNode *binarytree_search(TBTree tree, TInfo value) {
     if(tree == NULL || equal(value, tree->info)) return tree;
     return binarytree_search(less(value, tree->info) ? tree->left : tree->right, value);
 }
 
-TNode *binarytree_search_min(TBinaryTree tree) {
+TNode *binarytree_search_min(TBTree tree) {
     if(tree == NULL || tree->left == NULL) return tree;
     return binarytree_search_min(tree->left);
 }
 
-TBinaryTree binarytree_delete(TBinaryTree tree, TInfo info) {
+TBTree binarytree_delete(TBTree tree, TInfo info) {
     if(tree == NULL) return tree;
     if(equal(tree->info, info)) {
         if (tree->left != NULL && tree->right != NULL) {
-            TBinaryTree min = binarytree_search_min(tree->right);
+            TBTree min = binarytree_search_min(tree->right);
             tree->info = min->info;
             tree->right = binarytree_delete(min->right, min->info);
             return tree;
@@ -147,7 +147,7 @@ TBinaryTree binarytree_delete(TBinaryTree tree, TInfo info) {
             node_destroy(tree);
             return NULL;
         } else {
-            TBinaryTree result = tree->left ? tree->left : tree->right;
+            TBTree result = tree->left ? tree->left : tree->right;
             node_destroy(tree);
             return result;
         }
@@ -161,22 +161,22 @@ TBinaryTree binarytree_delete(TBinaryTree tree, TInfo info) {
     }
 }
 
-TBinaryTree binarytree_init(TInfo* entries, int nentries) {
-    TBinaryTree t = NULL;
+TBTree binarytree_init(TInfo* entries, int nentries) {
+    TBTree t = NULL;
     for(int i = 0; i < nentries; i++) {
         t = binarytree_insert(t, entries[i]);
     }
     return t;
 }
 
-int binarytree_sum(TBinaryTree tree) {
+int binarytree_sum(TBTree tree) {
     if(!tree) return 0;
     int sum_left = binarytree_sum(tree->left);
     int sum_right = binarytree_sum(tree->right);
     return tree->info + sum_left + sum_right;
 }
 
-bool binarytree_is_empty(TBinaryTree tree) {
+bool binarytree_is_empty(TBTree tree) {
     return tree == NULL;
 }
 
@@ -184,28 +184,28 @@ void print_node(TInfo i) {
     printf("(%d)", i);
 }
 
-int binarytree_height(TBinaryTree tree) {
+int binarytree_height(TBTree tree) {
     if(binarytree_is_empty(tree)) return -1;
     int hleft = binarytree_height(tree->left);
     int hright = binarytree_height(tree->right);
     return hleft >= hright ? hleft + 1 : hright + 1;
 }
 
-int binarytree_count_nodes(TBinaryTree tree) {
+int binarytree_count_nodes(TBTree tree) {
     if(!tree) return 0;
     int nnodes_left = binarytree_count_nodes(tree->left);
     int nnodes_right = binarytree_count_nodes(tree->right);
     return 1 + nnodes_left + nnodes_right;
 }
 
-int binarytree_count_leaves(TBinaryTree tree) {
+int binarytree_count_leaves(TBTree tree) {
     if(!tree) return 0;
     if(!tree->left && !tree->right) return 1;
     return binarytree_count_leaves(tree->left) + binarytree_count_leaves(tree->right);
 }
 
 int main() {
-    TBinaryTree tree = binarytree_insert(NULL, 10);
+    TBTree tree = binarytree_insert(NULL, 10);
     tree = binarytree_insert(tree, 7);
     tree = binarytree_insert(tree, 15);
     tree = binarytree_insert(tree, 3);
@@ -246,7 +246,7 @@ int main() {
     binarytree_destroy(tree);
 
     puts("\nNuovo BST (creazione semplificata):");
-    TBinaryTree t2 = binarytree_init((TInfo[]) { 5, 2, 8, 0, 6, 4, 10 }, 7); 
+    TBTree t2 = binarytree_init((TInfo[]) { 5, 2, 8, 0, 6, 4, 10 }, 7); 
     binarytree_print_preorder(t2, 0);
     puts("");
     printf("L'albero ha altezza %d.\n", binarytree_height(t2));
