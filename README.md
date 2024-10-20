@@ -103,7 +103,7 @@ Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di di
 ## Lab `time` (2024-10-21): Misura dei tempi d'esecuzione di funzioni
 <a name="lab-time"></a>
 
-Si svolgano i seguenti esercizi:
+Consultando le slide sulla misura dei tempi d'esecuzione in Python, si svolgano i seguenti esercizi:
 
 0. *[Tempo stimato: 15']* Consultare la pagina [TimeComplexity (python.org)](https://wiki.python.org/moin/TimeComplexity) che documenta la complessità in tempo di varie operazioni su strutture dati nell'implementazione Python `CPython`. Ci si concentri in particulare sulle operazioni su `list`.
     - Si noti come sia importante per chi programma in un linguaggio conoscere la complessità delle funzioni che utilizza.
