@@ -105,9 +105,14 @@ Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di di
 
 Consultando le slide sulla misura dei tempi d'esecuzione in Python, si svolgano i seguenti esercizi:
 
-0. *[Tempo stimato: 15']* Consultare la pagina [TimeComplexity (python.org)](https://wiki.python.org/moin/TimeComplexity) che documenta la complessità in tempo di varie operazioni su strutture dati nell'implementazione Python `CPython`. Ci si concentri in particulare sulle operazioni su `list`.
-    - Si noti come sia importante per chi programma in un linguaggio conoscere la complessità delle funzioni che utilizza.
-    - Più avanti nel corso vedremo queste strutture dati e capiremo da dove vengono fuori questi upper bound all'efficienza asintotica
+0. *[Tempo stimato: 15']* Riscaldamento (`pow.py`): Implementare `pow(a,n)` (elevamento a potenza) in modo *ricorsivo*
+    - Considerare l'approccio divide-et-impera, basato su tre fasi (divide, impera, combine)
+    - Per verificare la correttezza della soluzione, prevedere alcuni test automatici (riusando `math.pow` ed eventualmente `math.isclose` per gestire confronto fra numeri floating point)
+    - Rispondere alla domanda: la funzione ricorsiva implementata di quale tipologia di ricorsione è? E' tail recursive?
+    - Una lista di tuple rappresentanti diversi test case può essere generata comodamente come segue:
+```
+pow_tests = [((a, n), math.pow(a, n)) for a, n in [(0,5), (5,0), (3,3), (2,8), (2,-3)]]
+```
 1. *[Tempo stimato: 30']* Si consideri **`measure-fib.py`**. Si misuri e si confronti il tempo d'esecuzione di `fib` (Fibonacci in versione ricorsiva) e `fib_iter` (Fibonacci in versione iterativa). Si utilizzino i *millisecondi* come unità di misura.
     * Si definisca una funzione `measure_running_time(f)` che restituisca il tempo d'esecuzione della funzione `f` fornita in input e la si applichi a `fib` e `fib_iter` per input 10, 20, 30.
         * Si implementi la funzione in due varianti: una usando `time.perf_counter()` e l'altra usando `timeit.repeat`
@@ -137,6 +142,9 @@ Consultando le slide sulla misura dei tempi d'esecuzione in Python, si svolgano 
         1    0.000    0.000    0.000    0.000 {built-in method builtins.print}
         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
 ```
+3. *[Tempo stimato: 10']* Consultare la pagina [TimeComplexity (python.org)](https://wiki.python.org/moin/TimeComplexity) che documenta la complessità in tempo di varie operazioni su strutture dati nell'implementazione Python `CPython`. Ci si concentri in particulare sulle operazioni su `list`.
+    - Si noti come sia importante per chi programma in un linguaggio conoscere la complessità delle funzioni che utilizza.
+    - Più avanti nel corso vedremo queste strutture dati e capiremo da dove vengono fuori questi upper bound all'efficienza asintotica
 4. *[Tempo stimato: 30']* Si legga la descrizione del progetto [`big-O`](https://pypi.org/project/big-O/)
     * Si rifletta sul problema generale: dedurre la forma/formula di una funzione a partire da punti (e.g., coppie (x,y)). Un approccio è quello della cosiddetta [regression analysis](https://en.wikipedia.org/wiki/Regression_analysis), dove si considera una certa forma di funzione (ad es `ax+b` per una retta), e si cerca di trovare i valori dei parametri `a` e `b` che meglio corrispondano ai dati (*regressione lineare*).
     * Completamento di **`bigo-fib.py`**: si provi, consultando la documentazione, ad applicare il modulo allo scopo di inferire il comportamento asintotico di Fibonacci in versione ricorsiva ed iterativa.
