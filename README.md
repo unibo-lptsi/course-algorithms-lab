@@ -90,8 +90,8 @@ Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di di
 Parte `plotting`
 
 1. *[Tempo stimato: 45']* Si utilizzi `matplotlib` per costruire un'immagine simile a quella sottostante
-    * Si faccia riferimento alle slide, al [cheatsheet](https://matplotlib.org/cheatsheets/cheatsheets.pdf), alla [guida](https://matplotlib.org/stable/users/explain/quick_start.html), e alla [API Reference](https://matplotlib.org/stable/api/index.html) 
-    * Si faccia anche riferimento agli **esempi** inclusi in [code-python/mpl/](code-python/mpl/)
+    * Si faccia riferimento alle slide, al notebook in `notebooks/matplotlib.ipynb`, agli **esempi** inclusi in [code-python/mpl/](code-python/mpl/)
+        * oltre che al [cheatsheet](https://matplotlib.org/cheatsheets/cheatsheets.pdf), alla [guida](https://matplotlib.org/stable/users/explain/quick_start.html), e alla [API Reference](https://matplotlib.org/stable/api/index.html) 
     * Alcune indicazioni:
         * Si può stabilire una lista di funzioni da graficare con: `functions = [float, math.log, lambda n: n*math.log(n), ...]`
         * Si può usare `x_points = np.linspace(...)` per individuare i valori dell'asse `x` da produrre
