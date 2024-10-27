@@ -3,6 +3,12 @@
 * Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`** 
 * Le soluzioni sono incluse assieme agli esercizi, con suffisso **`-sol`**
 
+## Lab `plotting` + `recursion` (2024-10-28): Grafici di funzioni ed esercizi sulla ricorsione
+
+- `plotting_functions_of_n.py`: using NumPy and MatPlotLib
+- `recursion-sol.py`:
+    - note how test specification and execution is promoted by custom function `test`
+
 ## Lab `time` (2024-10-21): Misura dei tempi d'esecuzione di funzioni
 <a name="lab-time"></a>
 
