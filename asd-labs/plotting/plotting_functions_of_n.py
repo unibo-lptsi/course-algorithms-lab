@@ -33,7 +33,7 @@ for f in range(len(functions)):
     axes.plot(X,y,label=funs_labels[f])
 
 axes.legend(loc='upper left')
-os.mkdir("./gen")
+os.makedirs("./gen", exist_ok=True)
 plt.savefig('./gen/functions.pdf',bbox_inches='tight', pad_inches = 0, format='pdf')
 plt.show()
 
