@@ -87,7 +87,9 @@ Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di di
 
 ## Lab `plotting` + `recursion` (2024-10-28): Grafici di funzioni ed esercizi sulla ricorsione
 
-Parte `plotting`
+#### Parte `plotting`
+
+Razionale/obiettivo: acquisire familiarità con funzioni di diverse classi di complessità, e imparare a graficare dati per ottenere rappresentazioni utili allo studio e all'indagine.
 
 1. *[Tempo stimato: 45']* Si utilizzi `matplotlib` per costruire un'immagine simile a quella sottostante
     * Si faccia riferimento alle slide, al notebook in `notebooks/matplotlib.ipynb`, agli **esempi** inclusi in [code-python/mpl/](code-python/mpl/)
@@ -100,11 +102,14 @@ Parte `plotting`
         * Si può plottare con `plot(x_points, y_points)`
         * Si può voler limitare l'asse y mediante la funzione `ylim(min,max)`
         * Si può usare `Axes#xscale("log")` per impostare una scala logaritmica sull'asse x 
-        * Si può usare `list(map(f,l))` per produrre una lista applicando `f` ad ogni elemento della lista `l` 
+        * Si pul usare `Axes#text(x,y,s)` per posizionare un'etichetta con testo `s` al punto `(x,y)` del grafico
+        * Si può usare `list(map(f,l))` per produrre una lista applicando `f` ad ogni elemento della lista `l`. Un'alternativa con NumPy potrebbe essere: usare `fvec = np.vectorize(f)` per ottenere una funzione `fvec` che usi `f` per lavorare su array in modo member-wise (cf. broadcasting).
         * Al posto della funzione fattoriale, si può considerare la funzione [gamma](https://en.wikipedia.org/wiki/Gamma_function), che è una generalizzazione del fattoriale su valori reali. In Python: `math.gamma()`
 ![](imgs/functions.png)
 
-Parte `recursion`:
+#### Parte `recursion`
+
+Razionale/obiettivo: acquisire familiarità con la ricorsione.
 
 2. [Tempo stimato: 30'] Studio sorgenti dati
     - `02-recursion-hanoi.py`: implementazione della soluzione ricorsiva al problema della Torre di Hanoi
@@ -117,6 +122,8 @@ Parte `recursion`:
 
 ## Lab `time` (2024-10-21): Misura dei tempi d'esecuzione di funzioni
 <a name="lab-time"></a>
+
+Razionale/obiettivo: acquisire familiarità con il concetto di complessità temporale, attraverso tecniche di misure dei tempi d'esecuzione.
 
 Consultando le slide sulla misura dei tempi d'esecuzione in Python, si svolgano i seguenti esercizi:
 
