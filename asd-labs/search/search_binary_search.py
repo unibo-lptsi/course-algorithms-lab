@@ -1,5 +1,4 @@
 import random
-# import timeit
 
 def binary_search_recur(array, x, start, to, eq = lambda x, y: x == y, less = lambda x, y: x < y):
     if to < start: return -1
