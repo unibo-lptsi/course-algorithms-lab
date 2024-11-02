@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import timeit
 import random
 import csv
@@ -67,11 +66,3 @@ if __name__ == '__main__':
         item[1].insert(0,["n","time[msec]"])
         write_csv(item[0], item[1])
 
-=======
-import timeit # for measuring time
-import search_linear_search # to be impl
-import search_binary_search # to be impl
-import matplotlib.pyplot as plt # for plotting
-
-# TODO: measure and plot the time of linear_search and binary_search
->>>>>>> ay2425

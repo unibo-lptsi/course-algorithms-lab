@@ -92,6 +92,7 @@ Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di di
     2. scrivere alcuni test per stimare la correttezza dell'implementazione
     3. misurare i tempi d'esecuzione con input di diversa dimensione e struttura
     4. graficare i tempi d'esecuzione nel caso peggiore al variare della dimensione dell'array  
+2. Implementare e testare `linear_search_rec` e `binary_search_rec`, varianti degli algoritmi di ricerca strutturati in modo ricorsivo
 3. *[Opzionale]* Implementare, testare, e misurare l'algoritmo `interpolation_search`
 
 ## Lab `plotting` + `recursion` (2024-10-28): Grafici di funzioni ed esercizi sulla ricorsione

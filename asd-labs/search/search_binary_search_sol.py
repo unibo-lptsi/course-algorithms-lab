@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import random
 
 def binary_search_recur(array, x, start, to, eq = lambda x, y: x == y, less = lambda x, y: x < y):
@@ -38,10 +37,3 @@ if __name__ == '__main__':
         pos = binary_search_iter(input, x, 0, len(input)-1)
         print(f"---\nTEST (iter) {i}\n---\nINPUT: {input}\nElem to find: {x}\nOutput: {pos}\n")
         
-=======
-def binary_search(array, elem): pass
-
-def binary_search_rec(array, elem): pass
-
-# test: TODO
->>>>>>> ay2425

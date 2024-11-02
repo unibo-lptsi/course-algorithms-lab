@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import random
 import test_utils
 
@@ -40,10 +39,3 @@ print("\n*** LINEAR SEARCH TESTS ***\n")
 test_utils.test(tests, linear_search)
 print("\n*** LINEAR SEARCH REC TESTS ***\n")
 test_utils.test(tests, linear_search_rec)
-=======
-def linear_search(array, elem): pass
-
-def linear_search_rec(array, elem): pass
-
-# test: TODO
->>>>>>> ay2425
