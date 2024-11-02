@@ -3,6 +3,12 @@
 * Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`** 
 * Le soluzioni sono incluse assieme agli esercizi, con suffisso **`-sol`**
 
+## Lab `search`
+
+- `search_linear_search`: implementazione ricerca lineare iterativa/ricorsiva e test di correttezza
+- `search_binary_search`: implementazione ricerca binaria iterativa/ricorsiva e test di correttezza
+- `measure_search_algorithms`: misura dei tempi d'esecuzione degli algoritmi di ricerca su diversi input, e plotting degli andamenti
+
 ## Lab `plotting` + `recursion` (2024-10-28): Grafici di funzioni ed esercizi sulla ricorsione
 
 - `plotting_functions_of_n.py`: using NumPy and MatPlotLib
