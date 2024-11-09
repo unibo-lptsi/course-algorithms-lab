@@ -2,88 +2,11 @@
 
 Gli esercizi di ogni laboratorio sono contenuti in  `asd-labs/<NOME-LAB>/`. 
 
-<!--
-I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codice Python) e `code-c` (per codice C).
+## Lab `sorting` (2024-11-11)
 
-
-## Lab 08: Grafi e Alberi
-
-<a name="lab08-graphs"></a>
-
-1. Si consideri il file [`lab08_graphs.py`](code-python/lab08_graphs.py). Viene dato un grafo, creato mediante la libreria **NetworkX**. 
-    * Si studi il sorgente fornito: si osservi come viene creato il grafo, e come è strutturata la funzione che si occupa di plottarlo.
-        * Si faccia riferimento all [documentazione di NetworkX](https://networkx.org/documentation/stable/reference/index.html)
-    * Si implementino le funzioni:
-        * `bfv` (visita in ampiezza)
-        * `dfv` (visita in profondità)
-        * `dijkstra` (annotazione grafo per cammini di costo minimo da un nodo sorgente)
-        * `shortest_path` (produzione del cammino di costo minimo da un grafo annotato con Dijkstra)
-2. Si consideri il file `binary-trees.c`. Viene data un'implementazione degli alberi binari.
-    * Si studi il sorgente fornito: si osservi la definizione della struttura dati, e le implementazioni delle funzioni fornite (ad es. per creare, distruggere, o stampare alberi). 
-    * Si implementino le seguenti funzioni: 
-        * `binarytree_init`: inizializza un btree con l'array di valori dato
-        * `binarytree_visit_postorder`: effettua la visita in profondità post-ordine (nodo corrente dopo i sottoalberi)
-        * `binarytree_height`: calcola l'altezza di un btree
-        * `binarytree_count_leaves`: conta quante foglie sono presenti in un btree
-
-## Lab 07: Algoritmi di ordinamento
-<a name="lab07-sorting"></a>
-
-Si consideri il file `lab07_sorting_algorithms.py`. Include lo scheletro di un programma atto a testare e misurare i tempi d'esecuzione di 5 algoritmi di ordinamento (selection sort, insertion sort, bubble sort, merge sort, quick sort) da implementare.
-Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di difficoltà, alle slide viste a lezione e, in ultima istanza, allo pseudocodice mostrato).
-
-## Lab 06: Hashtable 
-<a name="lab06-hashtable"></a>
-
-1. [Tempo stimato: 30'] Hashtable a indirizzamento chiuso (chained)
-    - Studiare il sorgente `hashtable-chained.c`
-    - Implementare una funzione `HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries)` che crei e inizializzi una hashtable con le entry fornite
-    - Implementare una funzione `HashTable *hashtable_merge(HashTable* h1, HashTable *h2)` che restituisca una nuova hashtable data dall'unione delle due tabelle hash fornite in input.
-    - Si scriva un test per verificare le funzionalità implementate.
-2. [Tempo stimato: 30'] Si copi il file `hashtable-chained.c` e si vada ad adattare il sorgente per utilizzare il tipo stringa `char*` per le chiavi.
-    - Occorre modificare la `typedef`, aggiustare implementazioni di funzioni, e definire una nuova funzione di `hash` (si faccia riferimento alle slide di teoria per un esempio di implementazione)
-3. [EXTRA - Tempo stimato: 30'] Esercizio di realtà: esplorare l'implementazione della classe [java.util.HashMap](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/HashMap.java) e cercare di ritrovare concetti introdotti a lezione
-4. [EXTRA - Tempo stimato: 90'] Prendendo spunto da `hashtable-chained.c` e da `dynamic-arrays.c`, implementare una hashtable a indirizzamento aperto.
-    - Si ricorda che una hashtable a indirizzamento aperto risolve le collisioni andando a occupare bucket successivi della tabella.
-
-## Lab 05: Array dinamici (+ plotting con `matplotlib`)
-<a name="lab05-dynamic-arrays"></a>
-
-
-1. [Tempo stimato: 45'] Array dinamici
-    - Studiare il sorgente `dynamic_arrays.c`
-    - Completare il sorgente implementando le seguenti funzioni:
-        - `darray_resize_linear`: atta ad applicare un'espansione lineare della memoria dell'array dinamico
-        - `darray_append`: atta ad aggiungere alla fine dell'array un elemento (ridimensionando l'array)
-        - `darray_insert`: atta ad aggiungere alla posizione indicata un nuovo elemento (traslando opportunamenti quelli attualmente presenti)
-        - `darray_assert_equals`: atta a verificare con asserzioni che l'array dinamico indicato ha lo stesso contenuto dell'array "tradizionale" fornito
-    - Si noti la funzione di `test()` che viene invocata ed eseguita attivando le due modalità di espansione dell'array
-    - Nota: si compili con `gcc -DDEBUG dynamic_arrays.c` per attivare log di debug e ispezionare il comportamento delle funzioni di riallocazione
-2. [Tempo stimato: 30'] Utilizzare `matplotlib` per graficare come evolve la capacità (memoria allocata) di un array dinamico utilizzando le due tecniche di espansione (lineare e geometrica).
-    - Parametrizzare il codice rispetto ai delta, fattori, soglie di crescita/contrazione
-    - Ovvero, si cerchi di riprodurre una figura tipo la seguente
-![](imgs/dynamic-array-capacity-growth.png)
-
-
-## Lab 04: Algoritmi di ricerca (+ unit testing e csv)
-<a name="lab04-search"></a>
-
-
-0. [Tempo stimato: 15'] Si osservi il codice d'esempio sull'uso di [`unittest`](https://docs.python.org/3/library/unittest.html) in [`code-python/testing`](code-python/testing).
-1. [Tempo stimato: 30'] Implementare in Python l'algoritmo di *ricerca lineare*
-    - Testare l'algoritmo 
-        - [Opzionale] Usando `unittest` (si scrivano i test in un modulo separato)
-    - Misurare i tempi dell'algoritmo su istanze di dimensione diversa
-        - NOTA: per la misura dei tempi, si generino (in modo casuale) due categorie di istanze: (1) quelle del *caso medio*, dove l'elemento da trovare è casualmente individuato; e (2) quelle del *caso peggiore*, dove l'elemento da trovare è in posizione peggiore (o non presente).
-    - NOTA: si cerchi di rendere il codice di misura dei tempi (e di salvataggio su CSV -- vedi succ.) riusabile
-2. [Tempo stimato: 45'] Implementare in Python l'algoritmo di *ricerca binaria*
-    - Testare l'algoritmo 
-        - [Opzionale] Usando `unittest` (si scrivano i test in un modulo separato)
-    - Misurare i tempi dell'algoritmo su istanze di dimensione diversa
-3. [Opzionale] Si tenga traccia dei tempi d'esecuzione degli algoritmi implementati nei punti precedenti per valori progressivi di `n` (dimensione dell'istanza) in un file CSV usando il modulo [`csv`](https://docs.python.org/3/library/csv.html)
-3. [Tempo stimato: 30'] Si implementi gli algoritmi precedenti (ricerca lineare e ricerca binaria) in modo ricorsivo
-
--->
+1. *[Tempo stimato: 90']* Nel file modulo `sorting.py`, implementare e testare gli algoritmi di ordinamento visti a lezione: `selection_sort`, `insertion_sort`, `bubble_sort`, `merge_sort`, `quick_sort`
+    * per il testing, si può utilizzare la funzione di test `test_utils.test_all` fornita (si noti che è stata adattata per testare funzioni il cui output coincide con il primo argomento)
+    * si ragioni su quali ulteriori test case considerare
 
 ## Lab `search` (2024-11-04): Algoritmi di ricerca
 
@@ -233,5 +156,104 @@ ISTRUZIONI: leggere attentamente i passi seguenti. Completare ogni passo prima d
         - stampa in stdout della stringa `WON` in caso di vittoria e della stringa `LOSS` in caso di sconfitta
     - Consigli
         - si veda [`random.randint()`](https://docs.python.org/3/library/random.html?highlight=randint#random.randint)
+
+-->
+
+
+<!--
+I sorgenti indicati nelle istruzioni sono contenuti in `code-python/` (per codice Python) e `code-c` (per codice C).
+
+
+## Lab 08: Grafi e Alberi
+
+<a name="lab08-graphs"></a>
+
+1. Si consideri il file [`lab08_graphs.py`](code-python/lab08_graphs.py). Viene dato un grafo, creato mediante la libreria **NetworkX**. 
+    * Si studi il sorgente fornito: si osservi come viene creato il grafo, e come è strutturata la funzione che si occupa di plottarlo.
+        * Si faccia riferimento all [documentazione di NetworkX](https://networkx.org/documentation/stable/reference/index.html)
+    * Si implementino le funzioni:
+        * `bfv` (visita in ampiezza)
+        * `dfv` (visita in profondità)
+        * `dijkstra` (annotazione grafo per cammini di costo minimo da un nodo sorgente)
+        * `shortest_path` (produzione del cammino di costo minimo da un grafo annotato con Dijkstra)
+2. Si consideri il file `binary-trees.c`. Viene data un'implementazione degli alberi binari.
+    * Si studi il sorgente fornito: si osservi la definizione della struttura dati, e le implementazioni delle funzioni fornite (ad es. per creare, distruggere, o stampare alberi). 
+    * Si implementino le seguenti funzioni: 
+        * `binarytree_init`: inizializza un btree con l'array di valori dato
+        * `binarytree_visit_postorder`: effettua la visita in profondità post-ordine (nodo corrente dopo i sottoalberi)
+        * `binarytree_height`: calcola l'altezza di un btree
+        * `binarytree_count_leaves`: conta quante foglie sono presenti in un btree
+
+## Lab 07: Algoritmi di ordinamento
+<a name="lab07-sorting"></a>
+
+Si consideri il file `lab07_sorting_algorithms.py`. Include lo scheletro di un programma atto a testare e misurare i tempi d'esecuzione di 5 algoritmi di ordinamento (selection sort, insertion sort, bubble sort, merge sort, quick sort) da implementare.
+Si implementino gli algoritmi di ordinamento (facendo riferimento, in caso di difficoltà, alle slide viste a lezione e, in ultima istanza, allo pseudocodice mostrato).
+
+## Lab 06: Hashtable 
+<a name="lab06-hashtable"></a>
+
+1. [Tempo stimato: 30'] Hashtable a indirizzamento chiuso (chained)
+    - Studiare il sorgente `hashtable-chained.c`
+    - Implementare una funzione `HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries)` che crei e inizializzi una hashtable con le entry fornite
+    - Implementare una funzione `HashTable *hashtable_merge(HashTable* h1, HashTable *h2)` che restituisca una nuova hashtable data dall'unione delle due tabelle hash fornite in input.
+    - Si scriva un test per verificare le funzionalità implementate.
+2. [Tempo stimato: 30'] Si copi il file `hashtable-chained.c` e si vada ad adattare il sorgente per utilizzare il tipo stringa `char*` per le chiavi.
+    - Occorre modificare la `typedef`, aggiustare implementazioni di funzioni, e definire una nuova funzione di `hash` (si faccia riferimento alle slide di teoria per un esempio di implementazione)
+3. [EXTRA - Tempo stimato: 30'] Esercizio di realtà: esplorare l'implementazione della classe [java.util.HashMap](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/HashMap.java) e cercare di ritrovare concetti introdotti a lezione
+4. [EXTRA - Tempo stimato: 90'] Prendendo spunto da `hashtable-chained.c` e da `dynamic-arrays.c`, implementare una hashtable a indirizzamento aperto.
+    - Si ricorda che una hashtable a indirizzamento aperto risolve le collisioni andando a occupare bucket successivi della tabella.
+
+## Lab 05: Array dinamici (+ plotting con `matplotlib`)
+<a name="lab05-dynamic-arrays"></a>
+
+
+1. [Tempo stimato: 45'] Array dinamici
+    - Studiare il sorgente `dynamic_arrays.c`
+    - Completare il sorgente implementando le seguenti funzioni:
+        - `darray_resize_linear`: atta ad applicare un'espansione lineare della memoria dell'array dinamico
+        - `darray_append`: atta ad aggiungere alla fine dell'array un elemento (ridimensionando l'array)
+        - `darray_insert`: atta ad aggiungere alla posizione indicata un nuovo elemento (traslando opportunamenti quelli attualmente presenti)
+        - `darray_assert_equals`: atta a verificare con asserzioni che l'array dinamico indicato ha lo stesso contenuto dell'array "tradizionale" fornito
+    - Si noti la funzione di `test()` che viene invocata ed eseguita attivando le due modalità di espansione dell'array
+    - Nota: si compili con `gcc -DDEBUG dynamic_arrays.c` per attivare log di debug e ispezionare il comportamento delle funzioni di riallocazione
+2. [Tempo stimato: 30'] Utilizzare `matplotlib` per graficare come evolve la capacità (memoria allocata) di un array dinamico utilizzando le due tecniche di espansione (lineare e geometrica).
+    - Parametrizzare il codice rispetto ai delta, fattori, soglie di crescita/contrazione
+    - Ovvero, si cerchi di riprodurre una figura tipo la seguente
+![](imgs/dynamic-array-capacity-growth.png)
+
+
+## Lab 04: Algoritmi di ricerca (+ unit testing e csv)
+<a name="lab04-search"></a>
+
+
+0. [Tempo stimato: 15'] Si osservi il codice d'esempio sull'uso di [`unittest`](https://docs.python.org/3/library/unittest.html) in [`code-python/testing`](code-python/testing).
+1. [Tempo stimato: 30'] Implementare in Python l'algoritmo di *ricerca lineare*
+    - Testare l'algoritmo 
+        - [Opzionale] Usando `unittest` (si scrivano i test in un modulo separato)
+    - Misurare i tempi dell'algoritmo su istanze di dimensione diversa
+        - NOTA: per la misura dei tempi, si generino (in modo casuale) due categorie di istanze: (1) quelle del *caso medio*, dove l'elemento da trovare è casualmente individuato; e (2) quelle del *caso peggiore*, dove l'elemento da trovare è in posizione peggiore (o non presente).
+    - NOTA: si cerchi di rendere il codice di misura dei tempi (e di salvataggio su CSV -- vedi succ.) riusabile
+2. [Tempo stimato: 45'] Implementare in Python l'algoritmo di *ricerca binaria*
+    - Testare l'algoritmo 
+        - [Opzionale] Usando `unittest` (si scrivano i test in un modulo separato)
+    - Misurare i tempi dell'algoritmo su istanze di dimensione diversa
+3. [Opzionale] Si tenga traccia dei tempi d'esecuzione degli algoritmi implementati nei punti precedenti per valori progressivi di `n` (dimensione dell'istanza) in un file CSV usando il modulo [`csv`](https://docs.python.org/3/library/csv.html)
+3. [Tempo stimato: 30'] Si implementi gli algoritmi precedenti (ricerca lineare e ricerca binaria) in modo ricorsivo
+
+
+## Lab `sort1-unittest-csv` (2024-11-11)
+
+Nuovi contenuti: modulo `unittest`, modulo `csv`, e `DataFrame`
+
+1. *[Tempo stimato: 45']* Nel file modulo `sorting.py`, implementare gli algoritmi `selection_sort` e `insertion_sort`
+2. *[Tempo stimato: 30']* Nel file modulo `test_sorting.py`, implementare dei test per funzioni di sorting
+    * si ragioni quali *test case* considerare (considerando tipologie di array di input e casi limite)
+3. *[Tempo stimato: 60']* Nel file modulo `measure_sorting_csv.py`, implementare la misura dei tempi per le funzioni di sorting implementate, e poi plottare i risultati
+    * Scrivere le misure effettuate in tre file CSV, dove ogni riga sarà del formato `<n>,<selection_sort_time>,<insertion_sort_time>`
+        1. `ordered_array`, dove gli input sono array già ordinati di dimensioni crescenti (10, 100, 500, 1000, 5000, 10000)
+        2. `reversed_array`, dove gli input sono array contrordinati di dimensioni crescenti
+        3. `random_array`, dove gli input sono array disordinati di dimensioni crescenti
+    * Per plottare i risultati, si apra il CSV come `DataFrame` pandas
 
 -->
