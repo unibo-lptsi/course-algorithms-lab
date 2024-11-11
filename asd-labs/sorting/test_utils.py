@@ -26,6 +26,7 @@ def test(tests: Sequence[Tuple[Tuple,Any]], f: Callable, tolerance: float = 0.) 
         else:
             print(f"\n\t!!! FAILED: {test}\n\tGOT: {actual}")
     print(f"\nSUMMARY: {passed}/{len(tests)} tests passed")
+    return passed, len(tests)
 
 def test_all(tests: Sequence[Tuple[Tuple,Any]], fs: List[Callable], tolerance: float = 0.) -> None:
     for f in fs:

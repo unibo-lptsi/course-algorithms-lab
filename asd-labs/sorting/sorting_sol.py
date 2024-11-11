@@ -3,7 +3,19 @@ import sys
 sizes = [10,100,1000,2000,5000]
 sys.setrecursionlimit(2 * max(sizes))
 
+def min_index(a, index_from, index_to): 
+    min_idx = index_from
+    for i in range(index_from+1, index_to):
+        if a[i] < a[min_idx]:
+            min_idx = i
+    return min_idx
+
 def selection_sort(a):
+    for i in range(len(a)-1):
+        min_idx = min_index(a, i, len(a))
+        a[i], a[min_idx] = a[min_idx], a[i]
+
+def selection_sort2(a):
     sorted_idx = -1
     unsorted_idx = 0
     arr_len = len(a)
@@ -17,7 +29,18 @@ def selection_sort(a):
         sorted_idx = unsorted_idx
         unsorted_idx += 1
 
+def insert_in_order(arr, n, e):
+    pos = n
+    while pos > 0 and arr[pos-1] > e:
+        arr[pos] = arr[pos-1]
+        pos -= 1
+    arr[pos] = e
+
 def insertion_sort(a):
+    for i in range(1,len(a)):
+        insert_in_order(a, i, a[i])
+
+def insertion_sort2(a):
     for i in range(1,len(a)):
         e = a[i]
         j = i-1
@@ -39,31 +62,68 @@ def bubble_sort(a):
         i += 1
 
 # merge ordered sequences a and b into r
-def merge(a, b, r):
-    na = 0 
-    nb = 0
-    k = 0
-    # print(f"merge {a} and {b} into {r}")
-    while na < len(a) and nb < len(b):
-        if a[na] <= b[nb]:
-            r[k] = a[na]
-            na = na + 1
+def merge2(a, b, r, froma, toa, fromb, tob):
+    i = froma
+    j = fromb
+    k = froma
+    while i <= toa and j <= tob:
+        if a[i] <= b[j]:
+            r[k] = a[i]
+            i = i + 1
         else:
-            r[k] = b[nb]
-            nb = nb + 1
+            r[k] = b[j]
+            j = j + 1
         k = k + 1
-    for i in range(na,len(a)):
+    for i in range(i,toa+1):
         r[k] = a[i]
         k = k + 1
-    for i in range(nb,len(b)):
+    for i in range(j,tob+1):
+        r[k] = b[i]
+        k = k + 1
+
+def merge_sort2(a, from_index=None, to_index_incl=None, temp=None):
+    # Startup
+    if from_index is None or to_index_incl is None: 
+        from_index = 0
+        to_index_incl = len(a)-1
+        temp = list(range(0, len(a)))
+    # print(f"merge_sort({a[from_index:to_index_incl+1]}, {from_index}, {to_index_incl})")
+    # Base case
+    alen = to_index_incl - from_index + 1
+    if alen<=1: return
+    # Recursive case
+    m = (from_index + to_index_incl)//2
+    merge_sort2(a, from_index, m, temp)
+    merge_sort2(a, m+1, to_index_incl, temp)
+    # print('Merging', a[from_index:m+1], 'and', a[m+1:to_index_incl+1], end=' ')
+    merge2(a, a, temp, from_index, m, m+1, to_index_incl)
+    # print('and got ', temp[from_index:to_index_incl+1])
+    for i in range(from_index,to_index_incl+1):
+        a[i] = temp[i]
+
+def merge(a, b, r):
+    i, j, k = 0, 0, 0
+    # print(f"merge {a} and {b} into {r}")
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]:
+            r[k] = a[i]
+            i = i + 1
+        else:
+            r[k] = b[j]
+            j = j + 1
+        k = k + 1
+    for i in range(i,len(a)):
+        r[k] = a[i]
+        k = k + 1
+    for i in range(j,len(b)):
         r[k] = b[i]
         k = k + 1
 
 def merge_sort(a):
     if len(a)<=1: return
     m = len(a)//2
-    left = a[:m]
-    right = a[m:]
+    left = a[:m] # beware: it's a copy
+    right = a[m:] # beware: it's a copy
     merge_sort(left)
     merge_sort(right)
     merge(left, right, a)
@@ -98,5 +158,5 @@ if __name__ == '__main__':
         (([1],), [1], 'single element list'),
         (([],), [], 'empty list'),
     ]
-    sorting_algorithms = [selection_sort, insertion_sort, bubble_sort, merge_sort, quick_sort]
+    sorting_algorithms =  [selection_sort, selection_sort2, insertion_sort, insertion_sort2, bubble_sort, merge_sort, merge_sort2, quick_sort]
     test_utils.test_all(tests, sorting_algorithms)
