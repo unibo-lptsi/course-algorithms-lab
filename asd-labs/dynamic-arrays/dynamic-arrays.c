@@ -2,6 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * TODO: implementare le seguenti funzioni:
+ * - darray_append(DArray* da, TInfo value)
+ * - darray_insert(DArray* da, int insert_pos, TInfo value)
+ * - darray_assert_equals(DArray* da, TInfo* expected, int expected_len)
+ */
+
 // NB: compile with gcc "-DDEBUG"
 #ifdef DEBUG
 #define LOG(fmt, ...) fprintf(stderr, fmt, __VA_ARGS__)
