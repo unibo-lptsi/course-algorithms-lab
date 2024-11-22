@@ -2,7 +2,7 @@
 
 Gli esercizi di ogni laboratorio sono contenuti in  `asd-labs/<NOME-LAB>/`. 
 
-## Lab `hashtable` (2024-11-25): tabelle hash 
+## Lab `hashtables` (2024-11-25): tabelle hash 
 
 1. [Tempo stimato: 30'] Hashtable a indirizzamento chiuso (chained)
     - Studiare il sorgente `hashtable-chained.c`
