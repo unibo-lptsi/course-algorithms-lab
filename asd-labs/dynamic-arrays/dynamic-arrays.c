@@ -30,13 +30,24 @@ struct SDArray {
 };
 typedef struct SDArray DArray;
 
+void darray_resize(DArray* da, int new_size);
+DArray darray_create(int initial_size);
+DArray darray_create_capac(int initial_size, int initial_capacity);
+void darray_set(DArray* da, int pos, TInfo value);
+void darray_print(DArray* da, char* eol);
+void darray_destroy(DArray* da);
+void darray_resize_linear(DArray* da, int new_size);
+void darray_resize_geometric(DArray* da, int new_size);
+void darray_resize(DArray* da, int new_size);
+void darray_append(DArray* da, TInfo elem);
+void darray_expand(DArray* da, TInfo* arr, int sz);
+void darray_insert(DArray* da, int insert_pos, TInfo value);
+void darray_assert_equals(DArray* da, TInfo* expected, int expected_len);
+
+static void (*f_resize)(DArray*,int) = &darray_resize_linear;
+
 DArray darray_create(int initial_size) {
-    DArray a;
-    a.item = (TInfo*) malloc(sizeof(TInfo) * initial_size);
-    assert(initial_size==0 || a.item!=NULL);
-    a.capacity = initial_size;
-    a.size = initial_size;
-    return a;
+    return darray_create_capac(initial_size, initial_size);
 }
 
 DArray darray_create_capac(int initial_size, int initial_capacity) {
@@ -50,6 +61,13 @@ DArray darray_create_capac(int initial_size, int initial_capacity) {
 }
 
 void darray_set(DArray* da, int pos, TInfo value) {
+    int curr_size = da->size;
+    // one approach would be to conditionally set the value at pos iff pos < size
+    // another approach would be to expand the size (but then the user should be aware that a O(n) cost may apply)
+    if(da->size <= pos) {
+        darray_resize(da, pos+1);
+        // for(int i=curr_size; i<pos+1; i++) darray_set(da, i, 0);
+    }
     (da->item)[pos] = value;
 }
 
@@ -96,7 +114,6 @@ void darray_resize_geometric(DArray* da, int new_size) {
     da->size = new_size;
 }
 
-static void (*f_resize)(DArray*,int) = &darray_resize_linear;
 void darray_resize(DArray* da, int new_size) {
     f_resize(da, new_size);
 }
@@ -141,6 +158,8 @@ void test() {
     darray_print(&da,"\n");
     darray_assert_equals(&da, (int[]){1,2,3,0,1,2,3,4,5,6,7,8,9,10}, 14);
     darray_insert(&da, 2, 55);
+    //darray_resize(&da, 100);
+    darray_set(&da, 80, 888);
     darray_assert_equals(&da, (int[]){1,2,55,3,0,1,2,3,4,5,6,7,8,9,10}, 15);
     darray_print(&da,"\n\n");
 }
