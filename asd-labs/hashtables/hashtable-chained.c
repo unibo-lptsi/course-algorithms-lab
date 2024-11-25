@@ -180,8 +180,8 @@ list* list_delete_value(list *L, TInfo val) {
 
 /* Chained Hashtable implementation (closed addressing) */
 
-typedef unsigned int(*hash_function_type)(TKey);
-unsigned int hash_int(TKey key);
+typedef unsigned int(*hash_function_type)(TKey, int m);
+unsigned int hash_int(TKey key, int m);
 
 typedef struct HashTable {
     list** bucket;
@@ -190,8 +190,8 @@ typedef struct HashTable {
 
 static hash_function_type hash_function = &hash_int;
 
-unsigned int hash_int(TKey key) {
-    return key;
+unsigned int hash_int(TKey key, int m) {
+    return key % m;
 }
 
 HashTable *hashtable_create(int nbuckets);
@@ -233,24 +233,27 @@ list* hashtable_list(HashTable *h, TKey key) {
 }
 
 unsigned int hashtable_hash(HashTable *h, TKey key) {
-    return hash_function(key) % h->nbuckets;
+    return hash_function(key, h->nbuckets);
 }
 
 void hashtable_insert(HashTable* h, TKey key, TValue val) {
+    if(h == NULL) return;
     TInfo info = { key = key, val = val };
     unsigned int hash = hashtable_hash(h, key);
-    if(!hashtable_search_keyvalue(h, key, val)) {
+    if(!hashtable_search(h, key)) {
         h->bucket[hash] = list_create(info, h->bucket[hash]);
     }
 }
 
 void hashtable_delete(HashTable* ht, TKey key) {
+    if(ht == NULL) return;
     unsigned int h = hashtable_hash(ht, key);
     TInfo ikey = { key = key };
     ht->bucket[h] = list_delete_value(ht->bucket[h], ikey);
 }
 
 void hashtable_delete_value(HashTable* h, TKey key, TValue val) {
+    if(h == NULL) return;
     unsigned int hash = hashtable_hash(h, key);
     list* l = h->bucket[hash];
     if(l != NULL) {
@@ -276,6 +279,7 @@ int hashtable_search_keyvalue(HashTable* h, TKey key, TValue val) {
 }
 
 TValue *hashtable_search(HashTable* h, TKey key) {
+    if(h == NULL) return NULL;
     list* l = hashtable_list(h, key);
     for(; l != NULL; l = l->next) {
         if(l->val.key == key) {
@@ -286,6 +290,10 @@ TValue *hashtable_search(HashTable* h, TKey key) {
 }
 
 void hashtable_print(HashTable* h, int include_empty_buckets, char* pre) {
+    if(h == NULL) {
+        printf("%s {}\n", pre);
+        return;
+    }
     printf("%s {\n", pre);
     for(int i = 0; i < h->nbuckets; i++) {
         if(include_empty_buckets || h->bucket[i] != NULL) {
@@ -305,6 +313,8 @@ int main(void) {
     hashtable_insert(h, 175, 55);
     hashtable_print(h, 1, "hashtable (showing all buckets) =");
     hashtable_print(h, 0, "hashtable =");
+    printf("Is key 175 present? %s.\n", hashtable_search(h, 175) ? "yes" : "no");
+    printf("Is key 179 present? %s.\n", hashtable_search(h, 179) ? "yes" : "no");
     printf("Is value 55 present? %s.\n", hashtable_search_value(h, 55) ? "yes" : "no");
     printf("Is value 371 present? %s.\n", hashtable_search_value(h, 371) ? "yes" : "no");
     hashtable_delete(h, 4);
