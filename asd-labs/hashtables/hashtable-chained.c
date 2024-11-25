@@ -205,6 +205,7 @@ TValue *hashtable_search(HashTable* h, TKey key);
 int hashtable_search_value(HashTable* h, TValue val);
 int hashtable_search_keyvalue(HashTable* h, TKey key, TValue val);
 void hashtable_print(HashTable* h, int include_empty_buckets, char *pre);
+int hashtable_size(HashTable* h);
 
 HashTable *hashtable_create(int nbuckets) {
     HashTable *h = (HashTable*) malloc(sizeof(HashTable));
@@ -289,6 +290,14 @@ TValue *hashtable_search(HashTable* h, TKey key) {
     return NULL;
 }
 
+int hashtable_size(HashTable* h) {
+    int size = 0;
+    for(int i = 0; i < h->nbuckets; i++) {
+        size += list_length(h->bucket[i]);
+    }
+    return size;
+}
+
 void hashtable_print(HashTable* h, int include_empty_buckets, char* pre) {
     if(h == NULL) {
         printf("%s {}\n", pre);
@@ -302,7 +311,7 @@ void hashtable_print(HashTable* h, int include_empty_buckets, char* pre) {
             printf("\n");
         }
     }
-    printf("}\n");
+    printf("}[%d/%d]\n", hashtable_size(h), h->nbuckets);
 }
 
 int main(void) {
