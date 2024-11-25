@@ -180,8 +180,8 @@ list* list_delete_value(list *L, TInfo val) {
 
 /* Chained Hashtable implementation (closed addressing) */
 
-typedef unsigned int(*hash_function_type)(TKey);
-unsigned int hash_int(TKey key);
+typedef unsigned int(*hash_function_type)(TKey, int m);
+unsigned int hash_int(TKey key, int m);
 
 typedef struct HashTable {
     list** bucket;
@@ -190,8 +190,8 @@ typedef struct HashTable {
 
 static hash_function_type hash_function = &hash_int;
 
-unsigned int hash_int(TKey key) {
-    return key;
+unsigned int hash_int(TKey key, int m) {
+    return key % m;
 }
 
 HashTable *hashtable_create(int nbuckets);
@@ -205,33 +205,7 @@ TValue *hashtable_search(HashTable* h, TKey key);
 int hashtable_search_value(HashTable* h, TValue val);
 int hashtable_search_keyvalue(HashTable* h, TKey key, TValue val);
 void hashtable_print(HashTable* h, int include_empty_buckets, char *pre);
-HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries); // to be implemented
-HashTable *hashtable_merge(HashTable* h1, HashTable *h2); // to be implemented
-
-HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries) {
-    HashTable* ht = hashtable_create(nbuckets);
-    for(int i = 0; i < nentries; i++) {
-        hashtable_insert(ht, entries[i].key, entries[i].value);
-    }
-    return ht;
-}
-
-HashTable *hashtable_merge(HashTable* h1, HashTable *h2) {
-    HashTable *res = hashtable_create(h1->nbuckets + h2->nbuckets);
-    for(int i = 0; i < h1->nbuckets; i++) {
-        for(list *l = h1->bucket[i]; l != NULL; l = l->next) {
-            TInfo entry = l->val;
-            hashtable_insert(res, entry.key, entry.value);            
-        }
-    }
-    for(int i = 0; i < h2->nbuckets; i++) {
-        for(list *l = h2->bucket[i]; l != NULL; l = l->next) {
-            TInfo entry = l->val;
-            hashtable_insert(res, entry.key, entry.value);            
-        }
-    }
-    return res;
-}
+int hashtable_size(HashTable* h);
 
 HashTable *hashtable_create(int nbuckets) {
     HashTable *h = (HashTable*) malloc(sizeof(HashTable));
@@ -260,24 +234,27 @@ list* hashtable_list(HashTable *h, TKey key) {
 }
 
 unsigned int hashtable_hash(HashTable *h, TKey key) {
-    return hash_function(key) % h->nbuckets;
+    return hash_function(key, h->nbuckets);
 }
 
 void hashtable_insert(HashTable* h, TKey key, TValue val) {
+    if(h == NULL) return;
     TInfo info = { key = key, val = val };
     unsigned int hash = hashtable_hash(h, key);
-    if(!hashtable_search_keyvalue(h, key, val)) {
+    if(!hashtable_search(h, key)) {
         h->bucket[hash] = list_create(info, h->bucket[hash]);
     }
 }
 
 void hashtable_delete(HashTable* ht, TKey key) {
+    if(ht == NULL) return;
     unsigned int h = hashtable_hash(ht, key);
     TInfo ikey = { key = key };
     ht->bucket[h] = list_delete_value(ht->bucket[h], ikey);
 }
 
 void hashtable_delete_value(HashTable* h, TKey key, TValue val) {
+    if(h == NULL) return;
     unsigned int hash = hashtable_hash(h, key);
     list* l = h->bucket[hash];
     if(l != NULL) {
@@ -298,12 +275,12 @@ int hashtable_search_value(HashTable* h, TValue val) {
 }
 
 int hashtable_search_keyvalue(HashTable* h, TKey key, TValue val) {
-    TInfo info = { key = key, val = val };
-    TInfo *value_in_list = list_search(hashtable_list(h, key), info);
-    return value_in_list != NULL && equal(info, *value_in_list);
+    TValue *v = hashtable_search(h, key);
+    return v != NULL && *v == val;
 }
 
 TValue *hashtable_search(HashTable* h, TKey key) {
+    if(h == NULL) return NULL;
     list* l = hashtable_list(h, key);
     for(; l != NULL; l = l->next) {
         if(l->val.key == key) {
@@ -313,7 +290,19 @@ TValue *hashtable_search(HashTable* h, TKey key) {
     return NULL;
 }
 
+int hashtable_size(HashTable* h) {
+    int size = 0;
+    for(int i = 0; i < h->nbuckets; i++) {
+        size += list_length(h->bucket[i]);
+    }
+    return size;
+}
+
 void hashtable_print(HashTable* h, int include_empty_buckets, char* pre) {
+    if(h == NULL) {
+        printf("%s {}\n", pre);
+        return;
+    }
     printf("%s {\n", pre);
     for(int i = 0; i < h->nbuckets; i++) {
         if(include_empty_buckets || h->bucket[i] != NULL) {
@@ -322,10 +311,35 @@ void hashtable_print(HashTable* h, int include_empty_buckets, char* pre) {
             printf("\n");
         }
     }
-    printf("}\n");
+    printf("}[%d/%d]\n", hashtable_size(h), h->nbuckets);
 }
 
-int main(void) {
+HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries) {
+    HashTable* ht = hashtable_create(nbuckets);
+    for(int i = 0; i < nentries; i++) {
+        hashtable_insert(ht, entries[i].key, entries[i].value);
+    }
+    return ht;
+}
+
+HashTable *hashtable_merge(HashTable* h1, HashTable *h2) {
+    HashTable *res = hashtable_create(h1->nbuckets + h2->nbuckets);
+    for(int i = 0; i < h1->nbuckets; i++) {
+        for(list *l = h1->bucket[i]; l != NULL; l = l->next) {
+            TInfo entry = l->val;
+            hashtable_insert(res, entry.key, entry.value);            
+        }
+    }
+    for(int i = 0; i < h2->nbuckets; i++) {
+        for(list *l = h2->bucket[i]; l != NULL; l = l->next) {
+            TInfo entry = l->val;
+            hashtable_insert(res, entry.key, entry.value);            
+        }
+    }
+    return res;
+}
+
+void test0() {
     HashTable *h = hashtable_create(10);
     hashtable_insert(h, 4, 77);
     hashtable_insert(h, 44, 66);
@@ -340,15 +354,32 @@ int main(void) {
     hashtable_delete_value(h, 175, 55);
     hashtable_print(h, 0, "after removal of element 55 =");
 
-    // Testing new functionality
+    hashtable_destroy(h);
+}
+
+void test_init() {
+    printf("\n***Test init\n");
     HashTable *h2 = hashtable_init(10, (TInfo[]) { { 3, 7}, { 4, 8}, {5, 9}, { 6, 10 } }, 4);
-    hashtable_print(h2, 0, "h2");
+    hashtable_print(h2, 0, "initialised hashtable = ");
+    hashtable_destroy(h2);
+}
 
+void test_merge() {
+    printf("\n***Test merge\n");
+    HashTable *h = hashtable_init(10, (TInfo[]) { { 3, 99}, { 1, 1 }, {2 , 2} }, 3);
+    HashTable *h2 = hashtable_init(10, (TInfo[]) { { 3, 7}, { 4, 8}, {5, 9}, { 6, 10 } }, 4);
+    hashtable_print(h, 0, "h = ");
+    hashtable_print(h2, 0, "h2 =");
     HashTable *h3 = hashtable_merge(h, h2);
-    hashtable_print(h3, 0, "h3");
-
+    hashtable_print(h3, 0, "h3 (merge of h with h2) = ");
     hashtable_destroy(h);
     hashtable_destroy(h2);
     hashtable_destroy(h3);
+}
+
+int main(void) {
+    test0();
+    test_init();
+    test_merge();
     return 0;
 }
