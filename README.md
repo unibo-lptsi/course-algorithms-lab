@@ -2,6 +2,17 @@
 
 Gli esercizi di ogni laboratorio sono contenuti in  `asd-labs/<NOME-LAB>/`. 
 
+## Lab `btree` (2024-12-12): alberi binari (di ricerca)
+
+Si consideri il file `binary-trees.c`. Viene data un'implementazione degli alberi binari.
+
+* Si studi il sorgente fornito: si osservi la definizione della struttura dati, e le implementazioni delle funzioni fornite (ad es. per creare, distruggere, o stampare alberi). 
+* Si implementino le seguenti funzioni: 
+    * `binarytree_init`: inizializza un btree con l'array di valori dato
+    * `binarytree_visit_postorder`: effettua la visita in profondità post-ordine (nodo corrente dopo i sottoalberi)
+    * `binarytree_height`: calcola l'altezza di un btree
+    * `binarytree_count_leaves`: conta quante foglie sono presenti in un btree
+
 ## Lab `graphs` (2024-12-02): grafi e algoritmi su grafi
 
 Si consideri il file [`graphs.py`](asd-labs/graphs/graphs.py). Viene dato un grafo, creato mediante la libreria **NetworkX**. 

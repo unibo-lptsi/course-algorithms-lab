@@ -39,10 +39,19 @@ def plot_basic_graph(G, pos = None, layout = nx.random_layout, seed = None):
 
 # TODO: implement this
 def bfv(g, root, f):
+    # Initialization
+    for n in g.nodes:
+        g.nodes[n][L_VISITED] = False    
     pass
 
 # TODO: implement this
 def dfv(g, root, f):
+    # Initialization
+    for n in g.nodes:
+        g.nodes[n][L_VISITED] = False 
+    return dfv_rec(g, root, f)
+
+def dfv_rec(g, root, f):
     pass
 
 # TODO: implement this
