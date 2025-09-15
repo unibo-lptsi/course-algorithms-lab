@@ -2,6 +2,8 @@
 
 Gli esercizi di ogni laboratorio sono contenuti in  `asd-labs/<NOME-LAB>/`. 
 
+<!--
+
 ## Lab `btree` (2024-12-12): alberi binari (di ricerca)
 
 Si consideri il file `binary-trees.c`. Viene data un'implementazione degli alberi binari.
@@ -163,6 +165,10 @@ FIB_REC:  Exponential: time = 3.5E-06 * 1.6^n (sec)
 FIB_ITER:  Linear: time = -8.5E-05 + 3.6E-06*n (sec)
 ```
 
+
+-->
+
+<!-- START HERE -->
 
 
 <!--
