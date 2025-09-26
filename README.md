@@ -2,7 +2,8 @@
 
 Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**.  I percorsi relativi vanno intesi a partire dalla cartella del lab corrispondente.
 
-## Lab `testing`: testing di algoritmi
+
+## Lab `testing` (2025-09-29): testing di algoritmi
 <a name="lab04-search"></a>
 
 **Premessa**: lo studio degli algoritmi si concentrano sulle loro proprietà formali, specialmente quelle legate alla **correttezza**  e all'**efficienza**. Per ottenere risposte precise o garanzie su questi aspetti, generalmente si usano metodi formali/matematici (ne vedremo qualcuno nel corso). 
@@ -31,6 +32,20 @@ test_utils.test(tests, min_max)
     - Consultare le slide di laboratorio su questa libreria dal sito del corso
     - Osserva il codice in  [`main_minmax_unittest.py`](asd-labs/testing/main_minmax_unittest.py)
 0. Se non l'hai già fatto, risolvi il bug in `min_max` e riesegui i test ;)
+
+
+## Preliminari (2025-09-29): ambiente di sviluppo
+
+- Si raccomanda l'uso di **Visual Studio (VS) Code**
+- In VS Code:
+    - si usi `File -> Open folder` per selezionare la cartella di lavoro
+    - si apre un terminale via `Terminal -> New terminal`
+    - si usino i comandi `python` o `gcc` per eseguire/compilare i sorgenti
+- Si può lavorare con i notebook Jupyter all'interno di VS Code
+    - estensione VSCode `Jupyter` ed ambienti `conda` configurati con pacchetto `jupyter`
+- In generale, si può utilizzare l'IDE che si preferisce
+    - si tenga però presente che l'ambiente standardizzato nei laboratori usa VS Code
+    - e che in sede di esame, Internet è bloccato (i.e., niente Colab)
 
 
 
