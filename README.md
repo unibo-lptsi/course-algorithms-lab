@@ -33,6 +33,10 @@ test_utils.test(tests, min_max)
     - Osserva il codice in  [`main_minmax_unittest.py`](asd-labs/testing/main_minmax_unittest.py)
 0. Se non l'hai già fatto, risolvi il bug in `min_max` e riesegui i test ;)
 
+### Soluzione
+
+- Osserva la correzione di `min_max.py`: se la lista è vuota, lancia un `ValueError` (tipo di eccezione indicante parametri di valore non valido); a quel punto, il min/max temporaneo è il primo elemento della lista. 
+
 
 ## Preliminari (2025-09-29): ambiente di sviluppo
 
