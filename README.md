@@ -30,6 +30,12 @@ Razionale/obiettivo: acquisire familiarità con la ricorsione, le tipologie di r
 
 -->
 
+### Soluzioni
+
+- Si osservino le soluzioni in `recursion-sol-py` (queste includono le funzioni ricorsive e test)
+    - si noti l'uso dei range sulle liste `l[start,from]` per ridurre le liste verso il caso base di lista vuota
+    - si noti l'uso di `lambda` per creare funzioni anonime "al volo" da passare come argomento a `list_filter`
+
 ## Lab `testing` (2025-09-29): testing di algoritmi
 <a name="lab04-search"></a>
 
