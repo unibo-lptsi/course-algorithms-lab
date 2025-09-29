@@ -2,6 +2,33 @@
 
 Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**.  I percorsi relativi vanno intesi a partire dalla cartella del lab corrispondente.
 
+<!--
+## Lab `recursion` (2025-10-06): ricorsione
+
+Razionale/obiettivo: acquisire familiarità con la ricorsione, le tipologie di ricorsione, e alcuni esempi pratici.
+
+1. [Tempo stimato: 30'] Studio sorgenti dati
+    - `recursion-hanoi.py`: implementazione della soluzione ricorsiva al problema della Torre di Hanoi
+    - `recursion-types.py`: implementazione di algoritmi ricorsivi per le tipologie di ricorsione viste a lezione
+2. [Tempo stimato: 45'] Esercizi sulla ricorsione: si parta da file `recursion.py` con lo scheletro dell'esercizio
+    - NOTA: oltre all'implementazione della soluzione, prevedere una serie di test per verificarne la correttezza. 
+    Alcuni sono già forniti a titolo esemplificativo, basati sulla funzionalità di utilità in `test_utils.py`. 
+    - Implementare `sum_numbers(a,b)` (somma di tutti i numeri interi compresi tra `a` e `b`) in modo *ricorsivo*
+    - Implementare `pow(a,n)` per realizzare l'elevamento a potenza $a^n$ in modo *ricorsivo*
+    - Implementare `palindrome(s)` che verifica se la stringa è [palindroma](https://it.wikipedia.org/wiki/Palindromo) in modo *ricorsivo*
+    - Implementare `list_contains(lst,elem)` (funzione che restituisce `True` se `elem` è contenuto nella lista `lst` o `False` altrimenti) in modo *ricorsivo*
+    - Implementare `list_filter(lst,predicate)`: che restituisce una nuova lista con soli gli elementi di `lst` che soddisfano la funzione predicato `pred` in modo *ricorsivo*
+3. [Tempo stimato: 30'] Stack overflow e tail recursion
+    1. Si osservi e si esegua il sorgente `recursion_limit.py`: si dovrebbe incorrere in un `RecursionError` (ma si noti che il limite è platform-dependent)
+    2. Si provi a impostare [`sys.setrecursionlimit(limit)`](https://docs.python.org/3/library/sys.html#sys.setrecursionlimit) per evitare il problema. Dalla documentazione: **`sys.setrecursionlimit(limit)`** *"Set the maximum depth of the Python interpreter stack to limit. This limit prevents infinite recursion from causing an overflow of the C stack and crashing Python"*.
+    3. Si ricordi che Python (imp,ementazione CPython) non supporta la tail-call optimization (TCO), anche se esistono moduli come [`tail-recursive`](https://pypi.org/project/tail-recursive/) per abilitarla mediante decoratori e una gestione ad-hoc, seppur con qualche limitazione
+    4. Invece, `gcc` dovrebbe supportare TCO. Si provi a compilare `tailrec.c` con due modalità differenti (`-O<N>` per impostare livello di ottimizzazione e `-S` per generare un file assembly `tailrec.s`):
+        1. **normale (o senza ottimizzazione)**: `gcc -O1 -S asd-labs/recursion/tailrec.c`
+        2. **con ottimizzazione aggressiva**: `gcc -O2 -S asd-labs/recursion/tailrec.c`
+        - Osservare come nel caso (2) non sono presenti le chiamate ricorsive (instruzioni `call` per `_factorial_tail`)
+    5. Si compili con `gcc asd-labs/recursion/tailrec.c` e si esegua l'eseguibile prodotto (`.\a.exe` o `./a.out`) e si osservi come l'ottimizzazione consente di evitare un `segmentation fault`
+
+-->
 
 ## Lab `testing` (2025-09-29): testing di algoritmi
 <a name="lab04-search"></a>
@@ -13,7 +40,7 @@ Un modo alternativo di ottenere informazioni circa queste proprietà è mediante
     - Osserva il codice della funziona: è corretto?
     - Possiamo esercitare tale funzione in un programma: [`main_minmax.py`](asd-labs/testing/main_minmax.py)
     - Si noti la definizione di una funzione `test(input)` per automatizzare l'esecuzione e reportistica dei risultati
-0. Possiamo migliore l'infrastruttura di testing, generalizzando ed automatizzando ulteriormente
+1. Possiamo migliore l'infrastruttura di testing, generalizzando ed automatizzando ulteriormente
     1. Possiamo astrarre dalla **function-under-test** `f`
     2. Possiamo fornire più **test case** alla volta (quindi, non solo un input, ma diversi input da testare)
     3. Possiamo fornire non solo input ma intere **specifiche** di funzionamento in termini di coppie **(input, output)**: è quello che viene fatto in [`test_utils.py`](asd-labs/testing/test_utils.py)
@@ -28,10 +55,10 @@ tests = {
 test_utils.test(tests, min_max)
 ```
     4. Osserva il codice in [`main_minmax_test.py`](asd-labs/testing/main_minmax_test.py)
-0. Il problema di automatizzare test sul codice include vari "caveat" ed è già stato affrontato dalla comunità. E' quindi conveniente ricorrere a librerie come ad esempio **`unittest`**
+2. Il problema di automatizzare test sul codice include vari "caveat" ed è già stato affrontato dalla comunità. E' quindi conveniente ricorrere a librerie come ad esempio **`unittest`**
     - Consultare le slide di laboratorio su questa libreria dal sito del corso
     - Osserva il codice in  [`main_minmax_unittest.py`](asd-labs/testing/main_minmax_unittest.py)
-0. Se non l'hai già fatto, risolvi il bug in `min_max` e riesegui i test ;)
+3. Se non l'hai già fatto, risolvi il bug in `min_max` e riesegui i test ;)
 
 
 ## Preliminari (2025-09-29): ambiente di sviluppo
