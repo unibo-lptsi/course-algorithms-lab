@@ -20,7 +20,8 @@ Razionale/obiettivo: acquisire familiarità con la ricorsione, le tipologie di r
 3. [Tempo stimato: 30'] Stack overflow e tail recursion
     1. Si osservi e si esegua il sorgente `recursion_limit.py`: si dovrebbe incorrere in un `RecursionError` (ma si noti che il limite è platform-dependent)
     2. Si provi a impostare [`sys.setrecursionlimit(limit)`](https://docs.python.org/3/library/sys.html#sys.setrecursionlimit) per evitare il problema. Dalla documentazione: **`sys.setrecursionlimit(limit)`** *"Set the maximum depth of the Python interpreter stack to limit. This limit prevents infinite recursion from causing an overflow of the C stack and crashing Python"*.
-    3. Si ricordi che Python (imp,ementazione CPython) non supporta la tail-call optimization (TCO), anche se esistono moduli come [`tail-recursive`](https://pypi.org/project/tail-recursive/) per abilitarla mediante decoratori e una gestione ad-hoc, seppur con qualche limitazione
+        - ovviamente in pratica va usato con cautela, in casi circoscritti in cui si conosce il limite finito di ricorsione in modo deterministico
+    3. Si ricordi che Python (implementazione CPython) non supporta la tail-call optimization (TCO), anche se esistono moduli come [`tail-recursive`](https://pypi.org/project/tail-recursive/) per abilitarla mediante decoratori e una gestione ad-hoc, seppur con qualche limitazione
     4. Invece, `gcc` dovrebbe supportare TCO. Si provi a compilare `tailrec.c` con due modalità differenti (`-O<N>` per impostare livello di ottimizzazione e `-S` per generare un file assembly `tailrec.s`):
         1. **normale (o senza ottimizzazione)**: `gcc -O1 -S asd-labs/recursion/tailrec.c`
         2. **con ottimizzazione aggressiva**: `gcc -O2 -S asd-labs/recursion/tailrec.c`
