@@ -2,7 +2,6 @@
 
 Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**.  I percorsi relativi vanno intesi a partire dalla cartella del lab corrispondente.
 
-<!--
 ## Lab `recursion` (2025-10-06): ricorsione
 
 Razionale/obiettivo: acquisire familiarità con la ricorsione, le tipologie di ricorsione, e alcuni esempi pratici.
@@ -28,7 +27,6 @@ Razionale/obiettivo: acquisire familiarità con la ricorsione, le tipologie di r
         - Osservare come nel caso (2) non sono presenti le chiamate ricorsive (instruzioni `call` per `_factorial_tail`)
     5. Si compili con `gcc asd-labs/recursion/tailrec.c` e si esegua l'eseguibile prodotto (`.\a.exe` o `./a.out`) e si osservi come l'ottimizzazione consente di evitare un `segmentation fault`
 
--->
 
 ## Lab `testing` (2025-09-29): testing di algoritmi
 <a name="lab04-search"></a>
