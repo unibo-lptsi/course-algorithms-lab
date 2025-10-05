@@ -25,8 +25,10 @@ Razionale/obiettivo: acquisire familiarità con la ricorsione, le tipologie di r
     4. Invece, `gcc` dovrebbe supportare TCO. Si provi a compilare `tailrec.c` con due modalità differenti (`-O<N>` per impostare livello di ottimizzazione e `-S` per generare un file assembly `tailrec.s`):
         1. **normale (o senza ottimizzazione)**: `gcc -O1 -S asd-labs/recursion/tailrec.c`
         2. **con ottimizzazione aggressiva**: `gcc -O2 -S asd-labs/recursion/tailrec.c`
-        - Osservare come nel caso (2) non sono presenti le chiamate ricorsive (instruzioni `call` per `_factorial_tail`)
-    5. Si compili con `gcc asd-labs/recursion/tailrec.c` e si esegua l'eseguibile prodotto (`.\a.exe` o `./a.out`) e si osservi come l'ottimizzazione consente di evitare un `segmentation fault`
+            - Visionare l'assembly in `tailrec.s`
+            - Osservare come nel caso (2) non sono presenti le chiamate ricorsive (instruzioni `call` per `_factorial_tail`)
+    5. Si compili con `gcc -O[1|2] asd-labs/recursion/tailrec.c` e si esegua l'eseguibile prodotto (`.\a.exe` o `./a.out`) e si osservi come l'ottimizzazione possa consentire di evitare un `segmentation fault` 
+        - nota: il risultato potrebbe dipendere dall'implementazione/macchina
 
 
 ## Lab `testing` (2025-09-29): testing di algoritmi
