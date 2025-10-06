@@ -38,6 +38,8 @@ def list_filter(lst, pred):
 
 # Specifiche di test
 sum_numbers_tests = { f"sum(1,{n})": ((1, n), n*(n+1)//2) for n in range(1,10) }
+sum_numbers_tests["sum(3,10) [with a>1]"] = ((3,10), 3+4+5+6+7+8+9+10)
+sum_numbers_tests["sum(5,3) [with b>a]"] = ((5,3), 5+4+3)
 pow_tests = { "pow({a},{n}": ((a, n), math.pow(a, n)) for a, n in [(0,5), (5,0), (3,3), (2,8), (2,-3)] }
 contains_tests = {
     "empty list": (([],0), False), 
