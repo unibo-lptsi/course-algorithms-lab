@@ -12,7 +12,7 @@ Consultando le slide sulla misura dei tempi d'esecuzione in Python, si svolgano 
 
 1. *[Tempo stimato: 30']* Si consideri **`measure-fib.py`**. Si misuri e si confronti il tempo d'esecuzione di `fib` (Fibonacci in versione ricorsiva) e `fib_iter` (Fibonacci in versione iterativa). Si utilizzino i *millisecondi* come unità di misura.
     * Si definisca una funzione `measure_running_time(f)` che restituisca il tempo d'esecuzione della funzione `f` fornita in input e la si applichi a `fib` e `fib_iter` per input 10, 20, 30.
-        * Si implementi la funzione in due varianti: una usando `time.perf_counter()` e l'altra usando `timeit.repeat`
+        * Si implementi la funzione in due varianti: (A) una usando `time.perf_counter()` e (B) l'altra usando `timeit.repeat`
     * DOMANDA: Quale tra `fib` e `fib_iter` dà luogo a tempi d'esecuzione minori?
     * Esempio di output del programma da implementare:
 ```
@@ -24,6 +24,8 @@ Consultando le slide sulla misura dei tempi d'esecuzione in Python, si svolgano 
 
 ...
 ```
+
+    * Osservazione: qual è una limitazione d'uso della funzione `measure_running_time`? Posso impiegarla as-is per misurare altri algoritmi (ad es. di ordinamento liste di numeri)? **Come potrebbe essere generalizzata?** 
 2. *[Tempo stimato: 30']* Si consideri **`profile-function.py`**. Si utilizzi `cProfile` per profilare `function_to_be_profiled()`
     * Qual è la parte più lenta di `function_to_be_profiled()`?
     * Dovresti ottenere un output simile al seguente:
@@ -43,8 +45,9 @@ Consultando le slide sulla misura dei tempi d'esecuzione in Python, si svolgano 
     - Si noti come sia importante per chi programma in un linguaggio conoscere la complessità delle funzioni che utilizza.
     - Più avanti nel corso vedremo queste strutture dati e capiremo da dove vengono fuori questi upper bound all'efficienza asintotica
 4. *[Tempo stimato: 30']* Si legga la descrizione del progetto [`big-O`](https://pypi.org/project/big-O/)
-    * Si rifletta sul problema generale: dedurre la forma/formula di una funzione a partire da punti (e.g., coppie (x,y)). Un approccio è quello della cosiddetta [regression analysis](https://en.wikipedia.org/wiki/Regression_analysis), dove si considera una certa forma di funzione (ad es `ax+b` per una retta), e si cerca di trovare i valori dei parametri `a` e `b` che meglio corrispondano ai dati (*regressione lineare*).
-    * Completamento di **`bigo-fib.py`**: si provi, consultando la documentazione, ad applicare il modulo allo scopo di inferire il comportamento asintotico di Fibonacci in versione ricorsiva ed iterativa.
+    * Si rifletta sul problema generale: dedurre la forma/formula di una funzione a partire da punti (e.g., coppie (x,y)). Il problema si chiama **curve fitting**.
+    * Un approccio è quello della cosiddetta **[regression analysis](https://en.wikipedia.org/wiki/Regression_analysis)**, dove si considera una certa forma di funzione (ad es `ax+b` per una retta nella cosiddetta **regressione lineare**), e si cerca di trovare i valori dei parametri `a` e `b` che meglio corrispondano ai dati.
+    * DA SVOLGERE: Completamento di **`bigo-fib.py`**: si provi, consultando la [documentazione di big_O](https://github.com/pberkes/big_O), ad applicare il modulo allo scopo di inferire la complessità di Fibonacci in versione ricorsiva ed iterativa.
     * Esempio di output atteso:
 ```
 FIB_REC:  Exponential: time = 3.5E-06 * 1.6^n (sec)
