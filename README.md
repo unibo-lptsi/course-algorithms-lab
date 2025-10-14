@@ -54,6 +54,32 @@ FIB_REC:  Exponential: time = 3.5E-06 * 1.6^n (sec)
 FIB_ITER:  Linear: time = -8.5E-05 + 3.6E-06*n (sec)
 ```
 
+### Soluzioni
+
+- `measure-fib-sol.py`:
+    - tra i vari modi possibili di impostare la soluzione, si è scelto di differenziare la funzione di misura per tipologia (`measure_pc` e `measure_timeit`); in alternative, si poteva discriminare tra le due modalità mediante un parametro
+    - si noti che si sono uniformate le due modalità di misura per lavorare con un numero di esecuzioni dato (parametro `n_times=N` che corrisponde al `number` di `timeit(, ..., number=N)`): il valore restuito è però quello della singola esecuzione, ottenuto calcolando la media
+    - volendo, si sarebbe potuto uniformare ulteriormente accettando un ulteriore parametro per il *numero di ripetizioni* (cf. parametro `repeat` di `timeit.repeat()`)
+    - il programma cicla su diversi valori di `n` e restituisce i risultati per le quattro varianti date dalla combinazione `fib_rec`/`fib_iter` e misura con `time`/`timeit`
+- `profile-function-sol.py`
+    - si profilano due istanze del sottoprogramma (semplice uso della libreria)
+    - sapete come funziona il blocco `with`?
+        - `with expr as name: body`: expr() restituisce un oggetto "context manager" `c` che implementa un "protocollo di gestione"; essenzialmente, l'istruzione `with` fa sì che il corpo `body` del blocco venga eseguito in mezzo a `name = c.__enter__()` e `c.__exit__()`
+```
+with cProfile.Profile() as pf:
+    function_to_be_profiled(n)
+```
+- `bigo-fib-sol.py`
+    - semplice utilizzo della libreria, consultando la documentazione
+        - `n_repeats` è il numero di volte la funzione è invocata (attenzione: corrisponde a `numbers` in `timeit`)
+        - la funzione è misurata per `n_measures` punti compresi tra `min_n` e `max_n` 
+        - quando il generatore è `big_o.datagen.n_` significa che l'input corrisponde 1 a 1 al valore di `n` inteso come dimensione dell'input: si veda il [modulo `big_o.datagen`](https://github.com/pberkes/big_O/blob/master/big_o/datagen.py)
+    - interessante però il concetto di *generatore*: l'oggetto responsabile di generare gli input per la funzione da testare 
+```
+rec_best, rec_others = big_o.big_o(fib, big_o.datagen.n_, n_repeats=5, min_n = 1, max_n = 25, n_measures = 5)
+print("FIB_REC: ", rec_best) # should be: exponential
+```
+
 ## Lab `recursion` (2025-10-06): ricorsione
 
 Razionale/obiettivo: acquisire familiarità con la ricorsione, le tipologie di ricorsione, e alcuni esempi pratici.
