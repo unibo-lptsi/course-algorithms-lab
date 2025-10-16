@@ -2,6 +2,41 @@
 
 Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**.  I percorsi relativi vanno intesi a partire dalla cartella del lab corrispondente.
 
+## Lab `plotting` e `search` (2025-10-20 / 2025-10-27): Grafici di funzioni e Algoritmi di ricerca 
+
+**Razionale/obiettivo:** acquisire familiarità con funzioni di diverse classi di complessità, e imparare a graficare dati per ottenere rappresentazioni utili allo studio e all'indagine.
+
+1. *[Tempo stimato: 45']* Si utilizzi `matplotlib` per costruire un'immagine simile a quella sottostante
+    * Si faccia riferimento alle slide, al notebook in `notebooks/matplotlib.ipynb`, agli **esempi** inclusi in [code-python/mpl/](code-python/mpl/)
+        * oltre che al [cheatsheet](https://matplotlib.org/cheatsheets/cheatsheets.pdf), alla [guida](https://matplotlib.org/stable/users/explain/quick_start.html), e alla [API Reference](https://matplotlib.org/stable/api/index.html) 
+    * Si parta dal file `plot_functions_of_n.py`
+    * Alcune indicazioni:
+        * Si può stabilire una lista di funzioni da graficare con: `functions = [float, math.log, lambda n: n*math.log(n), ...]`
+        * Si può usare `x_points = np.linspace(...)` per individuare i valori dell'asse `x` da produrre
+        * Si può produrre le ordinate dei punti da graficare per ogni funzione con qualcosa del tipo:
+        `y_points = np.array([some_function(x) for x in x_points])`
+        * Si può plottare con `plot(x_points, y_points)`
+        * Si può voler limitare l'asse y mediante la funzione `ylim(min,max)`
+        * Si può usare `Axes#xscale("log")` per impostare una scala logaritmica sull'asse x 
+        * Si pul usare `Axes#text(x,y,s)` per posizionare un'etichetta con testo `s` al punto `(x,y)` del grafico
+        * Si può usare `list(map(f,l))` per produrre una lista applicando `f` ad ogni elemento della lista `l`. Un'alternativa con NumPy potrebbe essere: usare `fvec = np.vectorize(f)` per ottenere una funzione `fvec` che usi `f` per lavorare su array in modo member-wise (cf. broadcasting).
+        * Al posto della funzione fattoriale, si può considerare la funzione [gamma](https://en.wikipedia.org/wiki/Gamma_function), che è una generalizzazione del fattoriale su valori reali. In Python: `math.gamma()`
+![](imgs/functions.png)
+
+
+2. *[Tempo stimato: 90']* Implementare, testare, e misurare gli algoritmi `linear_search` (ricerca lineare) e `binary_search` (ricerca binaria/dicotomica). Ovvero, per ogni algoritmo:
+    1. scrivere l'implementazione in Python
+        - si può lavorare a partire dai file `search_linear_search.py` e `search_binary_search.py`
+    2. scrivere alcuni test per stimare la correttezza dell'implementazione
+        - si scelga su usare `test_utils` oppure il modulo `unittest`
+3. Con riferimento al file `measure_search_algorithms.py`, **misurare e graficare i tempi d'esecuzione di `linear_search` e `binary_search`**
+    1. misurare i tempi d'esecuzione (usando `time.perf_counter()` o il modulo `timeit`) con input di diversa dimensione e struttura
+    2. tracciare i tempi d'esecuzione nel caso peggiore al variare della dimensione dell'array e graficarli con matplotlib
+        - prima di farlo: cosa ci aspettiamo di vedere?  
+4. *[Tempo stimato: 30']* Implementare e testare `linear_search_rec` e `binary_search_rec`, varianti degli algoritmi di ricerca strutturati in modo ricorsivo
+    - si può lavorare a partire dai file `search_linear_search.py` e `search_binary_search.py`, dove sono fornite le funzioni con corpo vuoto
+5. *[Opzionale]* Implementare, testare, e misurare l'algoritmo `interpolation_search`
+
 
 ## Lab `time` (2025-10-13): Misura dei tempi d'esecuzione di funzioni
 <a name="lab-time"></a>
@@ -84,7 +119,7 @@ Razionale/obiettivo: acquisire familiarità con la ricorsione, le tipologie di r
 
 
 ## Lab `testing` (2025-09-29): testing di algoritmi
-<a name="lab04-search"></a>
+<a name="lab01-testing"></a>
 
 **Premessa**: lo studio degli algoritmi si concentrano sulle loro proprietà formali, specialmente quelle legate alla **correttezza**  e all'**efficienza**. Per ottenere risposte precise o garanzie su questi aspetti, generalmente si usano metodi formali/matematici (ne vedremo qualcuno nel corso). 
 Un modo alternativo di ottenere informazioni circa queste proprietà è mediante la **verifica sperimentale**. Poiché tipicamente non è possibile coprire tutti i possibili input e casistiche, l'informazione e dunque la garanzia sarà parziale o comunque informale. Ognimodo, la verifica sperimentale (**testing**) è una pratica comunemente usata per la verifica del software.
