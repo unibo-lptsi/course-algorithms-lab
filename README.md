@@ -40,7 +40,8 @@ Svolgere i seguenti esercizi, leggendo attentamente le istruzioni:
         - prima di farlo: cosa ci aspettiamo di vedere?  
 4. *[Tempo stimato: 30']* Implementare e testare `linear_search_rec` e `binary_search_rec`, varianti degli algoritmi di ricerca strutturati in modo ricorsivo
     - si può lavorare a partire dai file `search_linear_search.py` e `search_binary_search.py`, dove sono fornite le funzioni con corpo vuoto
-5. *[Opzionale]* Implementare, testare, e misurare l'algoritmo `interpolation_search`
+
+<!-- 5. *[Opzionale]* Implementare, testare, e misurare l'algoritmo `interpolation_search` -->
 
 
 ## Lab `time` (2025-10-13): Misura dei tempi d'esecuzione di funzioni
