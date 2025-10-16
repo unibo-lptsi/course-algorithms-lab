@@ -4,7 +4,12 @@ Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**. 
 
 ## Lab `plotting` e `search` (2025-10-20 / 2025-10-27): Grafici di funzioni e Algoritmi di ricerca 
 
-**Razionale/obiettivo:** acquisire familiarità con funzioni di diverse classi di complessità, e imparare a graficare dati per ottenere rappresentazioni utili allo studio e all'indagine.
+**Razionale/obiettivi:** 
+
+1. acquisire familiarità con funzioni di diverse classi di complessità, e imparare a **graficare dati** per ottenere rappresentazioni utili allo studio e all'indagine.
+2. esercitarsi con gli **algoritmi di ricerca** approfonditi a lezione (ricerca lineare e binaria)
+
+Svolgere i seguenti esercizi, leggendo attentamente le istruzioni:
 
 1. *[Tempo stimato: 45']* Si utilizzi `matplotlib` per costruire un'immagine simile a quella sottostante
     * Si faccia riferimento alle slide, al notebook in `notebooks/matplotlib.ipynb`, agli **esempi** inclusi in [code-python/mpl/](code-python/mpl/)
