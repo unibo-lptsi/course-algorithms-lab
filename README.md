@@ -9,7 +9,9 @@ Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**. 
 1. acquisire familiarità con funzioni di diverse classi di complessità, e imparare a **graficare dati** per ottenere rappresentazioni utili allo studio e all'indagine.
 2. esercitarsi con gli **algoritmi di ricerca** approfonditi a lezione (ricerca lineare e binaria)
 
-Svolgere i seguenti esercizi, leggendo attentamente le istruzioni:
+Svolgere i seguenti esercizi, leggendo attentamente le istruzioni.
+
+### PARTE 1 (2025-10-20)
 
 1. *[Tempo stimato: 45']* Si utilizzi `matplotlib` per costruire un'immagine simile a quella sottostante
     * Si faccia riferimento alle slide, al notebook in `notebooks/matplotlib.ipynb`, agli **esempi** inclusi in [code-python/mpl/](code-python/mpl/)
@@ -30,10 +32,18 @@ Svolgere i seguenti esercizi, leggendo attentamente le istruzioni:
 
 
 2. *[Tempo stimato: 90']* Implementare, testare, e misurare gli algoritmi `linear_search` (ricerca lineare) e `binary_search` (ricerca binaria/dicotomica). Ovvero, per ogni algoritmo:
-    1. scrivere l'implementazione in Python
+    1. scrivere un'implementazione in Python
         - si può lavorare a partire dai file `search_linear_search.py` e `search_binary_search.py`
+        - ATTENZIONE: occorre **evitare di procedere semplicemente traducendo lo pseudocodice dato verso un'implementazione Python** (questo approccio trasforma il problema dall'*implementare l'algoritmo* a *tradurre istruzioni di pseudocodice ad istruzioni del linguaggi di programmazione scelto*!!!). Il procedimento dovrebbe essere il seguente:
+            1. cercare di comprendere l'idea / principio dietro un algoritmo
+            2. provare a implementare l'idea (N.B.: senza guardare lo pseudocodice fornito, oppure guardandolo una sola volta all'inizio)
+            3. verificare la propria soluzione, e correggere in caso di errori
+            4. se dopo un po' di tentativi ancora non vi è soluzione, dare un'occhiata allo pseudocodice fornito
     2. scrivere alcuni test per stimare la correttezza dell'implementazione
-        - si scelga su usare `test_utils` oppure il modulo `unittest`
+        - si scelga se usare `test_utils` oppure il modulo `unittest`
+
+### PARTE 1 (2025-10-27)
+
 3. Con riferimento al file `measure_search_algorithms.py`, **misurare e graficare i tempi d'esecuzione di `linear_search` e `binary_search`**
     1. misurare i tempi d'esecuzione (usando `time.perf_counter()` o il modulo `timeit`) con input di diversa dimensione e struttura
     2. tracciare i tempi d'esecuzione nel caso peggiore al variare della dimensione dell'array e graficarli con matplotlib
