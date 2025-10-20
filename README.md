@@ -42,7 +42,7 @@ Svolgere i seguenti esercizi, leggendo attentamente le istruzioni.
     2. scrivere alcuni test per stimare la correttezza dell'implementazione
         - si scelga se usare `test_utils` oppure il modulo `unittest`
 
-### PARTE 1 (2025-10-27)
+### PARTE 2 (2025-10-27)
 
 3. Con riferimento al file `measure_search_algorithms.py`, **misurare e graficare i tempi d'esecuzione di `linear_search` e `binary_search`**
     1. misurare i tempi d'esecuzione (usando `time.perf_counter()` o il modulo `timeit`) con input di diversa dimensione e struttura
