@@ -42,6 +42,24 @@ Svolgere i seguenti esercizi, leggendo attentamente le istruzioni.
     2. scrivere alcuni test per stimare la correttezza dell'implementazione
         - si scelga se usare `test_utils` oppure il modulo `unittest`
 
+#### Soluzioni
+
+- Parte `plotting`: `plot_functions_of_n_sol.py`
+    - La variabile `X` corrisponde ai diversi input delle funzioni (nel caso di algoritmi, sarebbero le dimensioni `n` del problema di cui vogliamo ottenere le misure)
+    - Per ognuna delle funzioni da plottare in `functions`, generiamo i valori prodotti per ogni input: nelle soluzioni, questo viene fatto applicando la funzione scelta `f` a tutti gli elementi di `X` (la chiamata `map(f,X)` da proprio questo)
+    - Avremo dunque due array `X` e `y`, dove avremo `y[i] = f(X[i])`
+    - A quel punto plottiamo `X` e `y` via `axes.plot(X, y)`, dove possiamo fornire una `label` per la legenda
+    - Si noti la chiamata `plt.savefig` per salvare il PDF della figura che poi verrà mostrata via `plt.show()`
+    - La parte forse meno ovvia è quella per posizionare le etichette di testo via `axes.text(x,y,label)`: prima si individua la posizione orizzontale (`idx`) trovando via `argmin()` l'indice nell'array `y` del valore che minimizza la distanza rispetto a `ylimit`, poi si prende con `X[idx]` il punto dell'asse X, e come punto dell'asse Y per l'etichetta o il valore limite (se la funzione lo eccede) oppure l'ultimo valore Y, modificato con un offset per ogni funzione definito in `label_pos`
+- Parte `search`:
+    - `search_linear_search_sol.py`
+        - si noti l'uso di parametri di default affinché la firma della funzione richieda solo i parametri strettamente necessari (l'`array` e l'elemento `x` da cercare)
+        - si noti come si è esplicitata la funzione di uguaglianza mediante parametro `eq`
+    - `search_binary_search_sol.py`
+        - si noti l'uso di parametri di default affinché la firma della funzione richieda solo i parametri strettamente necessari (l'`array` e l'elemento `x` da cercare): visto che la soluzione prevede di lavorare sui limiti `start` e `to`, conviene che la funzione d'ingresso richiami una funzione che accetta anche tali parametri
+        - si noti come si sono esplicitate la relazioni di uguaglianza e di "minore" mediante parametri `eq` e `less`
+        - si noti l'uso dell'operatore `//` per la divisione intera
+
 ### PARTE 2 (2025-10-27)
 
 3. Con riferimento al file `measure_search_algorithms.py`, **misurare e graficare i tempi d'esecuzione di `linear_search` e `binary_search`**
