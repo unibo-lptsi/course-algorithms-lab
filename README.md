@@ -71,6 +71,16 @@ Svolgere i seguenti esercizi, leggendo attentamente le istruzioni.
 
 <!-- 5. *[Opzionale]* Implementare, testare, e misurare l'algoritmo `interpolation_search` -->
 
+#### Solutions
+
+- Implementazioni ricorsive: 
+    - `search_linear_search_sol.py`: si noti uso di parametri None per gestire inizializzazione, e l'uso di un parametro che funga da "cursore"
+    - `search_binary_search_sol.py`: si noti come il restringimento della porzione da esaminare si attui mediante parametro attuale alla chiamata ricorsiva
+    - DOMANDA: le implementazioni fornite sono tail recursive?
+- Plotting del confronto: `measure_search_algorithms_sol.py`
+    - Il confronto è impari. Si noti l'uso di funzioni di utilità per una soluzione modulare.
+    - Gli input sono piuttosto uniformi, la gestione delle casistiche è demandata all'elemento da cercare (presente / non presente)
+
 
 ## Lab `time` (2025-10-13): Misura dei tempi d'esecuzione di funzioni
 <a name="lab-time"></a>

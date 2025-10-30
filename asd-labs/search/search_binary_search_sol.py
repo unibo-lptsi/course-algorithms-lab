@@ -1,7 +1,17 @@
 import random
 
-def binary_search_recur(array, x):
-    pass
+def _binary_search_recur(array, x, start, to, eq = lambda x, y: x == y, less = lambda x, y: x < y):
+    if to < start: return -1
+    if start == to:
+        return start if eq(array[start], x)  else -1
+    mid = start + (to - start)//2
+    print(f"from={start}; to={to}; mid={mid}")
+    if eq(array[mid], x): return mid
+    elif less(array[mid], x): return binary_search_recur(array, x, mid+1, to)
+    else: return binary_search_recur(array, x, start, mid-1)
+
+def binary_search_recur(array, x, eq = lambda x, y: x == y, less = lambda x, y: x < y):
+    return _binary_search_recur(array, x, 0, len(array)-1, eq, less)
 
 def _binary_search_iter(array, x, start, to, eq = lambda x, y: x == y, less = lambda x, y: x < y):
     while start <= to:
@@ -15,7 +25,7 @@ def binary_search_iter(array, x, eq = lambda x, y: x == y, less = lambda x, y: x
    return _binary_search_iter(array, x, 0, len(array)-1, eq, less) 
 
 def binary_search(array, x):
-    return binary_search_iter(array, x, 0, len(array)-1)
+    return binary_search_iter(array, x)
 
 def random_array(fromN, toN, n, seed = None):
     random.seed(seed)

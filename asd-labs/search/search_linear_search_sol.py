@@ -7,8 +7,13 @@ def linear_search(array, x, eq = lambda x, y: x == y):
             return i
     return -1
 
-def linear_search_rec(array, x):
-    pass
+def linear_search_rec(array, x, start=None, to=None, eq = lambda x, y: x == y):
+    if start is None or to is None: 
+        start = 0
+        to = len(array)-1
+    if start > to: return -1
+    if eq(array[start], x): return start
+    return linear_search_rec(array, x, start+1, to, eq)
 
 def random_array(fromN, toN, n, seed = None):
     random.seed(seed)
