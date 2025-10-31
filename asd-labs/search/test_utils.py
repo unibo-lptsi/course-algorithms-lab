@@ -7,8 +7,8 @@ def test_all(tests: Dict[str, Tuple[Tuple,Any]], f: Callable, tolerance: float =
     """Runs a set of tests over a function-under-test f.
 
     Arguments:
-    tests -- the set of test specifications, as a dict where keys are test names and values are input/output tuples of format (args_tuple, expected_result)
-    f -- the function to be tested
+        tests -- the set of test specifications, as a dict where keys are test names and values are input/output tuples of format (args_tuple, expected_result)
+        f -- the function to be tested
     """
     ntests = 0
     nsuccess = 0
