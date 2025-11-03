@@ -8,8 +8,8 @@ Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**. 
 
 1. *[Tempo stimato: 90']* Nel file modulo `sorting.py`, implementare e testare gli algoritmi di ordinamento visti a lezione: `selection_sort`, `insertion_sort`, `bubble_sort`, `merge_sort`, `quick_sort`
     * ATTENZIONE: occorre **evitare di procedere semplicemente traducendo lo pseudocodice dato a lezione verso un'implementazione Python** (questo approccio riduce il problema dall'*implementare l'algoritmo* a *tradurre istruzioni di pseudocodice ad istruzioni del linguaggi di programmazione scelto*!!!). Il procedimento dovrebbe essere il seguente:
-        1. cercare di comprendere l'idea / principio dietro un algoritmo
-        2. provare a implementare l'idea (N.B.: senza guardare lo pseudocodice fornito, oppure guardandolo una sola volta all'inizio)
+        1. prima di iniziare a scrivere codice, cercare di comprendere l'idea / principio dietro un algoritmo: si consiglia di partire esercitando l'algoritmo con carta e penna su esempi piccoli
+        2. disattivando CoPilot o altri strumenti di code-completion, provare a implementare l'idea (N.B.: senza guardare lo pseudocodice fornito, oppure guardandolo una sola volta all'inizio)
         3. verificare la propria soluzione, e correggere in caso di errori
         4. se dopo un po' di tentativi ancora non vi è soluzione, dare un'occhiata allo pseudocodice fornito
         5. una volta verificata la correttezza di una soluzione, confrontarsi con lo pseudocodice (per scorgere eventuali aspetti da migliorare--ad esempio, piccoli interventi volti a ridurre il numero di iterazioni di un ciclo, o condizioni volte a promuovere una terminazione anticipata di un algoritmo)
@@ -51,8 +51,8 @@ Svolgere i seguenti esercizi, leggendo attentamente le istruzioni.
     1. scrivere un'implementazione in Python
         - si può lavorare a partire dai file `search_linear_search.py` e `search_binary_search.py`
         - ATTENZIONE: occorre **evitare di procedere semplicemente traducendo lo pseudocodice dato verso un'implementazione Python** (questo approccio trasforma il problema dall'*implementare l'algoritmo* a *tradurre istruzioni di pseudocodice ad istruzioni del linguaggi di programmazione scelto*!!!). Il procedimento dovrebbe essere il seguente:
-            1. cercare di comprendere l'idea / principio dietro un algoritmo
-            2. provare a implementare l'idea (N.B.: senza guardare lo pseudocodice fornito, oppure guardandolo una sola volta all'inizio)
+            1. prima di iniziare a scrivere codice, cercare di comprendere l'idea / principio dietro un algoritmo: si consiglia di partire esercitando l'algoritmo con carta e penna su esempi piccoli
+            2. disattivando CoPilot o altri strumenti di code-completion, provare a implementare l'idea (N.B.: senza guardare lo pseudocodice fornito, oppure guardandolo una sola volta all'inizio)
             3. verificare la propria soluzione, e correggere in caso di errori
             4. se dopo un po' di tentativi ancora non vi è soluzione, dare un'occhiata allo pseudocodice fornito
     2. scrivere alcuni test per stimare la correttezza dell'implementazione
