@@ -16,6 +16,7 @@ Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**. 
     * per il **testing**, si può utilizzare la funzione di test `test_utils.test_all_functions` fornita per sottoporre più funzioni-under-test a una stessa suite di test
     - si noti inoltre che il modulo `test_utils` è stato adattato per supportare, quando il parametro `in_place=True`, il testing funzioni che modificano **in-place** il loro primo argomento
     * si ragioni su quali ulteriori test case considerare
+2. *OPZIONALE*: cercando di riusare le funzionalità di misura tempi e plotting sviluppate nei laboratori precedenti, confrontare gli algoritmi di ordinamento producendo grafici corrispondenti ai casi: (1) array già ordinato, (2) array contrordinato, (3) array casuale 
 
 ## Lab `plotting` e `search` (2025-10-20 / 2025-10-27): Grafici di funzioni e Algoritmi di ricerca 
 
