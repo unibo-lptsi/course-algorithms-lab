@@ -15,9 +15,10 @@ Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**. 
         - **`darray_assert_equals`**: atta a verificare con asserzioni che l'array dinamico indicato abbia lo stesso contenuto dell'array "tradizionale" fornito
     - Si noti la funzione di `test()` che viene invocata ed eseguita attivando le due modalità di espansione dell'array
     - Nota: si compili con `gcc -DDEBUG dynamic_arrays.c`, ovvero con opzione **`-DDEBUG` per attivare log di debug e ispezionare il comportamento delle funzioni di riallocazione
-2. *OPZIONALE.* In Python, utilizzare `matplotlib` per graficare come evolve la capacità (memoria allocata) di un array dinamico utilizzando le due tecniche di espansione (lineare e geometrica).
+2. *OPZIONALE.* Si consideri il notebook fornito **`plotting_darray_capacity_expansion.ipynb`**, che utilizza `matplotlib` per graficare come evolve la capacità (memoria allocata) di un array dinamico utilizzando le due tecniche di espansione (lineare e geometrica). 
+    - Implementare la logica di espansione/contrazione lineare e geometrica
     - Parametrizzare il codice rispetto ai delta, fattori, soglie di crescita/contrazione
-    - Ovvero, si cerchi di riprodurre una figura tipo la seguente
+    - Si cerchi di riprodurre una figura tipo la seguente
 ![](imgs/dynamic-array-capacity-growth.png)
 
 ## Lab `sorting` (2025-11-03): Algoritmi di ordinamento
