@@ -11,7 +11,7 @@
 
 // NB: compile with gcc "-DDEBUG"
 #ifdef DEBUG
-#define LOG(fmt, ...) fprintf(stderr, fmt, __VA_ARGS__)
+#define LOG(fmt, ...) fprintf(stdout, fmt, __VA_ARGS__)
 #else
 #define LOG(fmt, ...)
 #endif
@@ -36,6 +36,7 @@ DArray darray_create_capac(int initial_size, int initial_capacity);
 void darray_set(DArray* da, int pos, TInfo value);
 void darray_print(DArray* da, char* eol);
 void darray_destroy(DArray* da);
+void darray_realloc(DArray* da, int new_capacity);
 void darray_resize_linear(DArray* da, int new_size);
 void darray_resize_geometric(DArray* da, int new_size);
 void darray_resize(DArray* da, int new_size);
@@ -44,6 +45,22 @@ void darray_expand(DArray* da, TInfo* arr, int sz);
 void darray_insert(DArray* da, int insert_pos, TInfo value);
 void darray_assert_equals(DArray* da, TInfo* expected, int expected_len);
 
+
+void darray_append(DArray* da, TInfo value) {
+    // TODO
+    fprintf(stderr, "darray_append: TO BE IMPLEMENTED\n");
+}
+
+void darray_insert(DArray* da, int insert_pos, TInfo value) {
+    // TODO
+    fprintf(stderr, "darray_insert: TO BE IMPLEMENTED\n");
+}
+
+void darray_assert_equals(DArray* da, TInfo* expected, int expected_len) {
+    // TODO
+    fprintf(stderr, "darray_assert_equals: TO BE IMPLEMENTED\n");
+}
+
 static void (*f_resize)(DArray*,int) = &darray_resize_linear;
 
 DArray darray_create(int initial_size) {
@@ -51,10 +68,17 @@ DArray darray_create(int initial_size) {
 }
 
 DArray darray_create_capac(int initial_size, int initial_capacity) {
-    assert(initial_capacity >= initial_size);
+    if(initial_capacity < initial_size) {
+        fprintf(stderr, "WARNING: initial_capacity %d is less than initial_size %d; adjusting initial_capacity to initial_size.\n", initial_capacity, initial_size);
+        initial_capacity = initial_size;
+    }
+
     DArray a;
     a.item = (TInfo*) malloc(sizeof(TInfo) * initial_capacity);
-    assert(initial_size==0 || a.item!=NULL);
+    if(a.item == NULL) {
+        fprintf(stderr, "ERROR: malloc failed; exiting.\n");
+        exit(-1);
+    }
     a.capacity = initial_capacity;
     a.size = initial_size;
     return a;
@@ -90,14 +114,27 @@ void darray_destroy(DArray* da) {
     da->size = 0;
 }
 
+void darray_realloc(DArray* da, int new_capacity) {
+    if(new_capacity < da->size) {
+        fprintf(stderr, "WARNING: requested capacity %d is less than current size %d; realloc skipped.\n", new_capacity, da->size);
+        return;
+    }
+    LOG("[LOG] Requested reallocating and setting new_capacity=%d.\n", new_capacity);
+    da->item = (TInfo*) realloc(da->item, sizeof(TInfo) * new_capacity);
+    if(da->item == NULL) {
+        fprintf(stderr, "ERROR: realloc failed; exiting.\n");
+        exit(-1);
+    }
+    da->capacity = new_capacity;
+}
+
 void darray_resize_linear(DArray* da, int new_size) {
     if(new_size < 0) return; 
     LOG("[LINEAR] Resize darray to new_size=%d.\n", new_size);
     if(new_size > da->capacity || (da->capacity - new_size) > SHRINKING_DELTA) {
         const int new_capacity = new_size + GROWING_DELTA;
         LOG("[LINEAR] Setting capacity to %d.\n", new_capacity);
-        da->item = (TInfo*) realloc(da->item, sizeof(TInfo) * new_capacity);
-        da->capacity = new_capacity;
+        darray_realloc(da, new_capacity);
     }
     da->size = new_size;
 }
@@ -108,8 +145,7 @@ void darray_resize_geometric(DArray* da, int new_size) {
     if(new_size > da->capacity || (da->capacity / new_size) > SHRINKING_FACTOR) {
         const int new_capacity = new_size * GROWING_FACTOR;
         LOG("[GEOMETRIC] Setting capacity to %d.\n", new_capacity);
-        da->item = (TInfo*) realloc(da->item, sizeof(TInfo) * new_capacity);
-        da->capacity = new_capacity;
+        darray_realloc(da, new_capacity);
     }
     da->size = new_size;
 }
@@ -118,9 +154,6 @@ void darray_resize(DArray* da, int new_size) {
     f_resize(da, new_size);
 }
 
-void darray_append(DArray* da, TInfo value) {
-    // TODO
-}
 
 void darray_expand(DArray* da, TInfo* arr, int sz) {
     int curr_size = da->size; // NB: keep track of current size as resize will move it
@@ -128,14 +161,6 @@ void darray_expand(DArray* da, TInfo* arr, int sz) {
     for(int i=0; i<sz; i++) {
         darray_set(da, curr_size + i, arr[i]);
     }
-}
-
-void darray_insert(DArray* da, int insert_pos, TInfo value) {
-    // TODO
-}
-
-void darray_assert_equals(DArray* da, TInfo* expected, int expected_len) {
-    // TODO
 }
 
 void test() {
@@ -147,23 +172,28 @@ void test() {
     }
     darray_assert_equals(&da, (int[]){1,2,3,4,5}, 5);
     darray_print(&da,"\n");
+    darray_realloc(&da, da.capacity + 3);
+    darray_print(&da,"\n");
     printf("appending 88\n");
     darray_append(&da, 88);
     darray_assert_equals(&da, (int[]){1,2,3,4,5,88}, 6);
     darray_print(&da,"\n");
+    printf("doing some resizes (first to 17, then back to 3)\n");
     darray_resize(&da, 17);
     darray_resize(&da, 3);
     darray_assert_equals(&da, (int[]){1,2,3}, 3);
+    printf("expanding with 11 new elements 0, ..., 10\n");
     darray_expand(&da, (TInfo[]){0,1,2,3,4,5,6,7,8,9,10}, 11);
     darray_print(&da,"\n");
     darray_assert_equals(&da, (int[]){1,2,3,0,1,2,3,4,5,6,7,8,9,10}, 14);
+    printf("inserting 55 at position 2\n");
     darray_insert(&da, 2, 55);
     //darray_resize(&da, 100);
+    printf("setting position 80 to 888\n");
     darray_set(&da, 80, 888);
     darray_assert_equals(&da, (int[]){1,2,55,3,0,1,2,3,4,5,6,7,8,9,10}, 15);
     darray_print(&da,"\n\n");
 }
-
 
 int main() {
     f_resize = &darray_resize_linear;

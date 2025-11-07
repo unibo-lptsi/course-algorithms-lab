@@ -2,7 +2,25 @@
 
 Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**.  I percorsi relativi vanno intesi a partire dalla cartella del lab corrispondente.
 
-## Lab `sorting` (2024-11-03): Algoritmi di ordinamento
+## Lab `dynamic-arrays` (2025-11-10): array dinamici
+
+1. **Implementazione C di array dinamici**: Studio e integrazione funzionalità
+    - **Studiare** il sorgente `dynamic_arrays.c`, in particolare:
+            - si compili (e.g. `gcc -Wall asd-labd/dynamic-arrays/dynamic-arrays.c`) ed **esegua** il codice (e.g. `./a.out` o `.\a.exe` su Windows) e si cerchi di comprendere l'output; se l'output non torna, si noti che la funzione di `test` sfrutta funzioni **ancora da implementare**.
+            - si noti l'uso di una rappresentazione stringa `[size/capacity]{ a_0, ..., a_{n-1} }` per gli array dinamici 
+            - a questo punto si studi il sorgente, e si osservi le funzioni rilevanti, tra cui: `darray_create_capac`, `darray_print`, `darray_realloc`, `darray_resize_linear`, `darray_resize_geometric`
+    - **Completare il sorgente implementando le seguenti funzioni**:
+        - **`darray_append`**: atta ad aggiungere alla fine dell'array un elemento (ridimensionando l'array)
+        - **`darray_insert`**: atta ad aggiungere alla posizione indicata un nuovo elemento (traslando opportunamenti quelli attualmente presenti)
+        - **`darray_assert_equals`**: atta a verificare con asserzioni che l'array dinamico indicato abbia lo stesso contenuto dell'array "tradizionale" fornito
+    - Si noti la funzione di `test()` che viene invocata ed eseguita attivando le due modalità di espansione dell'array
+    - Nota: si compili con `gcc -DDEBUG dynamic_arrays.c`, ovvero con opzione **`-DDEBUG` per attivare log di debug e ispezionare il comportamento delle funzioni di riallocazione
+2. *OPZIONALE.* In Python, utilizzare `matplotlib` per graficare come evolve la capacità (memoria allocata) di un array dinamico utilizzando le due tecniche di espansione (lineare e geometrica).
+    - Parametrizzare il codice rispetto ai delta, fattori, soglie di crescita/contrazione
+    - Ovvero, si cerchi di riprodurre una figura tipo la seguente
+![](imgs/dynamic-array-capacity-growth.png)
+
+## Lab `sorting` (2025-11-03): Algoritmi di ordinamento
 
 **Razionale/obiettivi:** esercitarsi con gli **algoritmi di ordinamento** approfonditi a lezione
 
