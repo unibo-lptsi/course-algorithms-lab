@@ -33,6 +33,7 @@ typedef struct SDArray DArray;
 void darray_resize(DArray* da, int new_size);
 DArray darray_create(int initial_size);
 DArray darray_create_capac(int initial_size, int initial_capacity);
+DArray darray_init(int initial_size, TInfo value);
 void darray_set(DArray* da, int pos, TInfo value);
 void darray_print(DArray* da, char* eol);
 void darray_destroy(DArray* da);
@@ -59,6 +60,11 @@ void darray_insert(DArray* da, int insert_pos, TInfo value) {
 void darray_assert_equals(DArray* da, TInfo* expected, int expected_len) {
     // TODO
     fprintf(stderr, "darray_assert_equals: TO BE IMPLEMENTED\n");
+}
+
+DArray darray_init(int initial_size, TInfo value) {
+    // TODO
+    fprintf(stderr, "darray_init: TO BE IMPLEMENTED\n");    
 }
 
 static void (*f_resize)(DArray*,int) = &darray_resize_linear;
@@ -166,6 +172,7 @@ void darray_expand(DArray* da, TInfo* arr, int sz) {
 void test() {
     printf("*** TEST ***\n");
     DArray da = darray_create(5);
+    darray_print(&da,"\n");
     for(int i=0; i<5; i++) {
         printf("setting d[%d] to %d\n", i, i+1);
         darray_set(&da, i, i+1);
@@ -193,6 +200,14 @@ void test() {
     darray_set(&da, 80, 888);
     darray_assert_equals(&da, (int[]){1,2,55,3,0,1,2,3,4,5,6,7,8,9,10}, 15);
     darray_print(&da,"\n\n");
+    printf("Destroying the array\n");
+    darray_destroy(&da);
+    print("Creating and initializing an array of size 7 with all values set to 42\n");
+    da = darray_init(7, 42);
+    darray_print(&da,"\n");
+    darray_assert_equals(&da, (int[]){42,42,42,42,42,42,42}, 7);
+    darray_destroy(&da);
+    printf("*** END TEST ***\n");
 }
 
 int main() {
