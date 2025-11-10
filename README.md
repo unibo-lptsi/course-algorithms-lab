@@ -37,6 +37,13 @@ Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**. 
     * si ragioni su quali ulteriori test case considerare
 2. *OPZIONALE*: cercando di riusare le funzionalità di misura tempi e plotting sviluppate nei laboratori precedenti, confrontare gli algoritmi di ordinamento producendo grafici corrispondenti ai casi: (1) array già ordinato, (2) array contrordinato, (3) array casuale 
 
+### Soluzione
+
+- `sorting_sol.py`:
+    - notate che per alcuni algoritmi sono definite delle varianti (`selection_sort2` e `insertion_sort2` che non usano funzioni di utilità, e `merge_sort2`)
+    - osservate che `merge_sort` fornisce una implementazione più semplice ma anche naive: lavorando con gli slice di liste Python, si incorre in alti costi legate alle copie 
+    - può essere interessante misurare i tempi d'esecuzione di queste diverse implementazioni
+
 ## Lab `plotting` e `search` (2025-10-20 / 2025-10-27): Grafici di funzioni e Algoritmi di ricerca 
 
 **Razionale/obiettivi:** 
