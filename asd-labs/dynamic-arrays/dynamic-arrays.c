@@ -7,6 +7,7 @@
  * - darray_append(DArray* da, TInfo value)
  * - darray_insert(DArray* da, int insert_pos, TInfo value)
  * - darray_assert_equals(DArray* da, TInfo* expected, int expected_len)
+ * - DArray darray_init(int initial_size, TInfo value)
  */
 
 // NB: compile with gcc "-DDEBUG"
