@@ -2,6 +2,41 @@
 
 Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**.  I percorsi relativi vanno intesi a partire dalla cartella del lab corrispondente.
 
+## Lab `dynamic-arrays` (2025-11-10): array dinamici
+
+1. **Implementazione C di array dinamici**: Studio e integrazione funzionalità
+    - **Studiare** il sorgente `dynamic_arrays.c`, in particolare:
+            - si compili (e.g. `gcc -Wall asd-labd/dynamic-arrays/dynamic-arrays.c`) ed **esegua** il codice (e.g. `./a.out` o `.\a.exe` su Windows) e si cerchi di comprendere l'output; se l'output non torna, si noti che la funzione di `test` sfrutta funzioni **ancora da implementare**.
+            - si noti l'uso di una rappresentazione stringa `[size/capacity]{ a_0, ..., a_{n-1} }` per gli array dinamici 
+            - a questo punto si studi il sorgente, e si osservi le funzioni rilevanti, tra cui: `darray_create_capac`, `darray_print`, `darray_realloc`, `darray_resize_linear`, `darray_resize_geometric`
+    - **Completare il sorgente implementando le seguenti funzioni**:
+        - **`darray_append`**: atta ad aggiungere alla fine dell'array un elemento (ridimensionando l'array)
+        - **`darray_insert`**: atta ad aggiungere alla posizione indicata un nuovo elemento (traslando opportunamenti quelli attualmente presenti)
+        - **`darray_assert_equals`**: atta a verificare con asserzioni che l'array dinamico indicato abbia lo stesso contenuto dell'array "tradizionale" fornito
+    - Si noti la funzione di `test()` che viene invocata ed eseguita attivando le due modalità di espansione dell'array
+    - Nota: si compili con `gcc -DDEBUG dynamic_arrays.c`, ovvero con opzione **`-DDEBUG` per attivare log di debug e ispezionare il comportamento delle funzioni di riallocazione
+2. *OPZIONALE.* Si consideri il notebook fornito **`plotting_darray_capacity_expansion.ipynb`**, che utilizza `matplotlib` per graficare come evolve la capacità (memoria allocata) di un array dinamico utilizzando le due tecniche di espansione (lineare e geometrica). 
+    - Implementare la logica di espansione/contrazione lineare e geometrica
+    - Parametrizzare il codice rispetto ai delta, fattori, soglie di crescita/contrazione
+    - Si cerchi di riprodurre una figura tipo la seguente
+![](imgs/dynamic-array-capacity-growth.png)
+
+## Lab `sorting` (2025-11-03): Algoritmi di ordinamento
+
+**Razionale/obiettivi:** esercitarsi con gli **algoritmi di ordinamento** approfonditi a lezione
+
+1. *[Tempo stimato: 90']* Nel file modulo `sorting.py`, implementare e testare gli algoritmi di ordinamento visti a lezione: `selection_sort`, `insertion_sort`, `bubble_sort`, `merge_sort`, `quick_sort`
+    * ATTENZIONE: occorre **evitare di procedere semplicemente traducendo lo pseudocodice dato a lezione verso un'implementazione Python** (questo approccio riduce il problema dall'*implementare l'algoritmo* a *tradurre istruzioni di pseudocodice ad istruzioni del linguaggi di programmazione scelto*!!!). Il procedimento dovrebbe essere il seguente:
+        1. prima di iniziare a scrivere codice, cercare di comprendere l'idea / principio dietro un algoritmo: si consiglia di partire esercitando l'algoritmo con carta e penna su esempi piccoli
+        2. disattivando CoPilot o altri strumenti di code-completion, provare a implementare l'idea (N.B.: senza guardare lo pseudocodice fornito, oppure guardandolo una sola volta all'inizio)
+        3. verificare la propria soluzione, e correggere in caso di errori
+        4. se dopo un po' di tentativi ancora non vi è soluzione, dare un'occhiata allo pseudocodice fornito
+        5. una volta verificata la correttezza di una soluzione, confrontarsi con lo pseudocodice (per scorgere eventuali aspetti da migliorare--ad esempio, piccoli interventi volti a ridurre il numero di iterazioni di un ciclo, o condizioni volte a promuovere una terminazione anticipata di un algoritmo)
+    * per il **testing**, si può utilizzare la funzione di test `test_utils.test_all_functions` fornita per sottoporre più funzioni-under-test a una stessa suite di test
+    - si noti inoltre che il modulo `test_utils` è stato adattato per supportare, quando il parametro `in_place=True`, il testing funzioni che modificano **in-place** il loro primo argomento
+    * si ragioni su quali ulteriori test case considerare
+2. *OPZIONALE*: cercando di riusare le funzionalità di misura tempi e plotting sviluppate nei laboratori precedenti, confrontare gli algoritmi di ordinamento producendo grafici corrispondenti ai casi: (1) array già ordinato, (2) array contrordinato, (3) array casuale 
+
 ## Lab `plotting` e `search` (2025-10-20 / 2025-10-27): Grafici di funzioni e Algoritmi di ricerca 
 
 **Razionale/obiettivi:** 
@@ -35,8 +70,8 @@ Svolgere i seguenti esercizi, leggendo attentamente le istruzioni.
     1. scrivere un'implementazione in Python
         - si può lavorare a partire dai file `search_linear_search.py` e `search_binary_search.py`
         - ATTENZIONE: occorre **evitare di procedere semplicemente traducendo lo pseudocodice dato verso un'implementazione Python** (questo approccio trasforma il problema dall'*implementare l'algoritmo* a *tradurre istruzioni di pseudocodice ad istruzioni del linguaggi di programmazione scelto*!!!). Il procedimento dovrebbe essere il seguente:
-            1. cercare di comprendere l'idea / principio dietro un algoritmo
-            2. provare a implementare l'idea (N.B.: senza guardare lo pseudocodice fornito, oppure guardandolo una sola volta all'inizio)
+            1. prima di iniziare a scrivere codice, cercare di comprendere l'idea / principio dietro un algoritmo: si consiglia di partire esercitando l'algoritmo con carta e penna su esempi piccoli
+            2. disattivando CoPilot o altri strumenti di code-completion, provare a implementare l'idea (N.B.: senza guardare lo pseudocodice fornito, oppure guardandolo una sola volta all'inizio)
             3. verificare la propria soluzione, e correggere in caso di errori
             4. se dopo un po' di tentativi ancora non vi è soluzione, dare un'occhiata allo pseudocodice fornito
     2. scrivere alcuni test per stimare la correttezza dell'implementazione
