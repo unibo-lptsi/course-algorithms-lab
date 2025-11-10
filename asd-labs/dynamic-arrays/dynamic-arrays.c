@@ -65,7 +65,9 @@ void darray_assert_equals(DArray* da, TInfo* expected, int expected_len) {
 
 DArray darray_init(int initial_size, TInfo value) {
     // TODO
-    fprintf(stderr, "darray_init: TO BE IMPLEMENTED\n");    
+    DArray da = {};
+    fprintf(stderr, "darray_init: TO BE IMPLEMENTED\n");
+    return da;
 }
 
 static void (*f_resize)(DArray*,int) = &darray_resize_linear;
@@ -92,7 +94,6 @@ DArray darray_create_capac(int initial_size, int initial_capacity) {
 }
 
 void darray_set(DArray* da, int pos, TInfo value) {
-    int curr_size = da->size;
     // one approach would be to conditionally set the value at pos iff pos < size
     // another approach would be to expand the size (but then the user should be aware that a O(n) cost may apply)
     if(da->size <= pos) {
