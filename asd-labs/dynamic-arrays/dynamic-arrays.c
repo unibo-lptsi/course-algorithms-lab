@@ -203,7 +203,7 @@ void test() {
     darray_print(&da,"\n\n");
     printf("Destroying the array\n");
     darray_destroy(&da);
-    print("Creating and initializing an array of size 7 with all values set to 42\n");
+    printf("Creating and initializing an array of size 7 with all values set to 42\n");
     da = darray_init(7, 42);
     darray_print(&da,"\n");
     darray_assert_equals(&da, (int[]){42,42,42,42,42,42,42}, 7);
