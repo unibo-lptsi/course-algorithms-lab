@@ -49,24 +49,33 @@ void darray_assert_equals(DArray* da, TInfo* expected, int expected_len);
 
 
 void darray_append(DArray* da, TInfo value) {
-    // TODO
-    fprintf(stderr, "darray_append: TO BE IMPLEMENTED\n");
+    int curr_size = da->size; // NB: keep track of current size as resize will move it
+    darray_resize(da, curr_size + 1);
+    da->item[curr_size] = value;
 }
 
 void darray_insert(DArray* da, int insert_pos, TInfo value) {
-    // TODO
-    fprintf(stderr, "darray_insert: TO BE IMPLEMENTED\n");
+    darray_resize(da, da->size + 1); // make room for an additional element
+    // shift elements to free the insert position
+    for(int i=da->size-1; i>insert_pos; i--) {
+        da->item[i] = da->item[i-1];
+    }
+    da->item[insert_pos] = value;
 }
 
 void darray_assert_equals(DArray* da, TInfo* expected, int expected_len) {
-    // TODO
-    fprintf(stderr, "darray_assert_equals: TO BE IMPLEMENTED\n");
+    assert(da->size == expected_len);
+    for(int i=0; i<expected_len; i++) {
+        assert(da->item[i] == expected[i]);
+    }
 }
 
 DArray darray_init(int initial_size, TInfo value) {
-    // TODO
-    DArray da = {};
-    fprintf(stderr, "darray_init: TO BE IMPLEMENTED\n");
+    DArray da = darray_create(initial_size);
+    for(int i=0; i<initial_size; i++) {
+        // da.item[i] = value;
+        darray_set(&da, i, value);
+    }
     return da;
 }
 
@@ -96,17 +105,11 @@ DArray darray_create_capac(int initial_size, int initial_capacity) {
 void darray_set(DArray* da, int pos, TInfo value) {
     // one approach would be to conditionally set the value at pos iff pos < size
     // another approach would be to expand the size (but then the user should be aware that a O(n) cost may apply)
-    /**
     if(da->size <= pos) {
         darray_resize(da, pos+1);
         // for(int i=curr_size; i<pos+1; i++) darray_set(da, i, 0);
     }
-    */
-    if(da->size <= pos) {
-        fprintf(stderr, "WARNING: darray_set: position %d is out of bounds (size=%d); skipping.\n", pos, da->size);
-    } else {
-        (da->item)[pos] = value;
-    }
+    (da->item)[pos] = value;
 }
 
 void darray_print(DArray* da, char* eol) {
@@ -203,7 +206,7 @@ void test() {
     darray_insert(&da, 2, 55);
     //darray_resize(&da, 100);
     darray_assert_equals(&da, (int[]){1,2,55,3,0,1,2,3,4,5,6,7,8,9,10}, 15);
-    darray_print(&da,"\n\n");
+    darray_print(&da,"\n");
     printf("[ACT] destroying the array\n");
     darray_destroy(&da);
     printf("[ACT] creating and initializing an array of size 7 with all values set to 42\n");
