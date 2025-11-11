@@ -7,6 +7,7 @@
  * - darray_append(DArray* da, TInfo value)
  * - darray_insert(DArray* da, int insert_pos, TInfo value)
  * - darray_assert_equals(DArray* da, TInfo* expected, int expected_len)
+ * - DArray darray_init(int initial_size, TInfo value)
  */
 
 // NB: compile with gcc "-DDEBUG"
@@ -33,6 +34,7 @@ typedef struct SDArray DArray;
 void darray_resize(DArray* da, int new_size);
 DArray darray_create(int initial_size);
 DArray darray_create_capac(int initial_size, int initial_capacity);
+DArray darray_init(int initial_size, TInfo value);
 void darray_set(DArray* da, int pos, TInfo value);
 void darray_print(DArray* da, char* eol);
 void darray_destroy(DArray* da);
@@ -61,6 +63,13 @@ void darray_assert_equals(DArray* da, TInfo* expected, int expected_len) {
     fprintf(stderr, "darray_assert_equals: TO BE IMPLEMENTED\n");
 }
 
+DArray darray_init(int initial_size, TInfo value) {
+    // TODO
+    DArray da = {};
+    fprintf(stderr, "darray_init: TO BE IMPLEMENTED\n");
+    return da;
+}
+
 static void (*f_resize)(DArray*,int) = &darray_resize_linear;
 
 DArray darray_create(int initial_size) {
@@ -85,7 +94,6 @@ DArray darray_create_capac(int initial_size, int initial_capacity) {
 }
 
 void darray_set(DArray* da, int pos, TInfo value) {
-    int curr_size = da->size;
     // one approach would be to conditionally set the value at pos iff pos < size
     // another approach would be to expand the size (but then the user should be aware that a O(n) cost may apply)
     if(da->size <= pos) {
@@ -164,35 +172,46 @@ void darray_expand(DArray* da, TInfo* arr, int sz) {
 }
 
 void test() {
-    printf("*** TEST ***\n");
+    printf("*** TEST ***\n\n");
+    printf("[ACT] Creating an array of size 5\n");
     DArray da = darray_create(5);
+    darray_print(&da,"\n");
     for(int i=0; i<5; i++) {
-        printf("setting d[%d] to %d\n", i, i+1);
+        printf("[ACT] setting d[%d] to %d\n", i, i+1);
         darray_set(&da, i, i+1);
     }
     darray_assert_equals(&da, (int[]){1,2,3,4,5}, 5);
     darray_print(&da,"\n");
+    printf("[ACT] asking explicit realloc to capacity +3\n");
     darray_realloc(&da, da.capacity + 3);
     darray_print(&da,"\n");
-    printf("appending 88\n");
+    printf("[ACT] appending 88\n");
     darray_append(&da, 88);
     darray_assert_equals(&da, (int[]){1,2,3,4,5,88}, 6);
     darray_print(&da,"\n");
-    printf("doing some resizes (first to 17, then back to 3)\n");
+    printf("[ACT] doing some resizes (first to 17, then back to 3)\n");
     darray_resize(&da, 17);
     darray_resize(&da, 3);
     darray_assert_equals(&da, (int[]){1,2,3}, 3);
-    printf("expanding with 11 new elements 0, ..., 10\n");
+    printf("[ACT] expanding with 11 new elements 0, ..., 10\n");
     darray_expand(&da, (TInfo[]){0,1,2,3,4,5,6,7,8,9,10}, 11);
     darray_print(&da,"\n");
     darray_assert_equals(&da, (int[]){1,2,3,0,1,2,3,4,5,6,7,8,9,10}, 14);
-    printf("inserting 55 at position 2\n");
+    printf("[ACT] inserting 55 at position 2\n");
     darray_insert(&da, 2, 55);
     //darray_resize(&da, 100);
-    printf("setting position 80 to 888\n");
+    printf("[ACT] setting position 80 to 888\n");
     darray_set(&da, 80, 888);
     darray_assert_equals(&da, (int[]){1,2,55,3,0,1,2,3,4,5,6,7,8,9,10}, 15);
     darray_print(&da,"\n\n");
+    printf("[ACT] destroying the array\n");
+    darray_destroy(&da);
+    printf("[ACT] creating and initializing an array of size 7 with all values set to 42\n");
+    da = darray_init(7, 42);
+    darray_print(&da,"\n");
+    darray_assert_equals(&da, (int[]){42,42,42,42,42,42,42}, 7);
+    darray_destroy(&da);
+    printf("*** END TEST ***\n\n");
 }
 
 int main() {
