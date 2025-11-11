@@ -96,11 +96,17 @@ DArray darray_create_capac(int initial_size, int initial_capacity) {
 void darray_set(DArray* da, int pos, TInfo value) {
     // one approach would be to conditionally set the value at pos iff pos < size
     // another approach would be to expand the size (but then the user should be aware that a O(n) cost may apply)
+    /**
     if(da->size <= pos) {
         darray_resize(da, pos+1);
         // for(int i=curr_size; i<pos+1; i++) darray_set(da, i, 0);
     }
-    (da->item)[pos] = value;
+    */
+    if(da->size <= pos) {
+        fprintf(stderr, "WARNING: darray_set: position %d is out of bounds (size=%d); skipping.\n", pos, da->size);
+    } else {
+        (da->item)[pos] = value;
+    }
 }
 
 void darray_print(DArray* da, char* eol) {
@@ -123,10 +129,6 @@ void darray_destroy(DArray* da) {
 }
 
 void darray_realloc(DArray* da, int new_capacity) {
-    if(new_capacity < da->size) {
-        fprintf(stderr, "WARNING: requested capacity %d is less than current size %d; realloc skipped.\n", new_capacity, da->size);
-        return;
-    }
     LOG("[LOG] Requested reallocating and setting new_capacity=%d.\n", new_capacity);
     da->item = (TInfo*) realloc(da->item, sizeof(TInfo) * new_capacity);
     if(da->item == NULL) {
@@ -200,8 +202,6 @@ void test() {
     printf("[ACT] inserting 55 at position 2\n");
     darray_insert(&da, 2, 55);
     //darray_resize(&da, 100);
-    printf("[ACT] setting position 80 to 888\n");
-    darray_set(&da, 80, 888);
     darray_assert_equals(&da, (int[]){1,2,55,3,0,1,2,3,4,5,6,7,8,9,10}, 15);
     darray_print(&da,"\n\n");
     printf("[ACT] destroying the array\n");
