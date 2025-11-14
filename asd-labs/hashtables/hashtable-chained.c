@@ -2,6 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+/**
+ * Esercizio. Implementare le seguenti funzioni sull'implementazione di hasthable chained fornita:
+ * 1) HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries) che crei e inizializzi una hashtable con le entry fornite
+ * 2) HashTable *hashtable_merge(HashTable* h1, HashTable *h2) che restituisca una nuova hashtable data dall'unione delle due tabelle hash fornite in input.
+ * Si aggiorni il main con un test per verificare le funzionalità implementate.
+ */
+
+// NB: compile with gcc "-DDEBUG"
+#ifdef DEBUG
+#define LOG(fmt, ...) fprintf(stdout, fmt, __VA_ARGS__)
+#else
+#define LOG(fmt, ...)
+#endif
+
 /* Information pieces are key-value pairs */
 
 typedef int TKey;
