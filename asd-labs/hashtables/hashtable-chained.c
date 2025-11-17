@@ -2,6 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+/**
+ * Esercizio. Implementare le seguenti funzioni sull'implementazione di hasthable chained fornita:
+ * 1) HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries) che crei e inizializzi una hashtable con le entry fornite
+ * 2) HashTable *hashtable_merge(HashTable* h1, HashTable *h2) che restituisca una nuova hashtable data dall'unione delle due tabelle hash fornite in input.
+ * Si aggiorni il main con un test per verificare le funzionalità implementate.
+ */
+
+// NB: compile with gcc "-DDEBUG"
+#ifdef DEBUG
+#define LOG(fmt, ...) fprintf(stdout, fmt, __VA_ARGS__)
+#else
+#define LOG(fmt, ...)
+#endif
+
 /* Information pieces are key-value pairs */
 
 typedef int TKey;
@@ -204,7 +218,18 @@ void hashtable_delete_value(HashTable* h, TKey key, TValue val);
 TValue *hashtable_search(HashTable* h, TKey key);
 int hashtable_search_value(HashTable* h, TValue val);
 int hashtable_search_keyvalue(HashTable* h, TKey key, TValue val);
+list *hashtable_search_list_item(HashTable* h, TKey key);
 void hashtable_print(HashTable* h, int include_empty_buckets, char *pre);
+HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries);
+HashTable *hashtable_merge(HashTable* h1, HashTable *h2);
+
+HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries) {
+    return NULL; // TODO
+}
+
+HashTable *hashtable_merge(HashTable* h1, HashTable *h2) {
+    return NULL; // TODO
+}
 
 HashTable *hashtable_create(int nbuckets) {
     HashTable *h = (HashTable*) malloc(sizeof(HashTable));
@@ -240,8 +265,11 @@ void hashtable_insert(HashTable* h, TKey key, TValue val) {
     if(h == NULL) return;
     TInfo info = { key = key, val = val };
     unsigned int hash = hashtable_hash(h, key);
-    if(!hashtable_search(h, key)) {
+    list* list_item = hashtable_search_list_item(h, key);
+    if(list_item == NULL) {
         h->bucket[hash] = list_create(info, h->bucket[hash]);
+    } else {
+        list_item->val.value = val; // update value
     }
 }
 
@@ -278,6 +306,18 @@ int hashtable_search_keyvalue(HashTable* h, TKey key, TValue val) {
     return v != NULL && *v == val;
 }
 
+list *hashtable_search_list_item(HashTable* h, TKey key) {
+    if(h == NULL) return NULL;
+    list* l = hashtable_list(h, key);
+    for(; l != NULL; l = l->next) {
+        if(l->val.key == key) {
+            return l;
+        }
+    }
+    return NULL;
+}
+
+
 TValue *hashtable_search(HashTable* h, TKey key) {
     if(h == NULL) return NULL;
     list* l = hashtable_list(h, key);
@@ -305,7 +345,8 @@ void hashtable_print(HashTable* h, int include_empty_buckets, char* pre) {
     printf("}\n");
 }
 
-int main(void) {
+void test_basic_usage() { 
+    printf("\n=== TEST BASIC USAGE ===\n\n");
     HashTable *h = hashtable_create(10);
     hashtable_insert(h, 4, 77);
     hashtable_insert(h, 44, 66);
@@ -313,6 +354,9 @@ int main(void) {
     hashtable_insert(h, 175, 55);
     hashtable_print(h, 1, "hashtable (showing all buckets) =");
     hashtable_print(h, 0, "hashtable =");
+    printf("What happens if I insert an element for the same key?\n");
+    hashtable_insert(h, 175, 88);
+    hashtable_print(h, 0, "hashtable after insert (175, 88) =");
     printf("Is key 175 present? %s.\n", hashtable_search(h, 175) ? "yes" : "no");
     printf("Is key 179 present? %s.\n", hashtable_search(h, 179) ? "yes" : "no");
     printf("Is value 55 present? %s.\n", hashtable_search_value(h, 55) ? "yes" : "no");
@@ -321,5 +365,19 @@ int main(void) {
     hashtable_print(h, 0, "after removal of key 4 =");
     hashtable_delete_value(h, 175, 55);
     hashtable_print(h, 0, "after removal of element 55 =");
+}
+
+void test_init() {
+    // TODO
+}
+
+void test_merge() {
+    // TODO
+}
+
+int main(void) {
+    test_basic_usage();
+    test_init();
+    test_merge(); 
     return 0;
 }
