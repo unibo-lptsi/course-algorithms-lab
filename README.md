@@ -22,6 +22,16 @@ Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**. 
     - Si cerchi di riprodurre una figura tipo la seguente
 ![](imgs/dynamic-array-capacity-growth.png)
 
+### Solutions
+
+- `dynamic-arrays-solution.c`:
+    - `darray_append` ridimensiona (`darray_resize`) per creare il posto aggiuntivo, e poi va a scrivere (direttamente o via `darray_set`); si noti che è in pratica una versione semplificata di `darray_expand` 
+    - `darray_insert` crea il posto come la precedente e poi shifta a destra gli elementi successivi
+    - `darray_assert_equals` asserisce mentre visita l'array dinamico e l'array di confronto
+    - `darray_init` riusa `darray_create` e setta (`darraY_set`) tutte le posizioni al valore fornito
+- `plotting_darray_capacity_expansion_solution.ipynb`
+    - le funzioni `linear_expansion` e `geometric_expansion` usano due cicli per simulare prima le `n` append e poi le `n` remove; producono array di valori corrispondenti ai valori di capacità per ogni successiva operazione: è in pratica una "simulazione" di come la capacità evolve durante l'uso della struttura dati; si noti la condizione `i>=c` (`i` è l'`i`-esima operazione ma anche la nuova dimensione richiesta dell'array) che triggera l'espansione della capacità, e le condizioni per il restringimento
+
 ## Lab `sorting` (2025-11-03): Algoritmi di ordinamento
 
 **Razionale/obiettivi:** esercitarsi con gli **algoritmi di ordinamento** approfonditi a lezione
