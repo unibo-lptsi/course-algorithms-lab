@@ -22,7 +22,7 @@ Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**. 
     - Si cerchi di riprodurre una figura tipo la seguente
 ![](imgs/dynamic-array-capacity-growth.png)
 
-### Solutions
+### Soluzioni
 
 - `dynamic-arrays-solution.c`:
     - `darray_append` ridimensiona (`darray_resize`) per creare il posto aggiuntivo, e poi va a scrivere (direttamente o via `darray_set`); si noti che è in pratica una versione semplificata di `darray_expand` 
