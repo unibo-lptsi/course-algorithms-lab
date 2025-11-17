@@ -3,10 +3,7 @@
 #include <string.h>
 
 /**
- * Esercizio. Implementare le seguenti funzioni sull'implementazione di hasthable chained fornita:
- * 1) HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries) che crei e inizializzi una hashtable con le entry fornite
- * 2) HashTable *hashtable_merge(HashTable* h1, HashTable *h2) che restituisca una nuova hashtable data dall'unione delle due tabelle hash fornite in input.
- * Si aggiorni il main con un test per verificare le funzionalità implementate.
+ * Esercizio. Aggiustare l'implementazione di hasthable chained affinché funzioni con chiavi di tipo stringa
  */
 
 // NB: compile with gcc "-DDEBUG"
