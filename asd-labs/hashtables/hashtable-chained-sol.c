@@ -11,7 +11,7 @@
 
 // NB: compile with gcc "-DDEBUG"
 #ifdef DEBUG
-#define LOG(fmt, ...) fprintf(stdout, fmt, __VA_ARGS__)
+#define LOG(fmt, ...) fprintf(stdout, fmt, ##__VA_ARGS__)
 #else
 #define LOG(fmt, ...)
 #endif
@@ -224,11 +224,34 @@ HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries);
 HashTable *hashtable_merge(HashTable* h1, HashTable *h2);
 
 HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries) {
-    return NULL; // TODO
+    HashTable *h = hashtable_create(nbuckets);
+    if(h == NULL) return NULL;
+    for(int i = 0; i < nentries; i++) {
+        hashtable_insert(h, entries[i].key, entries[i].value);
+    }
+    return h;
 }
 
 HashTable *hashtable_merge(HashTable* h1, HashTable *h2) {
-    return NULL; // TODO
+    HashTable *res = hashtable_create((h1 ? h1->nbuckets : 1) + (h2 ? h2->nbuckets : 1));
+    if(res == NULL) return NULL;
+    if(h1) {
+        for(int i = 0; i < h1->nbuckets; i++) {
+            for(list *l = h1->bucket[i]; l != NULL; l = l->next) {
+                TInfo entry = l->val;
+                hashtable_insert(res, entry.key, entry.value);            
+            }
+        }
+    }
+    if(h2) {
+        for(int i = 0; i < h2->nbuckets; i++) {
+            for(list *l = h2->bucket[i]; l != NULL; l = l->next) {
+                TInfo entry = l->val;
+                hashtable_insert(res, entry.key, entry.value);            
+            }
+        }
+    }
+    return res;
 }
 
 HashTable *hashtable_create(int nbuckets) {
@@ -368,11 +391,20 @@ void test_basic_usage() {
 }
 
 void test_init() {
-    // TODO
+    printf("\n=== TEST INIT ===\n\n");
+    TInfo entries[] = { { 1, 10 }, { 2, 20 }, { 12, 30 }, { 22, 40 }, { 3, 50 } };
+    HashTable *h = hashtable_init(3, entries, 5);
+    hashtable_print(h, 1, "hashtable initialized with capacity 3 and 5 entries =");
 }
 
 void test_merge() {
-    // TODO
+    printf("\n=== TEST MERGE ===\n\n");
+    HashTable *h1 = hashtable_init(5, (TInfo[]){ { 1, 10 }, { 2, 20 } }, 2);
+    hashtable_print(h1, 1, "hashtable 1 =");
+    HashTable *h2 = hashtable_init(5, (TInfo[]){ { 2, 200 }, { 3, 300 }, { 12, 400 } }, 3);
+    hashtable_print(h2, 1, "hashtable 2 =");
+    HashTable *hmerged = hashtable_merge(h1, h2);
+    hashtable_print(hmerged, 1, "merged hashtable =");
 }
 
 int main(void) {

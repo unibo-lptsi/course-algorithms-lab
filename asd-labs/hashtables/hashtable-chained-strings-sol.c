@@ -11,14 +11,14 @@
 
 // NB: compile with gcc "-DDEBUG"
 #ifdef DEBUG
-#define LOG(fmt, ...) fprintf(stdout, fmt, __VA_ARGS__)
+#define LOG(fmt, ...) fprintf(stdout, fmt, ##__VA_ARGS__)
 #else
 #define LOG(fmt, ...)
 #endif
 
 /* Information pieces are key-value pairs */
 
-typedef int TKey;
+typedef char* TKey; // HERE
 typedef int TValue;
 
 typedef struct TInfo {
@@ -27,11 +27,11 @@ typedef struct TInfo {
 } TInfo;
 
 int equal(TInfo a, TInfo b) {
-    return a.key == b.key /* && a.value == b.value */; // NB: equality only based on keys
+    return strcmp(a.key, b.key) == 0; // HERE
 }
 
 int info_repr(char *s, TInfo info) {
-    return sprintf(s, "%d->%d", info.key, info.value);
+    return sprintf(s, "%s->%d", info.key, info.value); // HERE
 }
 
 /* list implementation */
@@ -195,17 +195,34 @@ list* list_delete_value(list *L, TInfo val) {
 /* Chained Hashtable implementation (closed addressing) */
 
 typedef unsigned int(*hash_function_type)(TKey, int m);
-unsigned int hash_int(TKey key, int m);
+unsigned int hash_int(int key, int m);
+unsigned int hash_str(char* key, int m);
 
 typedef struct HashTable {
     list** bucket;
     int nbuckets;
 } HashTable;
 
-static hash_function_type hash_function = &hash_int;
+static hash_function_type hash_function = &hash_str;
 
-unsigned int hash_int(TKey key, int m) {
+unsigned int hash_int(int key, int m) {
     return key % m;
+}
+
+unsigned int hash_str(char* key, int m) {
+    unsigned int h = 0;
+    for(int i = 0; key[i] != '\0'; i++) {
+        h = h * 33 + key[i];
+    }
+    return h % m;
+}
+
+unsigned int hash_str_naive(char* key, int m) {
+    unsigned int h = 0;
+    for(int i = 0; key[i] != '\0'; i++) {
+        h += key[i];
+    }
+    return h % m;
 }
 
 HashTable *hashtable_create(int nbuckets);
@@ -214,7 +231,6 @@ list* hashtable_list(HashTable *h, TKey key);
 void hashtable_destroy(HashTable* h);
 void hashtable_insert(HashTable* h, TKey key, TValue val);
 void hashtable_delete(HashTable* h, TKey key);
-void hashtable_delete_value(HashTable* h, TKey key, TValue val);
 TValue *hashtable_search(HashTable* h, TKey key);
 int hashtable_exists_value(HashTable* h, TValue val);
 int hashtable_search_keyvalue(HashTable* h, TKey key, TValue val);
@@ -224,11 +240,34 @@ HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries);
 HashTable *hashtable_merge(HashTable* h1, HashTable *h2);
 
 HashTable *hashtable_init(int nbuckets, TInfo* entries, int nentries) {
-    return NULL; // TODO
+    HashTable *h = hashtable_create(nbuckets);
+    if(h == NULL) return NULL;
+    for(int i = 0; i < nentries; i++) {
+        hashtable_insert(h, entries[i].key, entries[i].value);
+    }
+    return h;
 }
 
 HashTable *hashtable_merge(HashTable* h1, HashTable *h2) {
-    return NULL; // TODO
+    HashTable *res = hashtable_create((h1 ? h1->nbuckets : 1) + (h2 ? h2->nbuckets : 1));
+    if(res == NULL) return NULL;
+    if(h1) {
+        for(int i = 0; i < h1->nbuckets; i++) {
+            for(list *l = h1->bucket[i]; l != NULL; l = l->next) {
+                TInfo entry = l->val;
+                hashtable_insert(res, entry.key, entry.value);            
+            }
+        }
+    }
+    if(h2) {
+        for(int i = 0; i < h2->nbuckets; i++) {
+            for(list *l = h2->bucket[i]; l != NULL; l = l->next) {
+                TInfo entry = l->val;
+                hashtable_insert(res, entry.key, entry.value);            
+            }
+        }
+    }
+    return res;
 }
 
 HashTable *hashtable_create(int nbuckets) {
@@ -278,16 +317,6 @@ void hashtable_delete(HashTable* ht, TKey key) {
     unsigned int h = hashtable_hash(ht, key);
     TInfo ikey = { key = key };
     ht->bucket[h] = list_delete_value(ht->bucket[h], ikey);
-}
-
-void hashtable_delete_value(HashTable* h, TKey key, TValue val) {
-    if(h == NULL) return;
-    unsigned int hash = hashtable_hash(h, key);
-    list* l = h->bucket[hash];
-    if(l != NULL) {
-        TInfo info = { key = key, val = val };
-        h->bucket[hash] = list_delete_value(l, info); // must be assigned since first element might need to be removed
-    }
 }
 
 int hashtable_exists_value(HashTable* h, TValue val) {
@@ -348,36 +377,45 @@ void hashtable_print(HashTable* h, int include_empty_buckets, char* pre) {
 void test_basic_usage() { 
     printf("\n=== TEST BASIC USAGE ===\n\n");
     HashTable *h = hashtable_create(10);
-    hashtable_insert(h, 4, 77);
-    hashtable_insert(h, 44, 66);
-    hashtable_insert(h, 85, 99);
-    hashtable_insert(h, 175, 55);
+    hashtable_insert(h, "foo", 77);
+    hashtable_insert(h, "oof", 66);
+    hashtable_insert(h, "ofo", 99);
+    hashtable_insert(h, "bar", 55);
     hashtable_print(h, 1, "hashtable (showing all buckets) =");
     hashtable_print(h, 0, "hashtable =");
     printf("What happens if I insert an element for the same key?\n");
-    hashtable_insert(h, 175, 88);
-    hashtable_print(h, 0, "hashtable after insert (175, 88) =");
-    printf("Is key 175 present? %s.\n", hashtable_search(h, 175) ? "yes" : "no");
-    printf("Is key 179 present? %s.\n", hashtable_search(h, 179) ? "yes" : "no");
-    printf("Is value 55 present? %s.\n", hashtable_exists_value(h, 55) ? "yes" : "no");
-    printf("Is value 371 present? %s.\n", hashtable_exists_value(h, 371) ? "yes" : "no");
-    hashtable_delete(h, 4);
-    hashtable_print(h, 0, "after removal of key 4 =");
-    hashtable_delete_value(h, 175, 55);
-    hashtable_print(h, 0, "after removal of element 55 =");
+    hashtable_insert(h, "bar", 88);
+    hashtable_print(h, 0, "hashtable after insert (bar, 88) =");
+    printf("Is key 175 present? %s.\n", hashtable_search(h, "bar") ? "yes" : "no");
+    printf("Is key 179 present? %s.\n", hashtable_search(h, "leonard") ? "yes" : "no");
+    hashtable_destroy(h);
 }
 
 void test_init() {
-    // TODO
+    printf("\n=== TEST INIT ===\n\n");
+    TInfo entries[] = { { "one", 1 }, { "two", 2 }, { "twelve", 30 }, { "twenty-two", 40 }, { "three", 50 } };
+    HashTable *h = hashtable_init(3, entries, 5);
+    hashtable_print(h, 1, "hashtable initialized with capacity 3 and 5 entries =");
 }
 
 void test_merge() {
-    // TODO
+    printf("\n=== TEST MERGE ===\n\n");
+    HashTable *h1 = hashtable_init(5, (TInfo[]){ { "one", 1 }, { "two", 2 } }, 2);
+    hashtable_print(h1, 1, "hashtable 1 =");
+    HashTable *h2 = hashtable_init(5, (TInfo[]){ { "abc", 200 }, { "cde", 300 }, { "fgh", 400 } }, 3);
+    hashtable_print(h2, 1, "hashtable 2 =");
+    HashTable *hmerged = hashtable_merge(h1, h2);
+    hashtable_print(hmerged, 1, "merged hashtable =");
 }
 
 int main(void) {
+    LOG("\n[LOG] Using naive string hash function\n");
+    hash_function = &hash_str_naive;
     test_basic_usage();
-    test_init();
-    test_merge(); 
+    LOG("\n[LOG] Using better string hash function\n");
+    hash_function = &hash_str; // use string hash function
+    test_basic_usage();
+    // test_init();
+    //test_merge(); 
     return 0;
 }

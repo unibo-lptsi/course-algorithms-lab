@@ -202,7 +202,7 @@ void hashtable_insert(HashTable* h, TKey key, TValue val);
 void hashtable_delete(HashTable* h, TKey key);
 void hashtable_delete_value(HashTable* h, TKey key, TValue val);
 TValue *hashtable_search(HashTable* h, TKey key);
-int hashtable_search_value(HashTable* h, TValue val);
+int hashtable_exists_value(HashTable* h, TValue val);
 int hashtable_search_keyvalue(HashTable* h, TKey key, TValue val);
 void hashtable_print(HashTable* h, int include_empty_buckets, char *pre);
 
@@ -259,7 +259,7 @@ void hashtable_delete_value(HashTable* h, TKey key, TValue val) {
     }
 }
 
-int hashtable_search_value(HashTable* h, TValue val) {
+int hashtable_exists_value(HashTable* h, TValue val) {
     if(h == NULL) return 0;
     for(int i = 0; i < h->nbuckets; i++) {
         list *list = h->bucket[i];
@@ -305,8 +305,8 @@ int main(void) {
     hashtable_insert(h, 175, 55);
     hashtable_print(h, 1, "hashtable (showing all buckets) =");
     hashtable_print(h, 0, "hashtable =");
-    printf("Is value 55 present? %s.\n", hashtable_search_value(h, 55) ? "yes" : "no");
-    printf("Is value 371 present? %s.\n", hashtable_search_value(h, 371) ? "yes" : "no");
+    printf("Is value 55 present? %s.\n", hashtable_exists_value(h, 55) ? "yes" : "no");
+    printf("Is value 371 present? %s.\n", hashtable_exists_value(h, 371) ? "yes" : "no");
     hashtable_delete(h, 4);
     hashtable_print(h, 0, "after removal of key 4 =");
     hashtable_delete_value(h, 175, 55);

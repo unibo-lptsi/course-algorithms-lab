@@ -13,9 +13,18 @@ Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**. 
 2. [Tempo stimato: 30'] Si copi il file `hashtable-chained.c` in un nuovo file `hashtable-chained-str.c` e si vada ad adattare il sorgente per utilizzare il tipo stringa `char*` per le chiavi.
     - Occorre modificare la `typedef`, aggiustare implementazioni di funzioni, e definire una nuova funzione di `hash` (si faccia riferimento alle slide di teoria per un esempio di implementazione)
 3. [EXTRA - Tempo stimato: 30'] Esercizio di realtà: esplorare l'implementazione della classe [java.util.HashMap](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/HashMap.java) e cercare di ritrovare concetti introdotti a lezione
-4. [EXTRA - Tempo stimato: 120'] Prendendo spunto da `hashtable-chained.c` e da `dynamic-arrays.c`, implementare una hashtable a indirizzamento aperto.
+4. [EXTRA - Tempo stimato: 120'] Prendendo spunto da `hashtable-chained.c`, implementare una hashtable a indirizzamento aperto.
     - Si ricorda che una hashtable a indirizzamento aperto risolve le collisioni andando a occupare bucket successivi della tabella.
 
+### Soluzioni
+
+- `hashtable-chained-sol.c`: implementazione chained con soluzioni per `hashtable_init` e `hashtable_merge`
+- `hashtable-chained-strings-sol.c`: implementazione chained adattata per chiavi di tipo stringa
+    - si osservi l'output dell'esecuzione del test per le diverse funzioni di hash `hash_str_naive` (che semplicemente somma il valore intero dei caratteri della stringa) e `hash_str` (che, più intelligentemente, combina assegnando fattori diversi ai caratteri della stringa)  
+- `hashtable-open-addr-sol.c`: implementazione a indirizzamento aperto (uso bucket successivi)
+    - l'implementazione usa un array statico allocato dinamicamente, e campi per denotare `size` e `nbuckets` (capacità)
+    - l'array contiene degli slot dove gli elementi informativi, oltre a `key`/`value`, hanno un campo `status` che può essere `EMPTY`, `OCCUPIED` o `REMOVED`
+    - si noti la funzione `hashtable_expand_and_rehash` per gestire l'espansione della tabella e il rahashing degli elementi
 
 ## Lab `dynamic-arrays` (2025-11-10): array dinamici
 
