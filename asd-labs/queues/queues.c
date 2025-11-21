@@ -65,7 +65,7 @@ bool queue_add(Queue *q, TInfo value) {
 TInfo queue_remove(Queue *q) {
     LOG("[ACTION] Requested removal from queue.\n");
     // TODO: implement removal from queue
-    LOG("TODO: REMOVAL TO BE IMPLEMENTED")
+    LOG("TODO: REMOVAL TO BE IMPLEMENTED");
 }
 
 int _queue_back_index(Queue *q) {
