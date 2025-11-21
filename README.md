@@ -2,8 +2,21 @@
 
 Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**.  I percorsi relativi vanno intesi a partire dalla cartella del lab corrispondente.
 
+## Lab `hashtable-open` + `queues` (2024-11-27): tabelle hash a indirizzamento aperto e code circolari
 
-## Lab `hashtable` (2024-11-27): tabelle hash 
+1. Hashtable a indirizzamento aperto e linear probing (file `hashtable-open-addr.c`): studio output e sorgente
+    * Si ricordi di compilare con opzioni `-Wall -DDEBUG -g` per abilitare tutti i warning, il logging, e il debugging
+    * Si osservi che la struttura `TInfo` include un campo `status` che specifica se il bucket è libero, occupato, o rimosso: l'idea è che le rimozioni vengono tracciate, affinché non si rompa la catena di probing
+    * Si osservi il funzionamento di `hashtable_insert`
+2. Esercizi di implementazione
+    1. Completare l'implementazione della funzione `hashtable_expand_and_rehash()` (vedi TODO al suo interno)
+    2. Implementare la funzione `hashtable_delete(HashTable* ht, TKey key)`: deve implementare il "linear probing" (scorrimento tabella a partire dalla posizione individuata dall'hash), ovvero avanzare fintantoché o si trova la cella occupata con la chiave cercata, o si trova una cella libera
+3. Si osservi il sorgente `queues.c` che fornisce un'implementazione di code circolari
+    1. Si osservi in modo particolare `queue_add(Queue *q, TInfo value)` e l'output del programma
+    2. Implementare la funzione `queue_remove(Queue *q)`
+        - si osservi dopo la rimozione come cambia la rappresentazione "esterna" da quella "interna"
+
+## Lab `hashtable` (2024-11-17): tabelle hash 
 
 1. [Tempo stimato: 30'] Hashtable a indirizzamento chiuso (chained)
     - Studiare il sorgente `hashtable-chained.c`
