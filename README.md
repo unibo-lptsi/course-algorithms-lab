@@ -2,7 +2,7 @@
 
 Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**.  I percorsi relativi vanno intesi a partire dalla cartella del lab corrispondente.
 
-## Lab `hashtable-open` + `queues` (2024-11-27): tabelle hash a indirizzamento aperto e code circolari
+## Lab `hashtable-open` + `queues` (2024-11-24): tabelle hash a indirizzamento aperto e code circolari
 
 1. Hashtable a indirizzamento aperto e linear probing (file `hashtable-open-addr.c`): studio output e sorgente
     * Si ricordi di compilare con opzioni `-Wall -DDEBUG -g` per abilitare tutti i warning, il logging, e il debugging
