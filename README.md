@@ -17,6 +17,15 @@ Si consideri il file [`graphs.py`](asd-labs/graphs/graphs.py). Viene dato un gra
 3. Si verifichi la correttezza di quanto implementato eseguendo lo script di test `test_graphs_algorithms.py`
     * Si osservi l'implementazione del test con la libreria `unittest`
 
+### Soluzioni
+
+- `graphs_sol`: 
+    - sono state introdotte due funzioni callback per `bfv` e `dfv` per differenziare la scoperta/visita e la visita/completamento, rispettivamente
+    - `bfv` usa una `deque` con `popleft` per rimuovere l'elemento in testa alla coda e `append` per aggiungere in fondo alla coda
+    - `dfv` usa un approccio ricorsivo
+    - `dijkstra` tiene un `set` di nodi ancora da visitare ed estra il minimo mediante `min` (usando come `key` una lambda che estra e il valore di distanza corrente)
+    - `shortest_path` parte da `dest` seguendo l'attributo `L_PARENT` fino a che non raggiunge `src`
+
 ## Lab `hashtable-open` + `queues` (2024-11-24): tabelle hash a indirizzamento aperto e code circolari
 
 1. Hashtable a indirizzamento aperto e linear probing (file `hashtable-open-addr.c`): studio output e sorgente
