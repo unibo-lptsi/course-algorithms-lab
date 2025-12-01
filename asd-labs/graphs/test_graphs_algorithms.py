@@ -1,6 +1,6 @@
 import unittest
 import networkx as nx
-import graphs
+import graphs_sol as graphs
 
 class TestGraphsAlgorithms(unittest.TestCase):
     def setUp(self):
@@ -13,16 +13,16 @@ class TestGraphsAlgorithms(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_bfv(self):
+    def test_bfs(self):
         # test 
         bfv_nodes = []
         graphs.bfv(self.g, 'A', lambda x: bfv_nodes.append(x))
         self.assertEqual(bfv_nodes, list('ABFCED'))
 
-    def test_bdv(self):
+    def test_dfs(self):
         # test 
         bdv_nodes = []
-        graphs.dfv(self.g, 'A', lambda x: bdv_nodes.append(x))
+        graphs.dfv(self.g, 'A', lambda x: None, lambda x: bdv_nodes.append(x))
         self.assertEqual(bdv_nodes, list('ABCDEF'))
 
     def test_dijkstra(self):
