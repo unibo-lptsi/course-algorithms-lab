@@ -16,6 +16,17 @@ Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**. 
     2. Implementare la funzione `queue_remove(Queue *q)`
         - si osservi dopo la rimozione come cambia la rappresentazione "esterna" da quella "interna"
 
+### Soluzioni
+
+- `hashtable-open-addr-sol.c`: implementazione a indirizzamento aperto (uso bucket successivi)
+    - l'implementazione usa un array statico allocato dinamicamente, e campi per denotare `size` e `nbuckets` (capacità)
+    - l'array contiene degli slot dove gli elementi informativi, oltre a `key`/`value`, hanno un campo `status` che può essere `EMPTY`, `OCCUPIED` o `REMOVED`
+    - si noti la funzione `hashtable_expand_and_rehash` per gestire l'espansione della tabella e il rahashing degli elementi
+- `queues-sol.c`
+    - la `queue_remove(q)` deve recuperare (e poi restituire) la testa della coda, far avanzare cursore `q->front` della testa della coda (facendo attenzione a gestire la circolarità mediante `% q->capacity`), e decrementare `q->size`.
+
+
+
 ## Lab `hashtable` (2024-11-17): tabelle hash 
 
 1. [Tempo stimato: 30'] Hashtable a indirizzamento chiuso (chained)
@@ -34,10 +45,6 @@ Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**. 
 - `hashtable-chained-sol.c`: implementazione chained con soluzioni per `hashtable_init` e `hashtable_merge`
 - `hashtable-chained-strings-sol.c`: implementazione chained adattata per chiavi di tipo stringa
     - si osservi l'output dell'esecuzione del test per le diverse funzioni di hash `hash_str_naive` (che semplicemente somma il valore intero dei caratteri della stringa) e `hash_str` (che, più intelligentemente, combina assegnando fattori diversi ai caratteri della stringa)  
-- `hashtable-open-addr-sol.c`: implementazione a indirizzamento aperto (uso bucket successivi)
-    - l'implementazione usa un array statico allocato dinamicamente, e campi per denotare `size` e `nbuckets` (capacità)
-    - l'array contiene degli slot dove gli elementi informativi, oltre a `key`/`value`, hanno un campo `status` che può essere `EMPTY`, `OCCUPIED` o `REMOVED`
-    - si noti la funzione `hashtable_expand_and_rehash` per gestire l'espansione della tabella e il rahashing degli elementi
 
 ## Lab `dynamic-arrays` (2025-11-10): array dinamici
 
