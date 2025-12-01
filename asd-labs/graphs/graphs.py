@@ -6,6 +6,10 @@ import networkx as nx
 from collections import deque
 
 # Some constants
+L_STATUS = 'status'
+V_STATUS_UNSEEN = 'unseen'
+V_STATUS_DISCOVERED = 'discovered'
+V_STATUS_VISITED = 'visited'
 L_VISITED = 'visited'
 L_VISIT_ORDER = 'visit_order'
 L_ROOT = 'root'
@@ -38,25 +42,55 @@ def plot_basic_graph(G, pos = None, layout = nx.random_layout, seed = None):
     plt.show()
 
 # TODO: implement this
-def bfv(g, root, f):
+def bfv(g, root, onVisit = print, onDiscovery = lambda n: None):
+    '''
+    Breadth-First Visit of graph g from root node.
+    
+    onVisit: function to call when visiting a node
+    onDiscovery: function to call when discovering a node (when first seen and added to the queue)
+
+    Annotations. Each node n in g should be annotated with:
+    - g.nodes[n][L_STATUS]: status of n during the BFS (unseen, discovered, visited)
+    - g.nodes[n][L_PARENT]: parent of n in the BFS tree
+    - g.nodes[n][L_DIST]: distance from root to n in the BFS tree
+    '''
     # Initialization
     for n in g.nodes:
         g.nodes[n][L_VISITED] = False    
     pass
 
 # TODO: implement this
-def dfv(g, root, f):
+def dfv(g, root, onVisit = print, onFinish = lambda n: None):
+    '''
+    Depth-First Visit of graph g from root node.
+
+    onVisit: function to call when visiting a node
+    onFinish: function to call when finishing a node (after all its neighbors have been visited
+
+    Annotations. Each node n in g should be annotated with:
+    - g.nodes[n][L_STATUS]: status of n during the DFS (unseen, discovered, visited)
+    - g.nodes[n][L_PARENT]: parent of n in the DFS tree
+    - g.nodes[n][L_DIST]: distance from root to n in the DFS tree
+    '''
     # Initialization
     for n in g.nodes:
         g.nodes[n][L_VISITED] = False 
-    return dfv_rec(g, root, f)
+    return dfv_rec(g, root, onVisit, onFinish)
 
-def dfv_rec(g, root, f):
+def dfv_rec(g, root, onVisit, onFinish):
     pass
 
 # TODO: implement this
 # The function should annotate the nodes with their parent and distance from source
 def dijkstra(g, src):
+    '''
+    Dijkstra's algorithm to compute shortest paths from src to all other nodes in g.
+
+    Annotations. The function should annotate each node n in g with:
+    - g.nodes[n][L_DIST]: the distance from src to n
+    - g.nodes[n][L_PARENT]: the parent of n in the shortest path tree
+    - g.nodes[n][L_VISITED]: boolean indicating whether the node has been visited
+    '''
     # initialization
     for n in g.nodes:
         g.nodes[n][L_VISITED] = False
@@ -65,6 +99,9 @@ def dijkstra(g, src):
     pass
 
 def shortest_path(g, src, dest):
+    '''
+    Reconstruct the shortest path from src to dest in graph g annotated by running Dijkstra's algorithm.
+    '''
     pass
 
 if __name__ == "__main__":
