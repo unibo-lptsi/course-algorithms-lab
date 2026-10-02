@@ -2,7 +2,9 @@
 
 Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**.  I percorsi relativi vanno intesi a partire dalla cartella del lab corrispondente.
 
-## Lab `bst` (2024-12-12): alberi binari di ricerca
+<!--
+
+## Lab `bst` (2026-11-30): alberi binari di ricerca
 
 Si consideri il file `binary-search-trees.c`. Viene data un'implementazione degli alberi binari di ricerca (BST).
 
@@ -13,7 +15,7 @@ Si consideri il file `binary-search-trees.c`. Viene data un'implementazione degl
     * `bst_height`: calcola l'altezza di un BST
     * `bst_count_leaves`: conta quante foglie sono presenti in un BST
 
-## Lab `graphs` (2024-12-01): grafi e algoritmi su grafi
+## Lab `graphs` (2026-11-23): grafi e algoritmi su grafi
 
 Si consideri il file [`graphs.py`](asd-labs/graphs/graphs.py). Viene dato un grafo, creato mediante la libreria **NetworkX**. 
 
@@ -27,7 +29,7 @@ Si consideri il file [`graphs.py`](asd-labs/graphs/graphs.py). Viene dato un gra
 3. Si verifichi la correttezza di quanto implementato eseguendo lo script di test `test_graphs_algorithms.py`
     * Si osservi l'implementazione del test con la libreria `unittest`
 
-## Lab `hashtable-open` + `queues` (2024-11-24): tabelle hash a indirizzamento aperto e code circolari
+## Lab `hashtable-open` + `queues` (2026-12-21): tabelle hash a indirizzamento aperto e code circolari
 
 1. Hashtable a indirizzamento aperto e linear probing (file `hashtable-open-addr.c`): studio output e sorgente
     * Si ricordi di compilare con opzioni `-Wall -DDEBUG -g` per abilitare tutti i warning, il logging, e il debugging
@@ -41,7 +43,7 @@ Si consideri il file [`graphs.py`](asd-labs/graphs/graphs.py). Viene dato un gra
     2. Implementare la funzione `queue_remove(Queue *q)`
         - si osservi dopo la rimozione come cambia la rappresentazione "esterna" da quella "interna"
 
-## Lab `hashtable` (2024-11-17): tabelle hash 
+## Lab `hashtable` (2026-11-16): tabelle hash 
 
 1. [Tempo stimato: 30'] Hashtable a indirizzamento chiuso (chained)
     - Studiare il sorgente `hashtable-chained.c`
@@ -55,7 +57,7 @@ Si consideri il file [`graphs.py`](asd-labs/graphs/graphs.py). Viene dato un gra
     - Si ricorda che una hashtable a indirizzamento aperto risolve le collisioni andando a occupare bucket successivi della tabella.
 
 
-## Lab `dynamic-arrays` (2025-11-10): array dinamici
+## Lab `dynamic-arrays` (2026-11-09): array dinamici
 
 1. **Implementazione C di array dinamici**: Studio e integrazione funzionalità
     - **Studiare** il sorgente `dynamic_arrays.c`, in particolare:
@@ -75,7 +77,7 @@ Si consideri il file [`graphs.py`](asd-labs/graphs/graphs.py). Viene dato un gra
     - Si cerchi di riprodurre una figura tipo la seguente
 ![](imgs/dynamic-array-capacity-growth.png)
 
-## Lab `sorting` (2025-11-03): Algoritmi di ordinamento
+## Lab `sorting` (2026-11-02): Algoritmi di ordinamento
 
 **Razionale/obiettivi:** esercitarsi con gli **algoritmi di ordinamento** approfonditi a lezione
 
@@ -91,7 +93,7 @@ Si consideri il file [`graphs.py`](asd-labs/graphs/graphs.py). Viene dato un gra
     * si ragioni su quali ulteriori test case considerare
 2. *OPZIONALE*: cercando di riusare le funzionalità di misura tempi e plotting sviluppate nei laboratori precedenti, confrontare gli algoritmi di ordinamento producendo grafici corrispondenti ai casi: (1) array già ordinato, (2) array contrordinato, (3) array casuale 
 
-## Lab `plotting` e `search` (2025-10-20 / 2025-10-27): Grafici di funzioni e Algoritmi di ricerca 
+## Lab `plotting` e `search` (2026-10-26): Grafici di funzioni e Algoritmi di ricerca 
 
 **Razionale/obiettivi:** 
 
@@ -140,10 +142,8 @@ Svolgere i seguenti esercizi, leggendo attentamente le istruzioni.
 4. *[Tempo stimato: 30']* Implementare e testare `linear_search_rec` e `binary_search_rec`, varianti degli algoritmi di ricerca strutturati in modo ricorsivo
     - si può lavorare a partire dai file `search_linear_search.py` e `search_binary_search.py`, dove sono fornite le funzioni con corpo vuoto
 
-<!-- 5. *[Opzionale]* Implementare, testare, e misurare l'algoritmo `interpolation_search` -->
 
-
-## Lab `time` (2025-10-13): Misura dei tempi d'esecuzione di funzioni
+## Lab `time` (2026-10-19): Misura dei tempi d'esecuzione di funzioni
 <a name="lab-time"></a>
 
 **Razionale/obiettivo:** acquisire familiarità con il concetto di complessità temporale, attraverso tecniche di misure dei tempi d'esecuzione.
@@ -194,7 +194,7 @@ FIB_REC:  Exponential: time = 3.5E-06 * 1.6^n (sec)
 FIB_ITER:  Linear: time = -8.5E-05 + 3.6E-06*n (sec)
 ```
 
-## Lab `recursion` (2025-10-06): ricorsione
+## Lab `recursion` (2026-10-12): ricorsione
 
 Razionale/obiettivo: acquisire familiarità con la ricorsione, le tipologie di ricorsione, e alcuni esempi pratici.
 
@@ -222,8 +222,9 @@ Razionale/obiettivo: acquisire familiarità con la ricorsione, le tipologie di r
     5. Si compili con `gcc -O[1|2] asd-labs/recursion/tailrec.c` e si esegua l'eseguibile prodotto (`.\a.exe` o `./a.out`) e si osservi come l'ottimizzazione possa consentire di evitare un `segmentation fault` 
         - nota: il risultato potrebbe dipendere dall'implementazione/macchina
 
+-->
 
-## Lab `testing` (2025-09-29): testing di algoritmi
+## Lab `testing` (2026-10-05): testing di algoritmi
 <a name="lab01-testing"></a>
 
 **Premessa**: lo studio degli algoritmi si concentrano sulle loro proprietà formali, specialmente quelle legate alla **correttezza**  e all'**efficienza**. Per ottenere risposte precise o garanzie su questi aspetti, generalmente si usano metodi formali/matematici (ne vedremo qualcuno nel corso). 
@@ -254,7 +255,7 @@ test_utils.test(tests, min_max)
 3. Se non l'hai già fatto, risolvi il bug in `min_max` e riesegui i test ;)
 
 
-## Preliminari (2025-09-29): ambiente di sviluppo
+## Preliminari (2026-10-05): ambiente di sviluppo
 
 - Si raccomanda l'uso di **Visual Studio (VS) Code**
 - In VS Code:
@@ -266,4 +267,5 @@ test_utils.test(tests, min_max)
 - In generale, si può utilizzare l'IDE che si preferisce
     - si tenga però presente che l'ambiente standardizzato nei laboratori usa VS Code
     - e che in sede di esame, Internet è bloccato (i.e., niente Colab)
+
 
