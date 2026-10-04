@@ -1,4 +1,4 @@
-# Corso *Algoritmi e Strutture Dati*: Laboratorio
+# Corso *Algoritmi e Strutture Dati (Edizione 2026-27)*: Laboratorio
 
 Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**.  I percorsi relativi vanno intesi a partire dalla cartella del lab corrispondente.
 
