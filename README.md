@@ -1,7 +1,10 @@
 # Corso *Algoritmi e Strutture Dati (Edizione 2026-27)*: Laboratorio
 
-Gli esercizi di ogni laboratorio sono contenuti in  **`asd-labs/<NOME-LAB>/`**.  I percorsi relativi vanno intesi a partire dalla cartella del lab corrispondente.
+Ogni laboratorio è contenuto in **`asd-labs/<NOME-LAB>/`**: il file `README.md` della cartella contiene il testo
+degli esercizi, e i percorsi relativi vanno intesi a partire da quella cartella.
+Le soluzioni vengono pubblicate, dopo lo svolgimento del laboratorio, in **`solutions/<NOME-LAB>/`**.
 
+<<<<<<< HEAD
 
 ## Lab `recursion` (2026-10-12): ricorsione
 
@@ -61,7 +64,16 @@ test_utils.test(tests, min_max)
     - Consultare le slide di laboratorio su questa libreria dal sito del corso
     - Osserva il codice in  [`main_minmax_unittest.py`](asd-labs/testing/main_minmax_unittest.py)
 3. Se non l'hai già fatto, risolvi il bug in `min_max` e riesegui i test ;)
+=======
+Per aggiornare la propria copia locale: `git pull` (si consiglia di lavorare su copie dei file, o su un proprio
+branch, per evitare conflitti con gli aggiornamenti).
 
+## Calendario
+>>>>>>> 87cfcea (Restructure public lab repo for scheduled publishing)
+
+<!-- Sezione generata automaticamente (vedi schedule.yaml): non modificare a mano -->
+<!-- labs:begin -->
+<!-- labs:end -->
 
 ## Preliminari (2026-10-05): ambiente di sviluppo
 
