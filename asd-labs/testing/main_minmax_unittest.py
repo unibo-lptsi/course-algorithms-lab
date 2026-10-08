@@ -15,7 +15,7 @@ class TestMinMax(unittest.TestCase):
         self.assertEqual((min(random_list), max(random_list)), result)
 
     def test_empty(self):
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             min_max([])
 
 # main
