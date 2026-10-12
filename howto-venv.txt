@@ -4,7 +4,9 @@ python3 -m venv code-python/lp-algorithms-venv
 pip freeze > requirements.txt
 # to be re-created with
 pip install -r requirements.txt
-# to activate with
+# to activate with (linux)
 source code-python/lp-algorithms-venv/bin/activate
+# to activate with (Windows)
+.\code-python/lp-algorithms-venv\Scripts\activate
 # once done
 deactivate
