@@ -3,7 +3,14 @@ from typing import *
 
 # Note: this is a higher-order function, since it takes a function as input (f is a Callable)
 # Note: type hints can be checked via tool `mypy`
-def test_all(tests: Dict[str, Tuple[Tuple,Any]], f: Callable, tolerance: float = 0.) -> None:
+type TestName = str
+type FunArgs = Tuple  # the arguments to a function under test
+type FunResult = Any  # the expected result of a test
+type FunctionUnderTest = Callable[..., FunResult]  # a function that takes any number of arguments and returns any type
+type TestCase = Tuple[FunArgs, FunResult]  # (args_tuple, expected_result)
+type TestSpecs = Dict[TestName, TestCase]
+
+def test_all(tests: TestSpecs, f: FunctionUnderTest, tolerance: float = 0.) -> None:
     """Runs a set of tests over a function-under-test f.
 
     Arguments:
