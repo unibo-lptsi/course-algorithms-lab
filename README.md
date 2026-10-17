@@ -73,6 +73,11 @@ branch, per evitare conflitti con gli aggiornamenti).
 
 <!-- Sezione generata automaticamente (vedi schedule.yaml): non modificare a mano -->
 <!-- labs:begin -->
+| Data | Lab | Testo e sorgenti | Soluzioni |
+|---|---|---|---|
+| 2026-10-05 | `testing`: testing di algoritmi | [`asd-labs/testing/`](asd-labs/testing/) | [`solutions/testing/`](solutions/testing/) |
+| 2026-10-12 | `recursion`: ricorsione | [`asd-labs/recursion/`](asd-labs/recursion/) | [`solutions/recursion/`](solutions/recursion/) |
+| 2026-10-19 | `time`: misura dei tempi d'esecuzione di funzioni | [`asd-labs/time/`](asd-labs/time/) | dal 2026-10-23 |
 <!-- labs:end -->
 
 ## Preliminari (2026-10-05): ambiente di sviluppo
