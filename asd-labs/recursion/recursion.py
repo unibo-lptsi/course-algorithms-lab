@@ -48,4 +48,3 @@ if __name__ == "__main__":
     test_all(contains_tests, list_contains)
     test_all(palindrome_tests, palindrome)
     test_all(filter_tests, list_filter)
-
