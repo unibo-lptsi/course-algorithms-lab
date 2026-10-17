@@ -5,10 +5,9 @@
 Consultando le slide sulla misura dei tempi d'esecuzione in Python, si svolgano i seguenti esercizi:
 
 1. *[Tempo stimato: 30']* Si consideri **`measure-fib.py`**. Si misuri e si confronti il tempo d'esecuzione di `fib` (Fibonacci in versione ricorsiva) e `fib_iter` (Fibonacci in versione iterativa). Si utilizzino i *millisecondi* come unità di misura.
-    * Si definisca una funzione `measure_running_time(f)` che restituisca il tempo d'esecuzione della funzione `f` fornita in input e la si applichi a `fib` e `fib_iter` per input 10, 20, 30.
-        * Si implementi la funzione in due varianti: (A) una usando `time.perf_counter()` e (B) l'altra usando `timeit.repeat`
+    * Si definisca una funzione `measure_running_time(f, n_repeats)` che restituisca il minimo di `n_repeats` tempi d'esecuzione della funzione `f` fornita in input e la si applichi a `fib` e `fib_iter` per input 10, 20, 30.
+        * Si implementi la funzione in due varianti: (A) una usando `time.perf_counter()`: `measure_pc` e (B) l'altra usando `timeit.repeat`: `measure_timeit`
     * DOMANDA: Quale tra `fib` e `fib_iter` dà luogo a tempi d'esecuzione minori?
-    * Osservazione: qual è una limitazione d'uso della funzione `measure_running_time`? Posso impiegarla as-is per misurare altri algoritmi (ad es. di ordinamento liste di numeri)? **Come potrebbe essere generalizzata?** 
     * Esempio di output del programma da implementare:
 ```
 [perf_counter ] fib_rec(5) took 1.347306533716619e-06 sec 	 fib_iter(5) took 1.0011048289015888e-06 sec
