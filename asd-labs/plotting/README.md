@@ -36,7 +36,6 @@ Svolgere i seguenti esercizi, leggendo attentamente le istruzioni.
     * DOMANDE:
         * Nel grafico in scala lineare, si riesce ad apprezzare l'andamento di `fib_iter`? Perché?
         * Che forma assume la curva di `fib` nel grafico in scala logaritmica? Cosa ci dice sulla sua complessità?
-        * *(Facoltativo)* Si stimi la base `b` di `t(n) ≈ c·b^n` per `fib`, interpolando con una retta (`np.polyfit(x, y, 1)`) i logaritmi dei tempi misurati. Che valore si ottiene?
 
 ![](imgs/fib_times.png)
 
