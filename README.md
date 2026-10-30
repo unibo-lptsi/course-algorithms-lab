@@ -15,7 +15,8 @@ branch, per evitare conflitti con gli aggiornamenti).
 | 2026-10-05 | `testing`: testing di algoritmi | [`asd-labs/testing/`](asd-labs/testing/) | [`solutions/testing/`](solutions/testing/) |
 | 2026-10-12 | `recursion`: ricorsione | [`asd-labs/recursion/`](asd-labs/recursion/) | [`solutions/recursion/`](solutions/recursion/) |
 | 2026-10-19 | `time`: misura dei tempi d'esecuzione di funzioni | [`asd-labs/time/`](asd-labs/time/) | [`solutions/time/`](solutions/time/) |
-| 2026-10-26 | `plotting`: grafici di funzioni e di tempi d'esecuzione | [`asd-labs/plotting/`](asd-labs/plotting/) | dal 2026-10-30 |
+| 2026-10-26 | `plotting`: grafici di funzioni e di tempi d'esecuzione | [`asd-labs/plotting/`](asd-labs/plotting/) | [`solutions/plotting/`](solutions/plotting/) |
+| 2026-11-02 | `search`: algoritmi di ricerca | [`asd-labs/search/`](asd-labs/search/) | dal 2026-11-06 |
 <!-- asd-labs:end -->
 
 ## Preliminari: ambiente di sviluppo
