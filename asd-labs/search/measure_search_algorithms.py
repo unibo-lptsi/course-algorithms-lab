@@ -1,10 +1,11 @@
 import timeit # for measuring time
 import os
+import sys
 from pathlib import Path
 from collections.abc import Callable
 import matplotlib.pyplot as plt # for plotting
-from search_linear_search import linear_search # to be implemented
-from search_binary_search import binary_search # to be implemented
+from search_linear_search import linear_search, linear_search_rec # to be implemented
+from search_binary_search import binary_search, binary_search_rec, binary_search_rec_slicing # to be implemented
 
 GEN_DIR = Path(__file__).parent / "gen" # where to save the generated figure
 
@@ -52,6 +53,8 @@ def plot_times(times: dict[str, Measures], title: str, filename: str) -> None:
 if __name__ == '__main__':
     # Input arrays of increasing size n; they must be sorted, as required by binary_search
     sizes = [2**k for k in range(18)] # 1, 2, 4, ..., 131072
+    # linear_search_rec makes a nested recursive call for each element, so it needs a recursion depth of about n (cf. lab recursion)
+    sys.setrecursionlimit(2 * max(sizes))
     arrays: list[list[int]] = [list(range(n)) for n in sizes]
     worst_inputs: list[SearchInput] = [] # TODO: one pair (array, x) for each array in arrays, such that searching x in array is a worst case
 
@@ -60,4 +63,13 @@ if __name__ == '__main__':
 
     plot_times({"linear_search": ls_times_worst, "binary_search": bs_times_worst},
                "Tempo d'esecuzione nel caso peggiore", "search_times_worst.pdf")
+
+    # Same measures and plot for the recursive variants, including the naive recursive binary search,
+    # which recurs on slices of the array instead of narrowing the bounds of the portion to examine
+    lsr_times_worst = measure(linear_search_rec, worst_inputs, "LINEAR SEARCH REC (WORST CASE)")
+    bsr_times_worst = measure(binary_search_rec, worst_inputs, "BINARY SEARCH REC (WORST CASE)")
+    bsrs_times_worst = measure(binary_search_rec_slicing, worst_inputs, "BINARY SEARCH REC SLICING (WORST CASE)")
+
+    plot_times({"linear_search_rec": lsr_times_worst, "binary_search_rec": bsr_times_worst, "binary_search_rec_slicing": bsrs_times_worst},
+               "Tempo d'esecuzione nel caso peggiore (varianti ricorsive)", "search_times_worst_rec.pdf")
     plt.show()

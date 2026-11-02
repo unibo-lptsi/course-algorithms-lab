@@ -1,7 +1,7 @@
 import sys
 import unittest
 from search_linear_search import linear_search, linear_search_rec
-from search_binary_search import binary_search, binary_search_rec
+from search_binary_search import binary_search, binary_search_rec, binary_search_rec_slicing
 
 
 class SearchTests:
@@ -83,7 +83,7 @@ class TestBinarySearch(SearchTests, unittest.TestCase):
     #      is not a strict weak order, even if the array is sorted (hint: Python's < on sets is the proper subset relation)
 
 
-# TODO (part 3): test linear_search_rec and binary_search_rec
+# TODO (part 3): test linear_search_rec, binary_search_rec and binary_search_rec_slicing
 
 
 if __name__ == "__main__":

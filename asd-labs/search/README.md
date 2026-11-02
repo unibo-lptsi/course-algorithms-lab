@@ -34,4 +34,13 @@ Svolgere i seguenti esercizi, leggendo attentamente le istruzioni.
 3. *[Tempo stimato: 30']* Implementare e testare `linear_search_rec` e `binary_search_rec`, varianti degli algoritmi di ricerca strutturati in modo ricorsivo
     - si può lavorare a partire dai file `search_linear_search.py` e `search_binary_search.py`, dove sono fornite le funzioni con corpo vuoto
     - per il testing, si aggiungano in `test_search_algorithms.py` le classi di test per le due varianti, riusando i test già scritti
+    - si misurino e si grafichino anche i tempi d'esecuzione delle due varianti ricorsive nel caso peggiore: `measure_search_algorithms.py` riusa `measure` e `plot_times` e salva la figura in `gen/search_times_worst_rec.pdf`
+        - DOMANDE: come si confrontano le curve con quelle delle varianti iterative? Perché lo script imposta `sys.setrecursionlimit(...)` (cf. lab `recursion`)?
+4. *[Tempo stimato: 20']* Implementare e testare `binary_search_rec_slicing`, variante "ingenua" di `binary_search_rec` che, invece di restringere i limiti della porzione da esaminare, effettua la chiamata ricorsiva su una metà dell'array ottenuta mediante *slicing* (`array[:mid]` oppure `array[mid+1:]`)
+    - si può lavorare a partire dal file `search_binary_search.py`, dove è fornita la funzione con corpo vuoto
+    - attenzione all'indice da restituire: la chiamata ricorsiva restituisce un indice della sotto-lista, non dell'array originale
+    - per il testing, si aggiunga in `test_search_algorithms.py` la relativa classe di test, riusando i test già scritti
+    - `measure_search_algorithms.py` ne misura i tempi d'esecuzione nel caso peggiore e li confronta con quelli di `binary_search_rec` in `gen/search_times_worst_slicing.pdf`
+        - prima di eseguire lo script: cosa ci aspettiamo di vedere?
+        - DOMANDE: che andamento ha la curva di `binary_search_rec_slicing` in scala log-log? Quanto costa un'operazione di slicing come `array[:mid]`? Qual è quindi la complessità di `binary_search_rec_slicing`?
 
