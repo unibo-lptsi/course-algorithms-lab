@@ -1,7 +1,5 @@
-import sys
-
-sizes = [10,100,1000,2000,5000]
-sys.setrecursionlimit(2 * max(sizes))
+# Sorting algorithms: each function sort(a) sorts the list a IN PLACE (in non-decreasing order).
+# Tests: test_sorting_algorithms.py; measures and plots: measure_sorting_algorithms.py
 
 def selection_sort(a):
     a.sort()
@@ -17,11 +15,3 @@ def merge_sort(a):
 
 def quick_sort(array):
     pass
-
-if __name__ == '__main__':
-    import test_utils
-    tests = {
-        "small random list": (([7, 3, 5, 2, 1, 4, 6],), [1, 2, 3, 4, 5, 6, 7])
-    }
-    sorting_algorithms = [selection_sort, insertion_sort, bubble_sort, merge_sort, quick_sort]
-    test_utils.test_all_functions(tests, sorting_algorithms, in_place=True)
