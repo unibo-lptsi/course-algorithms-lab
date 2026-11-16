@@ -6,7 +6,8 @@
  * on, so that the final report lists all the failed tests, not just the first one.
  * The report can show all the tests, with their trace, or only the failed ones (see darray_run_tests).
  *
- * NB: the tests use the darray module only through its interface (darray.h), as any other user would.
+ * NB: the tests use the darray module only through its interface (darray.h), as any other user would:
+ * DArray being an opaque type, the compiler rejects any access to its fields (e.g., da->size) outside darray.c.
  */
 #include "darray_test.h"
 
@@ -41,7 +42,7 @@ static int check_impl(int ok, const char* expr, const char* file, int line) {
     }
     return ok;
 }
-// NB: #cond turns the condition into a string (e.g., "da.capacity < N");
+// NB: #cond turns the condition into a string (e.g., "darray_capacity(da) < N");
 // __FILE__ and __LINE__ are the file and the line of the check
 #define CHECK(cond) check_impl((cond) != 0, #cond, __FILE__, __LINE__)
 
@@ -50,11 +51,13 @@ static int check_impl(int ok, const char* expr, const char* file, int line) {
  * Returns 1 if so; otherwise, it reports the first difference as a failed check and returns 0.
  */
 static int darray_assert_equals(const DArray* da, const TInfo* expected, int expected_len) {
-    const int broken_invariant = da->size < 0 || da->size > da->capacity;
+    const int size = darray_size(da);
+    const int capacity = darray_capacity(da);
+    const int broken_invariant = size < 0 || size > capacity;
     int diff_pos = -1; // first position where the elements differ, if any
-    if(!broken_invariant && da->size == expected_len) {
+    if(!broken_invariant && size == expected_len) {
         for(int i = 0; i < expected_len && diff_pos < 0; i++) {
-            if(da->item[i] != expected[i]) {
+            if(darray_get(da, i) != expected[i]) {
                 diff_pos = i;
             }
         }
@@ -67,18 +70,18 @@ static int darray_assert_equals(const DArray* da, const TInfo* expected, int exp
     if(broken_invariant) {
         // NB: do not print the elements, it could read outside the buffer
         fprintf(stderr, "size %d and capacity %d break the invariant 0 <= size <= capacity\n",
-                da->size, da->capacity);
+                size, capacity);
         return 0;
     }
-    if(da->size != expected_len) {
-        fprintf(stderr, "size is %d, expected %d\n", da->size, expected_len);
+    if(size != expected_len) {
+        fprintf(stderr, "size is %d, expected %d\n", size, expected_len);
     } else {
         fprintf(stderr, "item[%d] is " TINFO_FMT ", expected " TINFO_FMT "\n",
-                diff_pos, da->item[diff_pos], expected[diff_pos]);
+                diff_pos, darray_get(da, diff_pos), expected[diff_pos]);
     }
-    fprintf(stderr, "        actual:   [%d/%d]", da->size, da->capacity);
-    tinfo_print_array(stderr, da->item, da->size);
-    fprintf(stderr, "\n        expected: ");
+    fprintf(stderr, "        actual:   ");
+    darray_print(stderr, da, "\n");
+    fprintf(stderr, "        expected: ");
     tinfo_print_array(stderr, expected, expected_len);
     fprintf(stderr, "\n");
     return 0;
@@ -86,10 +89,10 @@ static int darray_assert_equals(const DArray* da, const TInfo* expected, int exp
 
 // Creates a full array (capacity == size, so its next growth reallocates) holding items[0..n-1].
 // NB: it uses provided functions only, so the setup of a test never depends on the exercise functions.
-static DArray make_darray(const TInfo* items, int n) {
-    DArray da = darray_create(n);
+static DArray* make_darray(const TInfo* items, int n) {
+    DArray* da = darray_create(n);
     for(int i = 0; i < n; i++) {
-        darray_set(&da, i, items[i]);
+        darray_set(da, i, items[i]);
     }
     return da;
 }
@@ -102,162 +105,162 @@ static DArray make_darray(const TInfo* items, int n) {
 static void trace(const DArray* da) {
     if(verbose_mode) {
         printf("  ");
-        darray_print(da, "\n");
+        darray_print(stdout, da, "\n");
     }
 }
 
 static void test_create_and_set(void) {
     TRACE_PRINTF("  [ACT] creating an array of size 5 (the elements are zero-initialised)\n");
-    DArray da = darray_create(5);
-    trace(&da);
-    darray_assert_equals(&da, (TInfo[]){0, 0, 0, 0, 0}, 5);
+    DArray* da = darray_create(5);
+    trace(da);
+    darray_assert_equals(da, (TInfo[]){0, 0, 0, 0, 0}, 5);
     TRACE_PRINTF("  [ACT] setting d[i] to i+1, for i = 0, ..., 4\n");
     for(int i = 0; i < 5; i++) {
-        darray_set(&da, i, i + 1);
+        darray_set(da, i, i + 1);
     }
-    trace(&da);
-    darray_assert_equals(&da, (TInfo[]){1, 2, 3, 4, 5}, 5);
-    CHECK(darray_get(&da, 2) == 3);
-    darray_destroy(&da);
+    trace(da);
+    darray_assert_equals(da, (TInfo[]){1, 2, 3, 4, 5}, 5);
+    CHECK(darray_get(da, 2) == 3);
+    darray_destroy(da);
 }
 
 static void test_realloc(void) {
-    DArray da = make_darray((TInfo[]){1, 2, 3, 4, 5}, 5);
-    trace(&da);
+    DArray* da = make_darray((TInfo[]){1, 2, 3, 4, 5}, 5);
+    trace(da);
     TRACE_PRINTF("  [ACT] asking explicit realloc to capacity +3\n");
-    const int old_capacity = da.capacity;
-    darray_realloc(&da, old_capacity + 3);
-    trace(&da);
-    CHECK(da.capacity == old_capacity + 3);
-    darray_assert_equals(&da, (TInfo[]){1, 2, 3, 4, 5}, 5);
-    darray_destroy(&da);
+    const int old_capacity = darray_capacity(da);
+    darray_realloc(da, old_capacity + 3);
+    trace(da);
+    CHECK(darray_capacity(da) == old_capacity + 3);
+    darray_assert_equals(da, (TInfo[]){1, 2, 3, 4, 5}, 5);
+    darray_destroy(da);
 }
 
 static void test_append(void) {
-    DArray da = make_darray((TInfo[]){1, 2, 3, 4, 5}, 5);
-    trace(&da);
+    DArray* da = make_darray((TInfo[]){1, 2, 3, 4, 5}, 5);
+    trace(da);
     TRACE_PRINTF("  [ACT] appending 88\n");
-    darray_append(&da, 88);
-    trace(&da);
-    darray_assert_equals(&da, (TInfo[]){1, 2, 3, 4, 5, 88}, 6);
-    darray_destroy(&da);
+    darray_append(da, 88);
+    trace(da);
+    darray_assert_equals(da, (TInfo[]){1, 2, 3, 4, 5, 88}, 6);
+    darray_destroy(da);
 
     TRACE_PRINTF("  [ACT] appending 7 to an empty array\n");
     da = darray_create(0);
-    darray_append(&da, 7);
-    trace(&da);
-    darray_assert_equals(&da, (TInfo[]){7}, 1);
-    darray_destroy(&da);
+    darray_append(da, 7);
+    trace(da);
+    darray_assert_equals(da, (TInfo[]){7}, 1);
+    darray_destroy(da);
 }
 
 static void test_resize(void) {
-    DArray da = make_darray((TInfo[]){1, 2, 3, 4, 5}, 5);
-    trace(&da);
+    DArray* da = make_darray((TInfo[]){1, 2, 3, 4, 5}, 5);
+    trace(da);
     TRACE_PRINTF("  [ACT] resizing to 17 (the new elements are zero-initialised)\n");
-    darray_resize(&da, 17);
-    trace(&da);
+    darray_resize(da, 17);
+    trace(da);
     TInfo expected[17] = {1, 2, 3, 4, 5}; // NB: the elements without an initialiser are set to 0
-    darray_assert_equals(&da, expected, 17);
+    darray_assert_equals(da, expected, 17);
     TRACE_PRINTF("  [ACT] resizing back to 3\n");
-    darray_resize(&da, 3);
-    trace(&da);
-    darray_assert_equals(&da, (TInfo[]){1, 2, 3}, 3);
-    darray_destroy(&da);
+    darray_resize(da, 3);
+    trace(da);
+    darray_assert_equals(da, (TInfo[]){1, 2, 3}, 3);
+    darray_destroy(da);
 }
 
 static void test_resize_to_zero(void) {
-    DArray da = make_darray((TInfo[]){1, 2, 3}, 3);
-    trace(&da);
+    DArray* da = make_darray((TInfo[]){1, 2, 3}, 3);
+    trace(da);
     TRACE_PRINTF("  [ACT] resizing to 0 (twice)\n");
-    darray_resize(&da, 0);
-    trace(&da);
-    darray_resize(&da, 0);
-    trace(&da);
-    darray_assert_equals(&da, NULL, 0);
+    darray_resize(da, 0);
+    trace(da);
+    darray_resize(da, 0);
+    trace(da);
+    darray_assert_equals(da, NULL, 0);
     TRACE_PRINTF("  [ACT] resizing to 2 (the new elements are zero-initialised)\n");
-    darray_resize(&da, 2);
-    trace(&da);
-    darray_assert_equals(&da, (TInfo[]){0, 0}, 2);
-    darray_destroy(&da);
+    darray_resize(da, 2);
+    trace(da);
+    darray_assert_equals(da, (TInfo[]){0, 0}, 2);
+    darray_destroy(da);
 }
 
 static void test_expand(void) {
-    DArray da = make_darray((TInfo[]){1, 2, 3}, 3);
-    trace(&da);
+    DArray* da = make_darray((TInfo[]){1, 2, 3}, 3);
+    trace(da);
     TRACE_PRINTF("  [ACT] expanding with 11 new elements 0, ..., 10\n");
-    darray_expand(&da, (TInfo[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 11);
-    trace(&da);
-    darray_assert_equals(&da, (TInfo[]){1, 2, 3, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 14);
-    darray_destroy(&da);
+    darray_expand(da, (TInfo[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 11);
+    trace(da);
+    darray_assert_equals(da, (TInfo[]){1, 2, 3, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 14);
+    darray_destroy(da);
 }
 
 static void test_insert(void) {
-    DArray da = make_darray((TInfo[]){1, 2, 3}, 3);
-    trace(&da);
+    DArray* da = make_darray((TInfo[]){1, 2, 3}, 3);
+    trace(da);
     TRACE_PRINTF("  [ACT] inserting 55 at position 2\n");
-    darray_insert(&da, 2, 55);
-    trace(&da);
-    darray_assert_equals(&da, (TInfo[]){1, 2, 55, 3}, 4);
+    darray_insert(da, 2, 55);
+    trace(da);
+    darray_assert_equals(da, (TInfo[]){1, 2, 55, 3}, 4);
     TRACE_PRINTF("  [ACT] inserting 77 at position 0 (i.e., at the front)\n");
-    darray_insert(&da, 0, 77);
-    trace(&da);
-    darray_assert_equals(&da, (TInfo[]){77, 1, 2, 55, 3}, 5);
+    darray_insert(da, 0, 77);
+    trace(da);
+    darray_assert_equals(da, (TInfo[]){77, 1, 2, 55, 3}, 5);
     TRACE_PRINTF("  [ACT] inserting 99 at position size (i.e., at the end)\n");
-    darray_insert(&da, da.size, 99);
-    trace(&da);
-    darray_assert_equals(&da, (TInfo[]){77, 1, 2, 55, 3, 99}, 6);
-    darray_destroy(&da);
+    darray_insert(da, darray_size(da), 99);
+    trace(da);
+    darray_assert_equals(da, (TInfo[]){77, 1, 2, 55, 3, 99}, 6);
+    darray_destroy(da);
 }
 
 static void test_remove(void) {
-    DArray da = make_darray((TInfo[]){77, 1, 2, 55, 3, 99}, 6);
-    trace(&da);
+    DArray* da = make_darray((TInfo[]){77, 1, 2, 55, 3, 99}, 6);
+    trace(da);
     TRACE_PRINTF("  [ACT] removing 77 (position 0), 55 (position 2), 99 (position size-1)\n");
-    const TInfo first = darray_remove(&da, 0);
-    const TInfo middle = darray_remove(&da, 2);
-    const TInfo last = darray_remove(&da, da.size - 1);
+    const TInfo first = darray_remove(da, 0);
+    const TInfo middle = darray_remove(da, 2);
+    const TInfo last = darray_remove(da, darray_size(da) - 1);
     TRACE_PRINTF("  removed: " TINFO_FMT ", " TINFO_FMT ", " TINFO_FMT "\n", first, middle, last);
     CHECK(first == 77);
     CHECK(middle == 55);
     CHECK(last == 99);
-    trace(&da);
-    darray_assert_equals(&da, (TInfo[]){1, 2, 3}, 3);
-    darray_destroy(&da);
+    trace(da);
+    darray_assert_equals(da, (TInfo[]){1, 2, 3}, 3);
+    darray_destroy(da);
 }
 
 static void test_append_remove_many(void) {
     enum { N = 30 };
     TRACE_PRINTF("  [ACT] appending 0, ..., %d to an empty array\n", N - 1);
-    DArray da = darray_create(0);
+    DArray* da = darray_create(0);
     TInfo expected[N];
     for(int i = 0; i < N; i++) {
-        darray_append(&da, i);
+        darray_append(da, i);
         expected[i] = i;
     }
-    trace(&da);
+    trace(da);
     // NB: stop at the first failure: going on could remove from an empty array
-    if(darray_assert_equals(&da, expected, N)) {
+    if(darray_assert_equals(da, expected, N)) {
         TRACE_PRINTF("  [ACT] removing all the elements from the end\n");
         for(int i = N - 1; i >= 0; i--) {
-            darray_remove(&da, da.size - 1);
+            darray_remove(da, darray_size(da) - 1);
             if(i % 10 == 0) {
-                trace(&da);
+                trace(da);
             }
-            if(!darray_assert_equals(&da, expected, i)) {
+            if(!darray_assert_equals(da, expected, i)) {
                 break;
             }
         }
-        CHECK(da.capacity < N); // removing elements must release memory (through darray_resize)
+        CHECK(darray_capacity(da) < N); // removing elements must release memory (through darray_resize)
     }
-    darray_destroy(&da);
+    darray_destroy(da);
 }
 
 static void test_init(void) {
     TRACE_PRINTF("  [ACT] creating an array of size 7 with all values set to 42\n");
-    DArray da = darray_init(7, 42);
-    trace(&da);
-    darray_assert_equals(&da, (TInfo[]){42, 42, 42, 42, 42, 42, 42}, 7);
-    darray_destroy(&da);
+    DArray* da = darray_init(7, 42);
+    trace(da);
+    darray_assert_equals(da, (TInfo[]){42, 42, 42, 42, 42, 42, 42}, 7);
+    darray_destroy(da);
 }
 
 typedef struct {

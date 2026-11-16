@@ -17,29 +17,33 @@ typedef int TInfo;
 void tinfo_print_array(FILE* out, const TInfo* items, int n);
 
 /**
- * Invariant: 0 <= size <= capacity; item[0..size-1] are the elements, item[size..capacity-1] is free space.
- * NB: always pass a DArray by pointer. A copy (DArray b = a;) shares the buffer of a, which any resize of a
- * may move or free (realloc): pointers into item[] are invalidated by resizes.
+ * DArray is an opaque type: this header declares it, but its fields are defined only in darray.c.
+ * So, outside darray.c, a DArray is handled only through a pointer (DArray*), created by darray_create,
+ * darray_create_capac or darray_init and freed by darray_destroy, and its fields are read only through
+ * functions (e.g., darray_size). Why: a resize may move the elements (realloc) and free the old block, to which
+ * a copy of the struct (DArray b = *a;) would still point. With an opaque type, such a copy does not compile,
+ * while a copy of the pointer (DArray* b = a;) refers to the same array, and so it sees all its changes.
  * NB: sizes are int rather than size_t (the idiomatic type for sizes) to keep the code simple:
  * e.g., with an unsigned i, a loop like for(i=size-1; i>=0; i--) would never end.
  */
-struct SDArray {
-    TInfo* item;
-    int capacity;
-    int size;
-};
 typedef struct SDArray DArray;
 
 // Creation and destruction
-DArray darray_create(int initial_size);
-DArray darray_create_capac(int initial_size, int initial_capacity);
-DArray darray_init(int initial_size, TInfo value);
+DArray* darray_create(int initial_size);
+DArray* darray_create_capac(int initial_size, int initial_capacity);
+DArray* darray_init(int initial_size, TInfo value);
+// Frees the array (the elements and the DArray itself): afterwards, neither da nor its copies may be used
 void darray_destroy(DArray* da);
+
+// Size and capacity (invariant: 0 <= size <= capacity)
+int darray_size(const DArray* da);
+int darray_capacity(const DArray* da);
 
 // Access to the elements (precondition: 0 <= pos < size)
 TInfo darray_get(const DArray* da, int pos);
 void darray_set(DArray* da, int pos, TInfo value);
-void darray_print(const DArray* da, const char* eol);
+// Prints the array as [size/capacity]{a_0, ..., a_{n-1}}, followed by eol, on the given stream
+void darray_print(FILE* out, const DArray* da, const char* eol);
 
 // Changing the size (and possibly the capacity)
 void darray_realloc(DArray* da, int new_capacity);

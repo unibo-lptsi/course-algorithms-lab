@@ -8,7 +8,7 @@
         - si noti l'uso di una rappresentazione stringa `[size/capacity]{ a_0, ..., a_{n-1} }` per gli array dinamici 
         - si noti l'**invariante** della struttura dati: `0 <= size <= capacity`; le posizioni da `0` a `size-1` contengono gli elementi, quelle da `size` a `capacity-1` sono spazio libero
         - a questo punto si studi prima l'interfaccia `darray.h` e poi l'implementazione `darray.c`, e si osservino le funzioni rilevanti, tra cui: `darray_create_capac`, `darray_print`, `darray_realloc`, `darray_resize` (che delega alla politica di ridimensionamento in uso, `darray_resize_linear` o `darray_resize_geometric`), `darray_set_linear_policy`, `darray_set_geometric_policy`; e, in `darray_test.c`, `darray_assert_equals` (usata dai test per confrontare un array dinamico con un array "tradizionale")
-        - si noti che ogni ridimensionamento può spostare in memoria gli elementi (`realloc`): i puntatori a elementi dell'array ottenuti prima di un ridimensionamento non sono più validi dopo; per lo stesso motivo, un `DArray` va passato per puntatore e mai copiato
+        - si noti che `DArray` è un **tipo opaco**: `darray.h` lo dichiara (`typedef struct SDArray DArray;`), ma i suoi campi sono definiti solo in `darray.c`. Fuori da `darray.c`, quindi, un `DArray` si usa solo tramite puntatore (`DArray*`), restituito da `darray_create` e liberato da `darray_destroy` (che libera sia gli elementi sia il `DArray` stesso), e i suoi campi si leggono solo tramite funzioni (`darray_size`, `darray_capacity`, `darray_get`). Il motivo: ogni ridimensionamento può spostare in memoria gli elementi (`realloc`) e liberare il blocco precedente, a cui una copia della `struct` (`DArray b = *a;`) continuerebbe a puntare; con il tipo opaco una copia del genere non compila, mentre una copia del puntatore (`DArray* b = a;`) si riferisce allo stesso array e ne vede tutte le modifiche. Resta che, dopo `darray_destroy(a)`, né `a` né le sue copie vanno più usati
     - **Completare `darray.c` implementando le seguenti funzioni** (già dichiarate in `darray.h`):
         - **`darray_append`**: atta ad aggiungere alla fine dell'array un elemento (ridimensionando l'array)
         - **`darray_insert`**: atta ad aggiungere alla posizione indicata un nuovo elemento (traslando opportunamente quelli attualmente presenti); le posizioni valide vanno da `0` a `size` inclusa (inserire in posizione `size` equivale ad aggiungere in fondo)
@@ -35,13 +35,13 @@ Il codice C è organizzato in **moduli**: ogni modulo ha un file *header* (`.h`)
 
 | File | Contenuto |
 |---|---|
-| `darray.h` | interfaccia del modulo `darray`: tipo degli elementi `TInfo`, tipo `DArray`, prototipi delle funzioni pubbliche |
-| `darray.c` | implementazione del modulo `darray`, comprese le funzioni da completare |
+| `darray.h` | interfaccia del modulo `darray`: tipo degli elementi `TInfo`, tipo (opaco) `DArray`, prototipi delle funzioni pubbliche |
+| `darray.c` | implementazione del modulo `darray`: definizione di `struct SDArray` (i campi di `DArray`) e delle funzioni, comprese quelle da completare |
 | `darray_test.h`, `darray_test.c` | modulo `darray_test`: i test del modulo `darray`, eseguiti da `darray_run_tests` |
 | `main.c` | programma principale (`main`): esegue i test con entrambe le politiche di ridimensionamento |
 
-- Un file che usa un modulo ne include l'header: ad es. `main.c` e `darray_test.c` contengono `#include "darray.h"` (con le virgolette, a differenza di `<stdio.h>`, il file viene cercato prima nella cartella del sorgente). Così conoscono i tipi e i prototipi delle funzioni, ma non la loro implementazione.
-- Ogni header è protetto da una *include guard* (`#ifndef DARRAY_H` / `#define DARRAY_H` / ... / `#endif`), che evita di ripeterne le definizioni (un errore, ad es. per `struct SDArray`) se lo stesso header viene incluso più volte, anche indirettamente, nello stesso file.
+- Un file che usa un modulo ne include l'header: ad es. `main.c` e `darray_test.c` contengono `#include "darray.h"` (con le virgolette, a differenza di `<stdio.h>`, il file viene cercato prima nella cartella del sorgente). Così conoscono i tipi e i prototipi delle funzioni, ma non la loro implementazione (né i campi di `DArray`, definiti in `darray.c`).
+- Ogni header è protetto da una *include guard* (`#ifndef DARRAY_H` / `#define DARRAY_H` / ... / `#endif`), che evita di ripeterne il contenuto se lo stesso header viene incluso più volte, anche indirettamente, nello stesso file: alcune ripetizioni sarebbero errori (ad es. due definizioni della stessa `struct`).
 
 **Compilazione in un solo comando**: si passano a `gcc` **tutti i file `.c`** (gli header no: vengono inclusi dai `.c`):
 

@@ -9,11 +9,22 @@
 #include <string.h>
 
 /**
+ * Definition of the opaque type DArray (declared in darray.h): only the functions of this file see its fields.
+ * Invariant: 0 <= size <= capacity; item[0..size-1] are the elements, item[size..capacity-1] is free space.
+ * NB: a resize may move the elements (realloc), so it invalidates the pointers into item[].
+ */
+struct SDArray {
+    TInfo* item;
+    int capacity;
+    int size;
+};
+
+/**
  * TODO: implementare le seguenti funzioni:
  * - void darray_append(DArray* da, TInfo value)
  * - void darray_insert(DArray* da, int insert_pos, TInfo value)
  * - TInfo darray_remove(DArray* da, int remove_pos)
- * - DArray darray_init(int initial_size, TInfo value)
+ * - DArray* darray_init(int initial_size, TInfo value)
  */
 
 // Prints "<function name>: TO BE IMPLEMENTED"
@@ -71,18 +82,17 @@ TInfo darray_remove(DArray* da, int remove_pos) {
     return (TInfo){0}; // dummy value
 }
 
-DArray darray_init(int initial_size, TInfo value) {
+DArray* darray_init(int initial_size, TInfo value) {
     // TODO
-    DArray da = {0};
     NOT_IMPLEMENTED();
-    return da;
+    return darray_create(0); // dummy value (an empty array), so that the caller can still use and destroy it
 }
 
-DArray darray_create(int initial_size) {
+DArray* darray_create(int initial_size) {
     return darray_create_capac(initial_size, initial_size);
 }
 
-DArray darray_create_capac(int initial_size, int initial_capacity) {
+DArray* darray_create_capac(int initial_size, int initial_capacity) {
     assert(initial_size >= 0);
     if(initial_capacity < initial_size) {
         fprintf(stderr, "WARNING: initial_capacity %d is less than initial_size %d; adjusting initial_capacity to initial_size.\n", initial_capacity, initial_size);
@@ -92,16 +102,31 @@ DArray darray_create_capac(int initial_size, int initial_capacity) {
         initial_capacity = MIN_CAPACITY;
     }
 
-    DArray a;
-    // NB: calloc zero-initialises the elements (with malloc, their value would be indeterminate)
-    a.item = calloc((size_t)initial_capacity, sizeof(TInfo));
-    if(a.item == NULL) {
-        fprintf(stderr, "ERROR: calloc failed; exiting.\n");
+    // NB: the DArray itself is allocated here, on the heap: the users of the module could not allocate it,
+    // as they do not know its fields, nor its size (sizeof(DArray)), DArray being opaque
+    DArray* da = malloc(sizeof(DArray));
+    if(da == NULL) {
+        fprintf(stderr, "ERROR: malloc failed; exiting.\n");
         exit(EXIT_FAILURE);
     }
-    a.capacity = initial_capacity;
-    a.size = initial_size;
-    return a;
+    // NB: calloc zero-initialises the elements (with malloc, their value would be indeterminate)
+    da->item = calloc((size_t)initial_capacity, sizeof(TInfo));
+    if(da->item == NULL) {
+        fprintf(stderr, "ERROR: calloc failed; exiting.\n");
+        free(da);
+        exit(EXIT_FAILURE);
+    }
+    da->capacity = initial_capacity;
+    da->size = initial_size;
+    return da;
+}
+
+int darray_size(const DArray* da) {
+    return da->size;
+}
+
+int darray_capacity(const DArray* da) {
+    return da->capacity;
 }
 
 TInfo darray_get(const DArray* da, int pos) {
@@ -132,17 +157,18 @@ void tinfo_print_array(FILE* out, const TInfo* items, int n) {
     fprintf(out, "}");
 }
 
-void darray_print(const DArray* da, const char* eol) {
-    printf("[%d/%d]", da->size, da->capacity);
-    tinfo_print_array(stdout, da->item, da->size);
-    printf("%s", eol);
+void darray_print(FILE* out, const DArray* da, const char* eol) {
+    fprintf(out, "[%d/%d]", da->size, da->capacity);
+    tinfo_print_array(out, da->item, da->size);
+    fprintf(out, "%s", eol);
 }
 
 void darray_destroy(DArray* da) {
-    free(da->item);
-    da->item = NULL;
-    da->capacity = 0;
-    da->size = 0;
+    if(da == NULL) {
+        return; // as free(NULL), destroying no array does nothing
+    }
+    free(da->item); // NB: before free(da), after which da->item could no longer be read
+    free(da);
 }
 
 void darray_realloc(DArray* da, int new_capacity) {
@@ -215,7 +241,8 @@ void darray_set_geometric_policy(double growing_factor, double shrinking_factor)
     f_resize = &darray_resize_geometric;
 }
 
-// Precondition: arr does not point into da->item, which the resize may free (e.g., not darray_expand(da, da->item, ...))
+// Precondition: arr does not point into da->item, which the resize may free (e.g., not darray_expand(da, da->item, ...));
+// only the functions of this file could break it, as da->item is not accessible elsewhere
 void darray_expand(DArray* da, const TInfo* arr, int sz) {
     assert(sz >= 0);
     int curr_size = da->size; // NB: keep track of current size as resize will move it
