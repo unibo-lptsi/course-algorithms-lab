@@ -65,12 +65,17 @@ if __name__ == '__main__':
     plot_times({"linear_search": ls_times_worst, "binary_search": bs_times_worst},
                "Tempo d'esecuzione nel caso peggiore", "search_times_worst.pdf")
 
-    # Same measures and plot for the recursive variants, including the naive recursive binary search,
-    # which recurs on slices of the array instead of narrowing the bounds of the portion to examine
+    # Same measures and plot for the recursive variants
     lsr_times_worst = measure(linear_search_rec, worst_inputs, "LINEAR SEARCH REC (WORST CASE)")
     bsr_times_worst = measure(binary_search_rec, worst_inputs, "BINARY SEARCH REC (WORST CASE)")
+
+    plot_times({"linear_search_rec": lsr_times_worst, "binary_search_rec": bsr_times_worst},
+               "Tempo d'esecuzione nel caso peggiore (varianti ricorsive)", "search_times_worst_rec.pdf")
+
+    # The naive recursive binary search, which recurs on slices of the array instead of narrowing the bounds
+    # of the portion to examine, compared with binary_search_rec
     bsrs_times_worst = measure(binary_search_rec_slicing, worst_inputs, "BINARY SEARCH REC SLICING (WORST CASE)")
 
-    plot_times({"linear_search_rec": lsr_times_worst, "binary_search_rec": bsr_times_worst, "binary_search_rec_slicing": bsrs_times_worst},
-               "Tempo d'esecuzione nel caso peggiore (varianti ricorsive)", "search_times_worst_rec.pdf")
+    plot_times({"binary_search_rec": bsr_times_worst, "binary_search_rec_slicing": bsrs_times_worst},
+               "Tempo d'esecuzione nel caso peggiore (ricerca binaria ricorsiva, con e senza slicing)", "search_times_worst_slicing.pdf")
     plt.show()
