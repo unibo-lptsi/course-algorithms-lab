@@ -1,9 +1,9 @@
 /**
  * Module darray_test: tests of the darray module (implementation).
  *
- * A minimal test harness. An assert (e.g., in darray_set) checks a precondition: a violation is a bug of
- * the caller, so the program stops at once. A test check instead reports a failure and lets the tests go
- * on, so that the final report lists all the failed tests, not just the first one.
+ * A minimal test harness. A REQUIRE (e.g., in darray_set; see darray.c) checks a precondition: a violation is
+ * a bug of the caller, so the program stops at once, with no final report. A test check instead reports a
+ * failure and lets the tests go on, so that the final report lists all the failed tests, not just the first one.
  * The report can show all the tests, with their trace, or only the failed ones (see darray_run_tests).
  *
  * NB: the tests use the darray module only through its interface (darray.h), as any other user would:

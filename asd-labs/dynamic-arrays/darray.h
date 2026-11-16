@@ -28,7 +28,12 @@ void tinfo_print_array(FILE* out, const TInfo* items, int n);
  */
 typedef struct SDArray DArray;
 
-// Creation and destruction
+/**
+ * Preconditions (e.g., 0 <= pos < size) must be guaranteed by the caller: violating one is a bug of the caller,
+ * so the function stops the program at once (abort), with a message saying which precondition was violated.
+ */
+
+// Creation and destruction (precondition: 0 <= initial_size <= initial_capacity)
 DArray* darray_create(int initial_size);
 DArray* darray_create_capac(int initial_size, int initial_capacity);
 DArray* darray_init(int initial_size, TInfo value);
@@ -46,12 +51,13 @@ void darray_set(DArray* da, int pos, TInfo value);
 void darray_print(FILE* out, const DArray* da, const char* eol);
 
 // Changing the size (and possibly the capacity)
-void darray_realloc(DArray* da, int new_capacity);
-void darray_resize(DArray* da, int new_size);
+void darray_realloc(DArray* da, int new_capacity);           // precondition: new_capacity >= size
+void darray_resize(DArray* da, int new_size);                // precondition: new_size >= 0
 void darray_append(DArray* da, TInfo value);
+// Appends arr[0..sz-1] (precondition: sz >= 0; arr may be NULL only if sz == 0)
 void darray_expand(DArray* da, const TInfo* arr, int sz);
-void darray_insert(DArray* da, int insert_pos, TInfo value);
-TInfo darray_remove(DArray* da, int remove_pos);
+void darray_insert(DArray* da, int insert_pos, TInfo value); // precondition: 0 <= insert_pos <= size
+TInfo darray_remove(DArray* da, int remove_pos);             // precondition: 0 <= remove_pos < size
 
 /**
  * Resize policy used by darray_resize, with its parameters. The setters check these constraints (why are they needed?):
