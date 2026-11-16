@@ -53,7 +53,7 @@ gcc -Wall -o darray main.c darray.c darray_test.c
 o anche, più brevemente
 
 ```sh
-gcc -Wall *.
+gcc -Wall *.c
 ./a.out
 ```
 
