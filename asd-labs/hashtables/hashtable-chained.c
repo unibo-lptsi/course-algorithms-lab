@@ -167,7 +167,7 @@ list* list_delete(list *L, int (*pred)(TInfo)) {
             free(curr);
             return L;
         }
-        prev = L;
+        prev = curr;
     }
     return L;
 }
@@ -187,7 +187,7 @@ list* list_delete_value(list *L, TInfo val) {
             free(curr);
             return L;
         }
-        prev = L;
+        prev = curr;
     }
     return L;
 }
