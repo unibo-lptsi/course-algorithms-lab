@@ -50,15 +50,11 @@ list* hashtable_list(HashTable *h, TKey key);
 void hashtable_insert(HashTable* h, TKey key, TValue val);
 // Deletes the entry with the given key, if present
 void hashtable_delete(HashTable* h, TKey key);
-// Deletes the entry key->val, if present
-void hashtable_delete_value(HashTable* h, TKey key, TValue val);
 
 // Returns a pointer to the value of key (valid until key is deleted), or NULL if key is not present
 TValue *hashtable_search(HashTable* h, TKey key);
 // Returns 1 iff some key has the value val, 0 otherwise
 int hashtable_search_value(HashTable* h, TValue val);
-// Returns 1 iff the table holds the entry key->val, 0 otherwise
-int hashtable_search_keyvalue(HashTable* h, TKey key, TValue val);
 // Returns the node holding key, or NULL if key is not present
 list *hashtable_search_list_item(HashTable* h, TKey key);
 

@@ -334,15 +334,11 @@ static void test_search_value(void) {
     HashTable* h = make_table("h", 10, ENTRIES, NUM_ENTRIES);
     CHECK_INT(hashtable_search_value(h, 55), 1);
     CHECK_INT(hashtable_search_value(h, 371), 0);
-    CHECK_INT(hashtable_search_keyvalue(h, 175, 55), 1);
-    CHECK_INT(hashtable_search_keyvalue(h, 175, 88), 0);
-    CHECK_INT(hashtable_search_keyvalue(h, 179, 55), 0);
     trace("[ACT] inserting 175->88 (175 is already present)");
     hashtable_insert(h, 175, 88);
     trace_table("h", h);
     CHECK_INT(hashtable_search_value(h, 55), 0);
     CHECK_INT(hashtable_search_value(h, 88), 1);
-    CHECK_INT(hashtable_search_keyvalue(h, 175, 88), 1);
     hashtable_destroy(h);
 }
 
@@ -375,22 +371,6 @@ static void test_delete(void) {
     hashtable_delete(h, 95);
     trace_table("h", h);
     CHECK_TABLE(h, after_4, 2);
-    hashtable_destroy(h);
-}
-
-static void test_delete_value(void) {
-    HashTable* h = make_table("h", 10, ENTRIES, NUM_ENTRIES);
-    trace("[ACT] deleting the entry 175->55");
-    hashtable_delete_value(h, 175, 55);
-    trace_table("h", h);
-    const TInfo expected[] = { {4, 77}, {44, 66}, {85, 99} };
-    CHECK_TABLE(h, expected, 3);
-
-    // the value must match too
-    trace("[ACT] deleting the entry 44->1 (44 is present, but with value 66)");
-    hashtable_delete_value(h, 44, 1);
-    trace_table("h", h);
-    CHECK_TABLE(h, expected, 3); // unchanged
     hashtable_destroy(h);
 }
 
@@ -462,9 +442,8 @@ static const TestCase TESTS[] = {
     TEST_CASE(test_insert_and_search, "insert some entries (also with negative keys), then search keys present and not"),
     TEST_CASE(test_collisions, "colliding keys are chained in the same bucket, the last inserted first"),
     TEST_CASE(test_insert_existing_key, "inserting a key already present updates its value"),
-    TEST_CASE(test_search_value, "search a value, and a key-value pair"),
+    TEST_CASE(test_search_value, "search values present and not, also after the value of a key is updated"),
     TEST_CASE(test_delete, "delete keys in the middle, at the head and at the end of their chains, and keys not present"),
-    TEST_CASE(test_delete_value, "delete a key-value pair (only if the value matches)"),
     TEST_CASE(test_many_entries, "insert, search and delete many entries (long chains)"),
     TEST_CASE(test_init, "hashtable_init (exercise)"),
     TEST_CASE(test_merge, "hashtable_merge (exercise)"),

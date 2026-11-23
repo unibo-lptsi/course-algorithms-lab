@@ -113,13 +113,6 @@ void hashtable_delete(HashTable* ht, TKey key) {
     ht->size--;
 }
 
-void hashtable_delete_value(HashTable* h, TKey key, TValue val) {
-    // NB: list_delete_value would not do, as it compares with tinfo_equal, i.e. the keys only
-    if(hashtable_search_keyvalue(h, key, val)) {
-        hashtable_delete(h, key);
-    }
-}
-
 int hashtable_search_value(HashTable* h, TValue val) {
     if(h == NULL) return 0;
     for(int i = 0; i < h->nbuckets; i++) {
@@ -129,11 +122,6 @@ int hashtable_search_value(HashTable* h, TValue val) {
         }
     }
     return 0;
-}
-
-int hashtable_search_keyvalue(HashTable* h, TKey key, TValue val) {
-    TValue *v = hashtable_search(h, key);
-    return v != NULL && *v == val;
 }
 
 list *hashtable_search_list_item(HashTable* h, TKey key) {
