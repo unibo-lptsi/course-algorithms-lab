@@ -7,6 +7,7 @@
  *   of hashtable.h hold (each entry is in the bucket its key hashes to, no key occurs twice, its size is n)
  * - CHECK_FOUND(h, key, value), CHECK_NOT_FOUND(h, key): the result of hashtable_search(h, key)
  * - CHECK_CHAIN(h, i, expected, n): the chain of bucket i holds exactly expected[0..n-1], in this order
+ * - CHECK_AT_MOST(actual, max): actual <= max (e.g., the length of the longest chain)
  * NB: these checks read the buckets (h->bucket, h->nbuckets): they are "white box" checks, which test how the
  * entries are stored, besides what the operations return.
  *
@@ -67,6 +68,16 @@ static int count_entries(HashTable* h) {
     return n;
 }
 
+// Returns the length of the longest chain of h (0 if h is NULL)
+static int longest_chain(HashTable* h) {
+    int max = 0;
+    for(int i = 0; h != NULL && i < h->nbuckets; i++) {
+        const int len = list_length(h->bucket[i]);
+        max = len > max ? len : max;
+    }
+    return max;
+}
+
 // Appends h as [n/m]{[i](chain of bucket i) ...} (only the non-empty buckets), or NULL
 static void append_table(StrBuf* sb, HashTable* h) {
     if(h == NULL) {
@@ -108,19 +119,22 @@ static void trace_action_with_entries(const char* action, const TInfo* entries, 
 }
 
 /**
- * Creates a table with m buckets, and inserts entries[0..n-1] in it (in this order), tracing these actions.
- * NB: it uses provided functions only (not hashtable_init, an exercise): the setup of a test never depends on the
- * exercises.
+ * Creates a table with m buckets holding entries[0..n-1] (with distinct keys), tracing these actions: each entry is
+ * put at the head of the chain of its bucket, in this order, as hashtable_insert does with a new key.
+ * NB: it uses provided functions only (not hashtable_insert, hashtable_add_many nor hashtable_init, exercises), and
+ * it builds the chains directly ("white box"): the setup of a test never depends on the exercises.
  */
 static HashTable* make_table(const char* name, int m, const TInfo* entries, int n) {
     if(trace_on()) {
         char action[64];
-        snprintf(action, sizeof(action), "%s = hashtable_create(%d), then inserting", name, m);
+        snprintf(action, sizeof(action), "%s = hashtable_create(%d), then adding", name, m);
         trace_action_with_entries(action, entries, n);
     }
     HashTable* h = hashtable_create(m);
     for(int i = 0; i < n; i++) {
-        hashtable_insert(h, entries[i].key, entries[i].value);
+        const unsigned int b = hashtable_hash(h, entries[i].key);
+        h->bucket[b] = list_create(entries[i], h->bucket[b]);
+        h->size++;
     }
     trace_table(name, h);
     return h;
@@ -261,6 +275,15 @@ static int check_chain(HashTable* h, int i, const TInfo* expected, int n, const 
 }
 #define CHECK_CHAIN(h, i, expected, n) check_chain((h), (i), (expected), (n), __FILE__, __LINE__, #h)
 
+// Checks that actual <= max (as CHECK_INT, which checks actual == expected, it reports the actual value)
+static int check_at_most(int actual, int max, const char* file, int line, const char* what) {
+    char actual_str[16], expected_str[24];
+    snprintf(actual_str, sizeof(actual_str), "%d", actual);
+    snprintf(expected_str, sizeof(expected_str), "at most %d", max);
+    return check_result(actual <= max, file, line, what, actual_str, expected_str);
+}
+#define CHECK_AT_MOST(actual, max) check_at_most((actual), (max), __FILE__, __LINE__, #actual)
+
 /* Tests */
 
 // The entries of several tests: with h(k) = k mod 10, 4 and 44 collide in bucket 4, and 85 and 175 in bucket 5
@@ -279,31 +302,41 @@ static void test_create(void) {
     hashtable_destroy(h);
 }
 
-static void test_insert_and_search(void) {
-    HashTable* h = make_table("h", 10, ENTRIES, NUM_ENTRIES);
-    CHECK_TABLE(h, ENTRIES, NUM_ENTRIES);
-    for(int i = 0; i < NUM_ENTRIES; i++) {
-        CHECK_FOUND(h, ENTRIES[i].key, ENTRIES[i].value);
+// NB: the table is built by make_table, without hashtable_insert: so, this test does not depend on it
+static void test_search(void) {
+    // negative keys: -3 mod 10 = 7 (while, in C, -3 % 10 == -3); so -3 and -13 collide in bucket 7
+    const TInfo entries[] = { {4, 77}, {44, 66}, {85, 99}, {175, 55}, {-3, 1}, {-13, 2} };
+    HashTable* h = make_table("h", 10, entries, 6);
+    for(int i = 0; i < 6; i++) {
+        CHECK_FOUND(h, entries[i].key, entries[i].value);
     }
     // unsuccessful searches: in an empty bucket (9), and in a non-empty one (4), whose chain is scanned to its end
     CHECK_NOT_FOUND(h, 179);
     CHECK_NOT_FOUND(h, 14);
-    // negative keys: -3 mod 10 = 7 (while, in C, -3 % 10 == -3); so -3 and -13 collide in bucket 7
-    CHECK_INT(hashtable_hash(h, -3), 7);
-    CHECK_INT(hashtable_hash(h, -13), 7);
-    trace("[ACT] inserting -3->1 and -13->2 (negative keys)");
-    hashtable_insert(h, -3, 1);
-    hashtable_insert(h, -13, 2);
-    trace_table("h", h);
-    CHECK_FOUND(h, -3, 1);
-    CHECK_FOUND(h, -13, 2);
-    const TInfo expected[] = { {4, 77}, {44, 66}, {85, 99}, {175, 55}, {-3, 1}, {-13, 2} };
-    CHECK_TABLE(h, expected, 6);
+    // the result points to the value in the node holding the key, not to a copy of it (e.g., in a local variable,
+    // which no longer exists after the return): so, the value can be changed through it
+    TValue* v = hashtable_search(h, 44);
+    const TValue* in_node = &find_in_any_bucket(h, 44)->val.value;
+    if(CHECK(v != NULL) && CHECK(v == in_node)) {
+        trace("[ACT] *hashtable_search(h, 44) = 67");
+        *v = 67;
+        trace_table("h", h);
+        const TInfo expected[] = { {4, 77}, {44, 67}, {85, 99}, {175, 55}, {-3, 1}, {-13, 2} };
+        CHECK_TABLE(h, expected, 6);
+    }
+    // a NULL table is an empty table (see hashtable.h)
+    CHECK(hashtable_search(NULL, 4) == NULL);
     hashtable_destroy(h);
 }
 
-static void test_collisions(void) {
-    HashTable* h = make_table("h", 10, ENTRIES, NUM_ENTRIES);
+static void test_insert(void) {
+    trace_action_with_entries("h = hashtable_create(10), then hashtable_insert of", ENTRIES, NUM_ENTRIES);
+    HashTable* h = hashtable_create(10);
+    for(int i = 0; i < NUM_ENTRIES; i++) {
+        hashtable_insert(h, ENTRIES[i].key, ENTRIES[i].value);
+    }
+    trace_table("h", h);
+    CHECK_TABLE(h, ENTRIES, NUM_ENTRIES);
     // with h(k) = k mod 10, 4 and 44 collide in bucket 4, and 85 and 175 in bucket 5
     CHECK_INT(hashtable_hash(h, 4), 4);
     CHECK_INT(hashtable_hash(h, 44), 4);
@@ -315,6 +348,22 @@ static void test_collisions(void) {
     CHECK_CHAIN(h, 4, chain4, 2);
     CHECK_CHAIN(h, 5, chain5, 2);
     CHECK_CHAIN(h, 0, NULL, 0);
+
+    // negative keys: -3 mod 10 = 7 (while, in C, -3 % 10 == -3); so -3 and -13 collide in bucket 7
+    CHECK_INT(hashtable_hash(h, -3), 7);
+    CHECK_INT(hashtable_hash(h, -13), 7);
+    trace("[ACT] inserting -3->1 and -13->2 (negative keys)");
+    hashtable_insert(h, -3, 1);
+    hashtable_insert(h, -13, 2);
+    trace_table("h", h);
+    const TInfo expected[] = { {4, 77}, {44, 66}, {85, 99}, {175, 55}, {-3, 1}, {-13, 2} };
+    CHECK_TABLE(h, expected, 6);
+    const TInfo chain7[] = { {-13, 2}, {-3, 1} };
+    CHECK_CHAIN(h, 7, chain7, 2);
+
+    // a NULL table is an empty table (see hashtable.h): inserting into it does nothing
+    trace("[ACT] hashtable_insert(NULL, 1, 10)");
+    hashtable_insert(NULL, 1, 10);
     hashtable_destroy(h);
 }
 
@@ -323,7 +372,6 @@ static void test_insert_existing_key(void) {
     trace("[ACT] inserting 175->88 (175 is already present)");
     hashtable_insert(h, 175, 88);
     trace_table("h", h);
-    CHECK_FOUND(h, 175, 88);
     // the value is updated, with no new entry
     const TInfo expected[] = { {4, 77}, {44, 66}, {85, 99}, {175, 88} };
     CHECK_TABLE(h, expected, 4);
@@ -334,8 +382,8 @@ static void test_search_value(void) {
     HashTable* h = make_table("h", 10, ENTRIES, NUM_ENTRIES);
     CHECK_INT(hashtable_search_value(h, 55), 1);
     CHECK_INT(hashtable_search_value(h, 371), 0);
-    trace("[ACT] inserting 175->88 (175 is already present)");
-    hashtable_insert(h, 175, 88);
+    trace("[ACT] changing the value of 175 to 88, in its node"); // NB: without hashtable_insert, an exercise
+    find_in_any_bucket(h, 175)->val.value = 88;
     trace_table("h", h);
     CHECK_INT(hashtable_search_value(h, 55), 0);
     CHECK_INT(hashtable_search_value(h, 88), 1);
@@ -371,6 +419,38 @@ static void test_delete(void) {
     hashtable_delete(h, 95);
     trace_table("h", h);
     CHECK_TABLE(h, after_4, 2);
+    hashtable_destroy(h);
+}
+
+// With chaining, a table never fills up: it can hold more entries than buckets (load factor > 1), in longer chains
+static void test_more_entries_than_buckets(void) {
+    // with h(k) = k mod 5: 1, 6, 11 and 16 collide in bucket 1; 2 and 7 in bucket 2; 3, 8 and 13 in bucket 3
+    const TInfo first[] = { {1, 10}, {2, 20}, {3, 30} };
+    const TInfo more[] = { {6, 60}, {11, 110}, {7, 70}, {16, 160}, {8, 80}, {13, 130} };
+    const TInfo all[] = { {1, 10}, {2, 20}, {3, 30}, {6, 60}, {11, 110}, {7, 70}, {16, 160}, {8, 80}, {13, 130} };
+    trace_action_with_entries("h = hashtable_create(5), then hashtable_insert of", first, 3);
+    HashTable* h = hashtable_create(5);
+    for(int i = 0; i < 3; i++) {
+        hashtable_insert(h, first[i].key, first[i].value);
+    }
+    trace_table("h", h);
+    CHECK_TABLE(h, first, 3);
+
+    trace_action_with_entries("hashtable_insert of", more, 6);
+    for(int i = 0; i < 6; i++) {
+        hashtable_insert(h, more[i].key, more[i].value);
+    }
+    trace_table("h", h);
+    CHECK_TABLE(h, all, 9);
+    // 9 entries in 5 buckets (load factor 1.8): the number of buckets does not change, the chains get longer...
+    CHECK_INT(h->nbuckets, 5);
+    CHECK(h->size > h->nbuckets);
+    const TInfo chain1[] = { {16, 160}, {11, 110}, {6, 60}, {1, 10} }; // the last inserted first
+    CHECK_CHAIN(h, 1, chain1, 4);
+    CHECK_FOUND(h, 1, 10); // at the end of its chain: found after 4 comparisons
+    // ... while some buckets may stay empty
+    CHECK_CHAIN(h, 0, NULL, 0);
+    CHECK_CHAIN(h, 4, NULL, 0);
     hashtable_destroy(h);
 }
 
@@ -426,9 +506,9 @@ static void test_many_entries(void) {
 }
 
 static void test_init(void) {
-    // TODO: test hashtable_init, e.g. creating a table with some entries and checking its content (CHECK_TABLE);
-    // see the other tests, then remove the following line
-    TEST_TODO("write the test of hashtable_init");
+    // TODO: test hashtable_init and hashtable_add_many, e.g. creating a table with some entries and checking its
+    // content (CHECK_TABLE), then adding more entries to it; see the other tests, then remove the following line
+    TEST_TODO("write the test of hashtable_init and hashtable_add_many");
 }
 
 static void test_merge(void) {
@@ -437,16 +517,81 @@ static void test_merge(void) {
     TEST_TODO("write the test of hashtable_merge");
 }
 
+static void test_rehash(void) {
+    // with h(k) = k mod 3, all the keys collide in bucket 1; with k mod 7, none collides
+    const TInfo entries[] = { {1, 10}, {4, 40}, {7, 70}, {10, 100} };
+    HashTable* h = make_table("h", 3, entries, 4);
+    CHECK_INT(longest_chain(h), 4);
+    const TValue* v = hashtable_search(h, 7); // the address of the value of key 7, in its node
+    trace("[ACT] hashtable_rehash(h, 7)");
+    hashtable_rehash(h, 7);
+    trace_table("h", h);
+    CHECK_INT(h->nbuckets, 7);
+    CHECK_TABLE(h, entries, 4); // NB: so, each entry is in the bucket its key hashes to with 7 buckets
+    CHECK_INT(longest_chain(h), 1);
+    // the nodes are moved (relinked), not copied: the address returned by hashtable_search before is still valid
+    CHECK(v != NULL && hashtable_search(h, 7) == v);
+
+    // fewer buckets work too, with longer chains: with h(k) = k mod 2, 4 and 10 collide in bucket 0, 1 and 7 in 1
+    trace("[ACT] hashtable_rehash(h, 2)");
+    hashtable_rehash(h, 2);
+    trace_table("h", h);
+    CHECK_INT(h->nbuckets, 2);
+    CHECK_TABLE(h, entries, 4);
+    CHECK_INT(longest_chain(h), 2);
+    hashtable_destroy(h);
+}
+
+static void test_dynamic_table(void) {
+    enum { N = 1000, M = 7 };
+    const double max_load_factor = 2;
+    trace("[ACT] fixed = hashtable_create(%d), dynamic = hashtable_create_dynamic(%d, %.1f), then inserting k->10k "
+          "for k = 0, ..., %d into both", M, M, max_load_factor, N - 1);
+    HashTable* fixed = hashtable_create(M);
+    HashTable* dynamic = hashtable_create_dynamic(M, max_load_factor);
+    int expansions = 0;
+    int too_loaded = 0; // the insertions after which the load factor of dynamic exceeds max_load_factor
+    for(int k = 0; k < N; k++) {
+        hashtable_insert(fixed, k, 10 * k);
+        const int m = dynamic->nbuckets;
+        hashtable_insert(dynamic, k, 10 * k);
+        if(dynamic->nbuckets != m) {
+            expansions++;
+            trace("inserting %d->%d into dynamic: %d entries, from %d to %d buckets", k, 10 * k, dynamic->size, m,
+                  dynamic->nbuckets);
+        }
+        if(dynamic->size > max_load_factor * dynamic->nbuckets) {
+            too_loaded++;
+        }
+    }
+    trace_chain_lengths("fixed", fixed);
+    trace_chain_lengths("dynamic", dynamic);
+    trace("dynamic: %d expansions", expansions);
+    CHECK_INT(too_loaded, 0);
+    CHECK_INT(count_entries(dynamic), N);
+    CHECK_INT(count_present_10k(dynamic, 0, N - 1, 1), N); // NB: as in test_many_entries, so the invariants hold too
+    // the longest chain: in the fixed table, at least N / M = 142.9 entries, whatever the hash function (pigeonhole
+    // principle); in the dynamic one, since its load factor N / m <= 2, with h(k) = k mod m and the consecutive keys
+    // 0, ..., N - 1, at most 2 entries
+    CHECK_INT(longest_chain(fixed), 143);
+    CHECK_AT_MOST(longest_chain(dynamic), 2);
+    hashtable_destroy(fixed);
+    hashtable_destroy(dynamic);
+}
+
 static const TestCase TESTS[] = {
     TEST_CASE(test_create, "create an empty table"),
-    TEST_CASE(test_insert_and_search, "insert some entries (also with negative keys), then search keys present and not"),
-    TEST_CASE(test_collisions, "colliding keys are chained in the same bucket, the last inserted first"),
-    TEST_CASE(test_insert_existing_key, "inserting a key already present updates its value"),
+    TEST_CASE(test_search, "search keys present (also negative) and not; results point into the nodes (exercise 1)"),
+    TEST_CASE(test_insert, "insert entries: colliding keys are chained, the last inserted first (exercise 1)"),
+    TEST_CASE(test_insert_existing_key, "inserting a key already present updates its value (exercise 1)"),
     TEST_CASE(test_search_value, "search values present and not, also after the value of a key is updated"),
     TEST_CASE(test_delete, "delete keys in the middle, at the head and at the end of their chains, and keys not present"),
-    TEST_CASE(test_many_entries, "insert, search and delete many entries (long chains)"),
-    TEST_CASE(test_init, "hashtable_init (exercise)"),
-    TEST_CASE(test_merge, "hashtable_merge (exercise)"),
+    TEST_CASE(test_more_entries_than_buckets, "a table holds more entries than buckets, in longer chains (ex. 1)"),
+    TEST_CASE(test_many_entries, "insert, search and delete many entries (long chains) (exercise 1)"),
+    TEST_CASE(test_init, "hashtable_init and hashtable_add_many (exercise 1)"),
+    TEST_CASE(test_merge, "hashtable_merge (exercise 1)"),
+    TEST_CASE(test_rehash, "hashtable_rehash moves the entries into more (or fewer) buckets (exercise 2)"),
+    TEST_CASE(test_dynamic_table, "a dynamic table expands, so its chains stay short, unlike a fixed one (exercise 2)"),
 };
 enum { NUM_TESTS = (int)(sizeof(TESTS) / sizeof(TESTS[0])) };
 
