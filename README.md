@@ -19,7 +19,8 @@ branch, per evitare conflitti con gli aggiornamenti).
 | 2026-11-02 | `search`: algoritmi di ricerca | [`asd-labs/search/`](asd-labs/search/) | [`solutions/search/`](solutions/search/) |
 | 2026-11-09 | `sorting`: algoritmi di ordinamento | [`asd-labs/sorting/`](asd-labs/sorting/) | [`solutions/sorting/`](solutions/sorting/) |
 | 2026-11-16 | `dynamic-arrays`: array dinamici | [`asd-labs/dynamic-arrays/`](asd-labs/dynamic-arrays/) | [`solutions/dynamic-arrays/`](solutions/dynamic-arrays/) |
-| 2026-11-23 | `hashtables`: tabelle hash | [`asd-labs/hashtables/`](asd-labs/hashtables/) | dal 2026-11-27 |
+| 2026-11-23 | `hashtables`: tabelle hash | [`asd-labs/hashtables/`](asd-labs/hashtables/) | [`solutions/hashtables/`](solutions/hashtables/) |
+| 2026-11-30 | `graphs`: grafi e algoritmi su grafi | [`asd-labs/graphs/`](asd-labs/graphs/) | dal 2026-12-04 |
 <!-- asd-labs:end -->
 
 ## Preliminari: ambiente di sviluppo
